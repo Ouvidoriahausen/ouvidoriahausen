@@ -1,0 +1,62 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 50px;
+  min-height: 100vh;
+}
+
+.texto-ouvidoria {
+  font-size: 40px;
+  color: white;
+}
+
+.texto-ouvidoria span {
+  color: var(--orange);
+}
+
+
+.home-btns {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.saiba-mais {
+  letter-spacing: 3px;
+  color: var(--orange);
+}
+
+.orange-texto {
+  color: var(--orange);
+}
+
+.acessar {
+  font-weight: 700;
+  border-radius: 5px;
+  color: #ffffff;
+  transition: .3s;
+}
+
+.login-btn {
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  padding: 14px 50px;
+  background-color: var(--orange);
+  border-radius: 5px;
+  color: #ffffff;
+  font-size: 20px;
+}
+
+.cadastro-btn {
+  padding: 14px 30px;
+  border: 1px solid var(--orange);
+}
+
+
+.acessar:hover{
+  opacity: .8;
+}

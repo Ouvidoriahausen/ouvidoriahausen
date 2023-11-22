@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useContext } from 'react';
 import './cadastrar.css';
+import React, { useState, useEffect, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../contexts/AuthContext';
 import { toast } from 'react-toastify';
@@ -17,7 +17,7 @@ function Cadastrar() {
 
   useEffect(() => {
     if (signed) {
-      navigate("/ticket")
+      navigate("/meus-chamados")
     }
   }, [signed]);
 
@@ -40,34 +40,6 @@ function Cadastrar() {
       toast.error("Preencha todos os campos!")
     }
   }
-
-  useEffect(() => {
-    const handlePopState = () => {
-      // Redireciona para a página do Ticket se o usuário tentar voltar para a tela de login
-      if (window.location.pathname.includes('/Login')) {
-        navigate('/Ticket');
-      }
-    };
-
-    window.addEventListener('popstate', handlePopState);
-
-    return () => {
-      window.removeEventListener('popstate', handlePopState);
-    };
-  }, [navigate]);
-
-  // Intercepta as mudanças de histórico e substitui a entrada no histórico para evitar a navegação
-  useEffect(() => {
-    const handleBeforeUnload = (event) => {
-      event.returnValue = true;
-    };
-
-    window.addEventListener('beforeunload', handleBeforeUnload);
-
-    return () => {
-      window.removeEventListener('beforeunload', handleBeforeUnload);
-    };
-  }, []);
 
   return (
     <div>

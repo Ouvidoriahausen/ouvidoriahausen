@@ -1,45 +1,79 @@
-import './style.css'
-import { FaUserCircle } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
+import './login.css';
+import React, { useContext, useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../contexts/AuthContext';
+import { toast } from 'react-toastify';
+
+export default function Login() {
+
+  const [mensagemErro, setMensagemErro] = useState('');
+  const [nomeUsuario, setNomeUsuario] = useState("")
+  const email = `${nomeUsuario}@seuapp.com`; // Mantém o domínio fictício
+  const [senha, setSenha] = useState("")
+
+  const { FazerLogin, signed } = useContext(AuthContext)
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if (signed) {
+      navigate("/meus-chamados")
+    }
+  }, [signed]);
 
 
-function Login(){
-    return(
-        <div>
-      
-        <form className='login'>
-          <h2>Fale conosco</h2>
-          <FaUserCircle className='icon' />
-          <div className='btns'>
+  async function handleLogin(e) {
+    e.preventDefault()
 
-          <Link to="/Loginesenha">
-          <a className="botao_login" target="_blank" >
-          <span></span>
-          <span></span>
-          <span></span>
-          <span></span>
-            FAZER LOGIN
-          </a>
-          </Link>
+    if (email !== "" && senha !== "") {
+      await FazerLogin(email, senha)
+    } else {
+      toast.error("Preencha todos os campos!")
+    }
+  }
 
+  return (
+    <div>
+      <Link to="/" className="voltarinicio">
+        Voltar para home
+      </Link>
 
-          <Link to="/Cadastrar">
-          <a className="botao_login" target="_blank">
-          <span></span>
-          <span></span>
-          <span></span>
-          <span></span>
-           CADASTRE-SE
-          </a>
-          </Link> 
-       
+      <form className="loginesenha" onSubmit={handleLogin}>
+        <h2>Login</h2>
 
-          </div>
-        
-          
-        </form>
-      </div>
-    )
+        <div className="box">
+          <label htmlFor="nome">Usuário</label>
+          <input
+            type="text"
+            name="usuario"
+            required
+            maxLength="15"
+            value={nomeUsuario}
+            onChange={(e) => setNomeUsuario(e.target.value)}
+          />
+        </div>
+
+        <div className="box">
+          <label htmlFor="senha">Senha</label>
+          <input
+            type="password"
+            name="senha"
+            required
+            maxLength="13"
+            value={senha}
+            onChange={(e) => setSenha(e.target.value)}
+          />
+        </div>
+
+        {mensagemErro && <p className="mensagem-erro error-text">{mensagemErro}</p>}
+
+        <button type="submit" className="entrar">
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          ENTRAR
+        </button>
+      </form>
+    </div>
+  );
 }
-
-export default Login

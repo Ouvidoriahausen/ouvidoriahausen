@@ -136,11 +136,11 @@ export default function NovoChamado() {
             </form>
 
             <div>
-                <Link className='btn-mychamados' to="/MeusChamados">Acessar Meus Chamados</Link>
+                <Link className='btn-mychamados' to="/meus-chamados">Acessar Meus Chamados</Link>
             </div>
 
             <div className='logout'>
-                <Link className='logout-btn' onClick={logout} to="/MeusChamados">Sair</Link>
+                <Link className='logout-btn' onClick={logout} to="/">Sair</Link>
             </div>
         </div>
     );

@@ -3,7 +3,6 @@ import { Routes, Route } from 'react-router-dom';
 
 import Home from '../Pages/Home';
 import Login from '../Pages/Login';
-import Loginesenha from '../Pages/Loginesenha';
 import Cadastrar from '../Pages/Cadastrar';
 import Admin from '../Pages/Admin';
 import NovoChamado from '../Pages/NovoChamado';
@@ -16,7 +15,7 @@ function RoutesApp() {
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/login" element={<Login />} />
-      <Route path="/loginesenha" element={<Loginesenha />} />
+      <Route path="/loginesenha" element={<Login />} />
       <Route path="/cadastrar" element={<Cadastrar />} />
       <Route path="/novo-chamado" element={<Private><NovoChamado /></Private>} />
       <Route path="/admin" element={<Private><Admin /></Private>} />

@@ -1,0 +1,243 @@
+*{
+    
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+
+body{
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background-color: rgb(13, 33, 79);
+    
+}
+
+.loginesenha{
+    background: rgba(0, 0, 0, 0.5);
+    width: 400px;
+    padding: 40px;
+    height: 450px;
+    border-radius: 10px;
+}
+
+.loginesenha h2{
+
+    text-align: center;
+    font-size: 30px;
+    color:  #ffd700;
+    margin-bottom: 30px;
+}
+
+.loginesenha .box {
+
+    position: relative;
+}
+
+.loginesenha .box input{
+    width: 100%;
+    padding: 10px 0 ;
+    border: 0;
+    outline: none;
+    background: transparent;
+    border-bottom: 1px solid  #ffd700;
+    /* rever isso em cima */
+    margin-bottom: 30px;
+    margin-top: 24px;
+    color:greenyellow;
+
+}
+
+.loginesenha .box label{
+    padding: 10px 0 ;
+    position: absolute;
+    font-size: 16px;
+    color: whitesmoke;
+    transition: .5s;
+    pointer-events: none;
+  }
+ 
+
+  .loginesenha .box input:focus~label,
+  .loginesenha .box input:valid~label{
+
+    top: -20px;
+    left: 0;
+    color: aqua;
+    font-size: 12px;
+
+
+  }
+  
+
+
+
+  .senha{
+
+    color:  #ffd700;
+    float: right;
+    font-size: 15px;
+  }
+   
+  a{
+
+    text-decoration: none;
+    margin-top: 32px;
+    margin-right: 102px;
+  }
+  
+
+  .entrar{
+    position: relative;
+    text-decoration: none;
+    display: inline-block;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    padding: 12px 20px;
+    border: none;
+    color:  #ffd700;
+    background-color: transparent;
+    font-weight: 700px;
+    margin-top: 20px;
+    transition: .5s;
+    overflow: hidden;
+    margin-left: 99px;
+  }
+
+
+  .entrar:hover{
+
+    background-color:  #ffd700;
+    border-radius: 5px;
+    cursor: pointer;
+    color: rgb(13, 33, 79);
+  }
+
+  .entrar span{
+    display: block;
+    position: absolute;
+  }
+
+
+  .entrar span:nth-child(1){
+
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, transparent,  #ffd700);
+    animation: entrar 1s linear infinite ;
+    
+  }
+
+  @keyframes entrar{
+    0%{
+        left: -100%;
+    }
+    50%,
+    100%{
+        left: 100%;
+    }
+  }
+
+  .entrar span:nth-child(2){
+
+    top: -100%;
+    right: 0;
+    width: 4px;
+    height: 100%;
+    background: linear-gradient(180deg, transparent,  #ffd700);
+    animation: entrar2 1s linear infinite ;
+    animation-delay: .20s;
+  }
+
+  @keyframes entrar2{
+
+    0%{
+       top:-100%;
+    }
+    50%,
+    100%{
+
+        top: 100%;
+    }
+  }
+
+  .entrar span:nth-child(3){
+
+    bottom: 0;
+    right: -100%;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(270deg, transparent,  #ffd700);
+    animation: entrar3 1s linear infinite ;
+    animation-delay: .45s;
+  }
+
+  @keyframes entrar3{
+0%{
+            right: -100%;
+}
+50%,
+100%{
+          right: 100%;
+}
+
+  }
+
+
+  .entrar span:nth-child(4){
+    bottom: -100%;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: linear-gradient(26deg, transparent,  #ffd700);
+    animation: entrar4 1s linear infinite ;
+    animation-delay: .70s;
+    
+
+  }
+
+  @keyframes entrar4{
+
+    0%{
+        bottom: -100%;
+    }
+    50%,
+    100%{
+        bottom: 100%;
+    }
+  }
+
+
+  @media(max-width: 405px ){
+    .login{
+        width: 90%;
+    }
+  }
+
+
+  .voltarinicio{
+    position: absolute;
+    top: 22px;
+    font-size: 27px;
+    left: 42%;
+    letter-spacing: 2px;
+    color: #ffd700;
+    animation: levantarEAbaxar4 2s ease infinite alternate;
+ }
+ @keyframes levantarEAbaxar4 {
+    0% {
+        transform: translateY(0);
+    }
+    100% {
+        transform: translateY(-20px);
+    }
+}
+
+.mensagem-erro.error-text {
+  color: rgb(255, 0, 0); /* Ou qualquer outra cor desejada */
+}

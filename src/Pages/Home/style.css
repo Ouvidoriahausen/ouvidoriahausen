@@ -1,0 +1,166 @@
+*{
+    margin: 0;
+    border: 0;
+    box-sizing: border-box;
+}
+
+body{
+    background-color: #002b49;
+}
+
+.texto-ouvidoria {
+    font-size: 40px;
+   color: #e5dbd1;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    text-align: center;
+    position: relative;
+    top: -138px ;
+  }
+
+  /* a baixo está os style do A que vai dar acesso a pagina SAIBA MAIS  */
+  .saiba-mais{
+    letter-spacing: 3px;
+    color: orange;
+    position: absolute;
+    top: 610px;
+    left: 711px;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  }
+
+
+
+#orange-texto {
+    color: orange;
+  }
+
+  .contato {
+    position: absolute; /* Alterado para posição absoluta */
+    text-decoration: none;
+    display: inline-block;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    padding: 12px 20px;
+    background-color: black;
+    border: none;
+    border-radius: 5px;
+    color: #ffffff;
+    font-weight: 700;
+    top:75%; /* Centralize verticalmente */
+    left: 50%; /* Centralize horizontalmente */
+    transform: translate(-50%, -50%); /* Centralize horizontalmente */
+    transition: .5s;
+    overflow: hidden;
+    visibility: visible; /* Manter visível desde o início */
+  }
+
+  .contato-hidden {
+    visibility: hidden;
+  }
+
+
+  .contato:hover{
+
+    background-color:   #090909b7;
+    border-radius: 5px;
+    color: whitesmoke;
+    cursor: pointer;
+  }
+
+  .contato span{
+    display: block;
+    position: absolute;
+  }
+
+
+  .contato span:nth-child(1){
+
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, transparent,  #e04f39);
+    animation: entrar 1s linear infinite ;
+    
+  }
+
+  /* A baixo está toda a animação do botão "acessar"   */
+
+
+  @keyframes entrar{
+    0%{
+        left: -100%;
+    }
+    50%,
+    100%{
+        left: 100%;
+    }
+  }
+
+  .contato span:nth-child(2){
+
+    top: -100%;
+    right: 0;
+    width: 4px;
+    height: 100%;
+    background: linear-gradient(180deg, transparent,  #e04f39);
+    animation: entrar2 1s linear infinite ;
+    animation-delay: .20s;
+  }
+
+  @keyframes entrar2{
+
+    0%{
+       top:-100%;
+    }
+    50%,
+    100%{
+
+        top: 100%;
+    }
+  }
+
+  .contato span:nth-child(3){
+
+    bottom: 0;
+    right: -100%;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(270deg, transparent,  #e04f39);
+    animation: entrar3 1s linear infinite ;
+    animation-delay: .45s;
+  }
+
+  @keyframes entrar3{
+0%{
+            right: -100%;
+}
+50%,
+100%{
+          right: 100%;
+}
+
+  }
+
+
+  .contato span:nth-child(4){
+    bottom: -100%;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: linear-gradient(26deg, transparent,  #e04f39);
+    animation: entrar4 1s linear infinite ;
+    animation-delay: .50s;
+    
+
+  }
+
+  @keyframes entrar4{
+
+    0%{
+        bottom: -100%;
+    }
+    50%,
+    100%{
+        bottom: 100%;
+    }
+  }

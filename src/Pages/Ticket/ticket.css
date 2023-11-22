@@ -1,0 +1,211 @@
+*{
+    box-sizing: border-box;
+    margin: 0;
+    border: 0;
+}
+
+
+.formulario-ticket{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    background-color: rgba(116, 22, 116, 0.452);
+    width: 700px;
+    height: 580px;
+    border-radius: 7px;
+    border: solid 1px white;
+    padding: 10px 20px;
+    gap: 8px;
+}
+
+
+.formulario-ticket h1{
+    text-align: center;
+    color: whitesmoke;
+    margin: 14px 0;
+}
+
+.formulario-inputs{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    gap: 14px;
+}
+
+.input_titulo{
+    display: flex;
+    border-radius: 6px;
+    width: 100%;
+    height: 50px;
+    text-align: center;
+    font-size: 23px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.input_descricao {
+    border-radius: 8px;
+    height: 170px;
+    width: 100%;
+    resize: vertical; /* Permite a alteração vertical */
+    overflow-y: auto; /* Adiciona uma barra de rolagem se o conteúdo ultrapassar a área */
+    text-align: center; /* Alinha o texto à esquerda */
+    padding: 5px; /* Adiciona um espaço interno para o texto */
+    font-size: 20px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.dropzone {
+    border: 2px dashed gray;
+    border-radius: 8px;
+    height: 94px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    color: white;
+    font-size: 18px;
+}
+
+.dropzone p {
+    margin: 0;
+    text-align: center;
+}
+
+.botao-submit{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: blue;
+    color: white;
+    border-radius: 5px;
+    padding: 15px;
+    font-size: 20px;
+    width: 100%;
+}
+.botao-submit:hover{
+    cursor: pointer;
+    color: white;
+    background-color: green;
+}
+
+.image-preview,
+.video-preview {
+    flex: 0 0 auto; /* Impede que as imagens redimensionem */
+    width: 50px; /* Tamanho das prévias das imagens */
+    height: 50px; /* Tamanho das prévias das imagens */
+    object-fit: cover;
+    margin-right: 5px; /* Adiciona espaçamento entre as imagens */
+    border: 1px solid #ccc;
+}
+
+.thumbs-container {
+    display: flex;
+    flex-wrap: nowrap; /* Impede que as imagens quebrem para a próxima linha */
+    overflow-x: auto; /* Adiciona a barra de rolagem horizontal se necessário */
+    max-width: 100%; /* Define a largura máxima para que as imagens caibam dentro do contêiner */
+    margin-bottom: 10px; /* Adiciona um espaçamento na parte inferior */
+    margin-top: 10px; /* Adiciona um espaçamento na parte superior */
+    padding: 5px; /* Adiciona um preenchimento interno */
+    
+}
+
+.thumbs-container > div {
+    order: 1; /* Define o primeiro item para a primeira posição */
+}
+
+.btn-myTickets{
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+    padding: 20px;
+    cursor: pointer;
+    background-color: #0080ff;
+    color: white;
+    font-size: 20px;
+    border-radius: 8px;
+}
+.logout a{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    width: 100%;
+    color: white;
+    padding: 10px;
+    background-color: red;
+}
+
+/* Overlay */
+
+.overlay {
+    display: flex;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8); /* Faz a sobreposição preta com 50% de opacidade */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.overlay-content {
+    display: flex;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background-color: black; /* Fundo preto para a caixa de conteúdo */
+    width: 90%;
+    max-width: 800px;
+    height: 12rem;
+    padding: 0 20px;    
+    border-radius: 8px;
+    font-size: 22px;
+    color: whitesmoke; /* Cor do texto */
+    border: 1px solid #323232;
+}
+
+.ticket-container {
+    position: relative;
+}
+
+.close-button {
+    display: flex;
+    cursor: pointer;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    border: none;
+    font-size: 20px;
+    color: rgb(255, 255, 255); /* Define a cor do X como vermelho */
+    padding: 4px 10px;
+    border-radius: 4px;
+    background-color: red;
+}
+
+/* .close-button {
+    cursor: pointer;
+    border: none;
+    background: none;
+    font-size: 20px;
+    position: absolute;
+    top: 307px;
+    left: 68.5%;
+    right: 450px;
+    color: rgb(255, 255, 255);
+} */
+
+
+
+.mensagem-enviada {
+    color: green;
+    text-align: center;
+    margin-top: 10px;
+}

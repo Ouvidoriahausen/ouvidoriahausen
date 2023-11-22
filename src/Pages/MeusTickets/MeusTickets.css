@@ -1,0 +1,8 @@
+.newTicket{
+    display: flex;
+    font-size: 18px;
+    padding: 10px 20px;
+    border-radius: 4px;
+    background-color: #10f00c;
+    color: black;
+}

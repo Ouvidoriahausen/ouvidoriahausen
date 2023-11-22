@@ -1,9 +1,9 @@
 import './ticket.css';
 import React, { useCallback, useContext, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
-import { auth, db } from '../../services/connectionFirebase';
+import { auth, db, storage } from '../../services/connectionFirebase';
 import { addDoc, collection } from 'firebase/firestore';
-import { getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/storage"
+import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage"
 import { toast } from 'react-toastify';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../contexts/AuthContext';
@@ -23,7 +23,7 @@ function Ticket() {
 
     const { getRootProps, getInputProps } = useDropzone({
         onDrop,
-        accept: 'image/*,video/*' // Aceita tanto imagens quanto vídeos
+        accept: 'image/*' // Aceita só imagens (até o momento)
     });
 
     const closeOverlay = () => {
@@ -33,19 +33,18 @@ function Ticket() {
     async function handleSubmitTicket(e) {
         e.preventDefault()
 
-        const storage = getStorage()
         const currentUser = auth.currentUser;
         const ticketsCollection = collection(db, "Tickets")
 
-        if (currentUser && files) {
+        if (currentUser && files.length > 0) {
             for(const file of files){
 
                 // Gera um nome unico para cada arquivo, usando o id do usuario e a data atual
                 const fileName = `${currentUser.uid}_${Date.now()}_${file.name}`
 
                 const storageRef = ref(storage, `ticketFiles/${currentUser.uid}/${fileName}`)
-                const uploadTask = uploadBytesResumable(storageRef, files)
-    
+                const uploadTask = uploadBytesResumable(storageRef, file)
+                
                 uploadTask.on("state_changed",
                     (snapshot) => {
                         // Pode colocar alguma lógica aqui também
@@ -54,6 +53,7 @@ function Ticket() {
                         console.log("Erro no upload do arquivo", error)
                     },
                     async () => {
+                        
                         try {
                             // Pega o URL do arquivo dps do upload
                             const fileURL = await getDownloadURL(uploadTask.snapshot.ref)

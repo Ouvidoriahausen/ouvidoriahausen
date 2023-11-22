@@ -1,14 +1,16 @@
 import { collection, doc, getDoc, getDocs, query, updateDoc, where } from "firebase/firestore";
+import { getDownloadURL, getStorage, ref } from "firebase/storage"
 import { useContext, useEffect, useState } from "react"
-import { db } from "../../services/connectionFirebase";
+import { db, storage } from "../../services/connectionFirebase";
 import { AuthContext } from "../../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 
+
 export default function Admin() {
 
+    const { user } = useContext(AuthContext)
     const [TickNaoRespondidos, setTickNaoRespondidos] = useState([])
     const [isEmpty, setIsEmpty] = useState(false);
-    const { user } = useContext(AuthContext)
     const [userAdmin, setUserAdmin] = useState(false)
     const navigate = useNavigate()
 
@@ -22,10 +24,10 @@ export default function Admin() {
                     if (userType === "admin") {
                         // Se type for "admin"
                         setUserAdmin(true)
-                        console.log("Usuário é um admin ou não tem um tipo definido.");
                     } else {
                         // Se não for um admin, redirecionar para a página MeusTickets
                         setUserAdmin(false)
+                        console.log("Usuário não é um admin ou não tem um tipo definido.");
                         navigate("/MeusTickets");
                     }
                 } else {
@@ -44,19 +46,29 @@ export default function Admin() {
             const q = query(collection(db, "Tickets"), where("resposta", "==", ""));
             try {
                 const querySnapshot = await getDocs(q);
+
                 if (!querySnapshot.empty) {
-                    let tickets = [];
-                    querySnapshot.forEach((doc) => {
-                        tickets.push({
+
+                    const promises = querySnapshot.docs.map(async (doc) => {
+                        const fileRef = ref(storage, doc.data().fileURL);
+                        const fileURL = await getDownloadURL(fileRef);
+                        console.log(fileURL)
+
+                        return {
                             id: doc.id,
                             titulo: doc.data().titulo,
                             descricao: doc.data().descricao,
                             resposta: doc.data().resposta,
-                            // Adicione aqui os campos de arquivo, se aplicável
-                        });
+                            fileURL: fileURL,
+                        };
+
                     });
-                    setTickNaoRespondidos(tickets);
+
+                    
+                    const ticketDataWithImages = await Promise.all(promises);
+                    setTickNaoRespondidos(ticketDataWithImages);
                     setIsEmpty(false)
+
                 } else {
                     setIsEmpty(true);
                 }
@@ -67,6 +79,7 @@ export default function Admin() {
 
         loadTicketsNaoRespondidos();
     }, []);
+
 
     const handleRespond = async (ticketID, resposta) => {
         try {
@@ -91,6 +104,7 @@ export default function Admin() {
                         placeholder="Resposta"
                         onChange={(e) => handleRespond(ticket.id, e.target.value)}
                     />
+                    <img src={ticket.fileURL} width={100} alt='Ticket Image' />
                 </div>
             ))}
             {isEmpty && <p>Nenhum ticket encontrado.</p>}

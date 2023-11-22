@@ -5,7 +5,7 @@
 }
 
 
-.formulario-ticket{
+.formulario-chamado{
     display: flex;
     justify-content: space-between;
     flex-direction: column;
@@ -19,7 +19,7 @@
 }
 
 
-.formulario-ticket h1{
+.formulario-chamado h1{
     text-align: center;
     color: whitesmoke;
     margin: 14px 0;
@@ -115,7 +115,7 @@
     order: 1; /* Define o primeiro item para a primeira posição */
 }
 
-.btn-myTickets{
+.btn-mychamados{
     display: flex;
     width: 100%;
     align-items: center;
@@ -172,7 +172,7 @@
     border: 1px solid #323232;
 }
 
-.ticket-container {
+.chamado-container {
     position: relative;
 }
 

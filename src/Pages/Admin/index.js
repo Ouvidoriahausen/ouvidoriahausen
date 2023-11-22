@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 export default function Admin() {
 
     const { user } = useContext(AuthContext)
-    const [TickNaoRespondidos, setTickNaoRespondidos] = useState([])
+    const [ChamadoNaoRespondidos, setChamadoNaoRespondidos] = useState([])
     const [isEmpty, setIsEmpty] = useState(false);
     const [userAdmin, setUserAdmin] = useState(false)
     const navigate = useNavigate()
@@ -25,10 +25,10 @@ export default function Admin() {
                         // Se type for "admin"
                         setUserAdmin(true)
                     } else {
-                        // Se não for um admin, redirecionar para a página MeusTickets
+                        // Se não for um admin, redirecionar para a página Meus Chamados
                         setUserAdmin(false)
                         console.log("Usuário não é um admin ou não tem um tipo definido.");
-                        navigate("/MeusTickets");
+                        navigate("/meus-chamados");
                     }
                 } else {
                     console.log("Documento do usuário não encontrado no Firestore.");
@@ -42,72 +42,88 @@ export default function Admin() {
     }, [user.uid]);
 
     useEffect(() => {
-        async function loadTicketsNaoRespondidos() {
-            const q = query(collection(db, "Tickets"), where("resposta", "==", ""));
+        async function loadChamadosNaoRespondidos() {
             try {
+                const q = query(collection(db, "chamados"), where("resposta", "==", ""));
                 const querySnapshot = await getDocs(q);
 
                 if (!querySnapshot.empty) {
 
                     const promises = querySnapshot.docs.map(async (doc) => {
-                        const fileRef = ref(storage, doc.data().fileURL);
-                        const fileURL = await getDownloadURL(fileRef);
-                        console.log(fileURL)
+                        
+                        // Filtro e promises do array de arquivos(fileURLs)
+                        const fileURLs = doc.data().fileURLs || []
+                        const fileRefs = fileURLs.map((url) => ref(storage, url));
+                        const fileURLsPromises = fileRefs.map(async (fileRef) => {
+                            try {
+                                const url = await getDownloadURL(fileRef);
+                                return url;
+                            } catch (error) {
+                                console.error('Erro ao obter URL do arquivo:', error);
+                                return null;
+                            }
+                        });
+
+                        const resolvedFileURLs = await Promise.all(fileURLsPromises)
 
                         return {
                             id: doc.id,
                             titulo: doc.data().titulo,
                             descricao: doc.data().descricao,
                             resposta: doc.data().resposta,
-                            fileURL: fileURL,
+                            fileURLs: resolvedFileURLs.filter((url) => url !== null),
                         };
 
                     });
 
-                    
-                    const ticketDataWithImages = await Promise.all(promises);
-                    setTickNaoRespondidos(ticketDataWithImages);
+
+                    const chamadoDataWithImages = await Promise.all(promises);
+                    setChamadoNaoRespondidos(chamadoDataWithImages);
                     setIsEmpty(false)
 
                 } else {
                     setIsEmpty(true);
                 }
             } catch (error) {
-                console.error("Erro ao carregar tickets:", error);
+                console.error("Erro ao carregar chamados:", error);
             }
         }
 
-        loadTicketsNaoRespondidos();
+        loadChamadosNaoRespondidos();
     }, []);
 
 
-    const handleRespond = async (ticketID, resposta) => {
+    const handleRespond = async (chamadoID, resposta) => {
         try {
-            await updateDoc(doc(db, "Tickets", ticketID, { resposta }))
-            setTickNaoRespondidos((prevTickets) =>
-                prevTickets.filter((ticket) => ticket.id != ticketID)
+            await updateDoc(doc(db, "chamados", chamadoID, { resposta }))
+            setChamadoNaoRespondidos((prevChamados) =>
+                prevChamados.filter((chamado) => chamado.id != chamadoID)
             )
         } catch (error) {
-            console.error("Erro ao responder ticket: ", error)
+            console.error("Erro ao responder chamado: ", error)
         }
     }
 
     return (
         <div>
-            {userAdmin && <h2>Tickets Não Respondidos</h2>}
-            {TickNaoRespondidos.map((ticket) => (
-                <div key={ticket.id}>
-                    <h3>{ticket.titulo}</h3>
-                    <p>{ticket.descricao}</p>
+            {userAdmin && <h2>Chamados Não Respondidos</h2>}
+            {ChamadoNaoRespondidos.map((chamado) => (
+                <div key={chamado.id}>
+                    <h3>{chamado.titulo}</h3>
+                    <p>{chamado.descricao}</p>
                     <input
                         type="text"
                         placeholder="Resposta"
-                        onChange={(e) => handleRespond(ticket.id, e.target.value)}
+                        onChange={(e) => handleRespond(chamado.id, e.target.value)}
                     />
-                    <img src={ticket.fileURL} width={100} alt='Ticket Image' />
+                    {chamado.fileURLs && chamado.fileURLs.map((image, index) => (
+                        <div key={index}>
+                            <img src={image} width={100} alt='Chamado Image' />
+                        </div>
+                    ))}
                 </div>
             ))}
-            {isEmpty && <p>Nenhum ticket encontrado.</p>}
+            {isEmpty && <p>Nenhum chamado encontrado.</p>}
         </div>
     )
 }

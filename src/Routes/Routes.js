@@ -5,9 +5,9 @@ import Home from '../Pages/Home';
 import Login from '../Pages/Login';
 import Loginesenha from '../Pages/Loginesenha';
 import Cadastrar from '../Pages/Cadastrar';
-import Ticket from '../Pages/Ticket';
 import Admin from '../Pages/Admin';
-import MeusTickets from "../Pages/MeusTickets"
+import NovoChamado from '../Pages/NovoChamado';
+import MeusChamados from '../Pages/MeusChamados';
 
 import Private from "./Private"
 
@@ -18,9 +18,9 @@ function RoutesApp() {
       <Route path="/login" element={<Login />} />
       <Route path="/loginesenha" element={<Loginesenha />} />
       <Route path="/cadastrar" element={<Cadastrar />} />
-      <Route path="/Ticket" element={<Private><Ticket /></Private>} />
-      <Route path="/Admin" element={<Private><Admin /></Private>} />
-      <Route path="/MeusTickets" element={<Private><MeusTickets /></Private>} />
+      <Route path="/novo-chamado" element={<Private><NovoChamado /></Private>} />
+      <Route path="/admin" element={<Private><Admin /></Private>} />
+      <Route path="/meus-chamados" element={<Private><MeusChamados /></Private>} />
     </Routes>
   );
 }

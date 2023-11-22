@@ -1,59 +1,58 @@
+import "./meusChamados.css"
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { useContext, useEffect, useState } from "react"
 import { db } from "../../services/connectionFirebase";
 import { AuthContext } from "../../contexts/AuthContext";
 import { Link } from "react-router-dom";
-import "./MeusTickets.css"
 
-export default function MeusTickets() {
+export default function MeusChamados() {
 
     const { user } = useContext(AuthContext);
-    const [userTickets, setUserTickets] = useState([]);
+    const [userChamados, setUserChamados] = useState([]);
     const [isEmpty, setIsEmpty] = useState(false);
 
     useEffect(() => {
-        async function loadTickets() {
-            const q = query(collection(db, "Tickets"), where("userID", "==", user.uid));
+        async function loadChamados() {
+            const q = query(collection(db, "chamados"), where("userID", "==", user.uid));
             try {
                 const querySnapshot = await getDocs(q);
                 if (!querySnapshot.empty) {
-                    let tickets = [];
+                    let chamados = [];
                     querySnapshot.forEach((doc) => {
-                        tickets.push({
+                        chamados.push({
                             id: doc.id,
                             titulo: doc.data().titulo,
                             descricao: doc.data().descricao,
                             resposta: doc.data().resposta,
-                            // Adicione aqui os campos de arquivo, se aplicável
                         });
                     });
-                    setUserTickets(tickets);
+                    setUserChamados(chamados);
                     setIsEmpty(false)
                 } else {
                     setIsEmpty(true);
                 }
             } catch (error) {
-                console.error("Erro ao carregar tickets:", error);
+                console.error("Erro ao carregar chamados:", error);
             }
         }
 
-        loadTickets();
+        loadChamados();
     }, [user.uid]);
 
     return (
         <div>
-            <h2>Meus Tickets</h2>
-            {userTickets.map((ticket) => (
-                <div key={ticket.id}>
-                    <h3>{ticket.titulo}</h3>
-                    <p>{ticket.descricao}</p>
-                    {ticket.resposta && <p>Resposta: {ticket.resposta}</p>}
+            <h2>Meus Chamados</h2>
+            {userChamados.map((chamado) => (
+                <div key={chamado.id}>
+                    <h3>{chamado.titulo}</h3>
+                    <p>{chamado.descricao}</p>
+                    {chamado.resposta && <p>Resposta: {chamado.resposta}</p>}
                 </div>
             ))}
             {isEmpty && <p>Nenhum ticket encontrado.</p>}
 
-            <Link to="/ticket" className="newTicket">
-                Criar Novo Ticket
+            <Link to="/novo-chamado" className="novoChamado">
+                Criar Novo Chamado
             </Link>
         </div>
     )

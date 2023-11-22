@@ -1,4 +1,4 @@
-import './ticket.css';
+import './novoChamado.css';
 import React, { useCallback, useContext, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { auth, db, storage } from '../../services/connectionFirebase';
@@ -8,7 +8,7 @@ import { toast } from 'react-toastify';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../contexts/AuthContext';
 
-function Ticket() {
+export default function NovoChamado() {
     const [titulo, setTitulo] = useState('')
     const [descricao, setDescricao] = useState('')
     const [files, setFiles] = useState([]);
@@ -30,21 +30,22 @@ function Ticket() {
         setDisplayOverlay(false);
     };
 
-    async function handleSubmitTicket(e) {
+    async function handleSubmitChamado(e) {
         e.preventDefault()
 
         const currentUser = auth.currentUser;
-        const ticketsCollection = collection(db, "Tickets")
+        const chamadosCollection = collection(db, "chamados")
+        const fileURLs = []
 
         if (currentUser && files.length > 0) {
-            for(const file of files){
+            for (const file of files) {
 
                 // Gera um nome unico para cada arquivo, usando o id do usuario e a data atual
                 const fileName = `${currentUser.uid}_${Date.now()}_${file.name}`
 
-                const storageRef = ref(storage, `ticketFiles/${currentUser.uid}/${fileName}`)
+                const storageRef = ref(storage, `chamadoFiles/${currentUser.uid}/${fileName}`)
                 const uploadTask = uploadBytesResumable(storageRef, file)
-                
+
                 uploadTask.on("state_changed",
                     (snapshot) => {
                         // Pode colocar alguma lógica aqui também
@@ -53,28 +54,32 @@ function Ticket() {
                         console.log("Erro no upload do arquivo", error)
                     },
                     async () => {
-                        
+
                         try {
                             // Pega o URL do arquivo dps do upload
                             const fileURL = await getDownloadURL(uploadTask.snapshot.ref)
-    
-                            await addDoc(ticketsCollection, {
-                                titulo: titulo,
-                                descricao: descricao,
-                                fileURL,
-                                userID: currentUser.uid,
-                                resposta: "",
-                            })
+                            fileURLs.push(fileURL)
 
-                            toast.success("Ticket Enviado com sucesso!")
-    
+                            if (fileURLs.length === files.length) {
+                                await addDoc(chamadosCollection, {
+                                    titulo: titulo,
+                                    descricao: descricao,
+                                    fileURLs: fileURLs,
+                                    userID: currentUser.uid,
+                                    resposta: "",
+                                })
+                            }
+
+                            toast.success("Chamado Enviado com sucesso!")
+
                             // Limpa os campos de input
                             setTitulo("")
                             setDescricao("")
                             setFiles([])
+
                         } catch (error) {
-                            toast.error("Erro ao adicionar o ticket!!")
-                            console.log("Erro ao adicionar o Ticket: ", error)
+                            toast.error("Erro ao adicionar o chamado!!")
+                            console.log("Erro ao adicionar o Chamado: ", error)
                         }
                     }
                 )
@@ -83,19 +88,19 @@ function Ticket() {
     }
 
     return (
-        <div className='ticket-container'>
+        <div className='chamado-container'>
             {displayOverlay && (
                 <div className='overlay'>
                     <div className='overlay-content'>
-                        <p>Sinta-se seguro ao fazer sua denúncia, você está totalmente anônimo e protegido.</p>
+                        <p>Sinta-se seguro ao fazer sua demanda, você está totalmente anônimo e protegido.</p>
                         <button onClick={closeOverlay} className='close-button'>x</button>
                     </div>
                 </div>
             )}
 
-            <form className='formulario-ticket' onSubmit={handleSubmitTicket}>
+            <form className='formulario-chamado' onSubmit={handleSubmitChamado}>
 
-                <h1>Formulário de denúncia</h1>
+                <h1>Nova Demanda</h1>
 
                 <div className="formulario-inputs">
                     <input
@@ -131,14 +136,12 @@ function Ticket() {
             </form>
 
             <div>
-                <Link className='btn-myTickets' to="/MeusTickets">Acessar Meus Tickets</Link>
+                <Link className='btn-mychamados' to="/MeusChamados">Acessar Meus Chamados</Link>
             </div>
 
             <div className='logout'>
-                <Link className='logout-btn' onClick={logout} to="/MeusTickets">Sair</Link>
+                <Link className='logout-btn' onClick={logout} to="/MeusChamados">Sair</Link>
             </div>
         </div>
     );
 }
-
-export default Ticket;

@@ -7,6 +7,8 @@ import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage"
 import { toast } from 'react-toastify';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../contexts/AuthContext';
+import { Content } from '../../components/layout/Content';
+import { Box, Button, TextField } from '@mui/material';
 
 export default function NovoChamado() {
     const [titulo, setTitulo] = useState('')
@@ -88,7 +90,7 @@ export default function NovoChamado() {
     }
 
     return (
-        <div className='chamado-container'>
+        <Content className="new-chamado-container">
             {displayOverlay && (
                 <div className='overlay'>
                     <div className='overlay-content'>
@@ -98,20 +100,26 @@ export default function NovoChamado() {
                 </div>
             )}
 
-            <form className='formulario-chamado' onSubmit={handleSubmitChamado}>
+            <Box component="form" className='formulario-chamado' onSubmit={handleSubmitChamado}>
 
-                <h1>Nova Demanda</h1>
+                <h1>Novo chamado</h1>
 
                 <div className="formulario-inputs">
-                    <input
+                    <TextField
                         value={titulo}
                         onChange={(e) => setTitulo(e.target.value)}
-                        className='input_titulo' type='text' placeholder='Digite o título da sua denúncia' />
+                        type='text'
+                        autoComplete="false"
+                        label='Digite o título da sua denúncia' />
 
-                    <textarea
+                    <TextField
                         value={descricao}
+                        multiline
+                        autoComplete="false"
+                        maxRows={45}
+                        minRows={5}
                         onChange={(e) => setDescricao(e.target.value)}
-                        className='input_descricao' placeholder='Digite aqui a descrição da sua denúncia'></textarea>
+                        label='Digite aqui a descrição da sua denúncia' />
 
                     <div {...getRootProps()} className='dropzone'>
 
@@ -132,16 +140,8 @@ export default function NovoChamado() {
                         </aside>
                     </div>
                 </div>
-                <button className='botao-submit' type='submit'>Enviar</button>
-            </form>
-
-            <div>
-                <Link className='btn-mychamados' to="/meus-chamados">Acessar Meus Chamados</Link>
-            </div>
-
-            <div className='logout'>
-                <Link className='logout-btn' onClick={logout} to="/">Sair</Link>
-            </div>
-        </div>
+                <Button fullWidth size="large" variant="contained" className="btn-enviar" type='submit'>Enviar</Button>
+            </Box>
+        </Content>
     );
 }

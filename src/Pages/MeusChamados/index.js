@@ -4,6 +4,7 @@ import { useContext, useEffect, useState } from "react"
 import { db } from "../../services/connectionFirebase";
 import { AuthContext } from "../../contexts/AuthContext";
 import { Link } from "react-router-dom";
+import { Content } from "../../components/layout/Content";
 
 export default function MeusChamados() {
 
@@ -40,7 +41,7 @@ export default function MeusChamados() {
     }, [user.uid]);
 
     return (
-        <div>
+        <Content>
             <h2>Meus Chamados</h2>
             {userChamados.map((chamado) => (
                 <div key={chamado.id}>
@@ -50,10 +51,6 @@ export default function MeusChamados() {
                 </div>
             ))}
             {isEmpty && <p>Nenhum ticket encontrado.</p>}
-
-            <Link to="/novo-chamado" className="novoChamado">
-                Criar Novo Chamado
-            </Link>
-        </div>
+        </Content>
     )
 }

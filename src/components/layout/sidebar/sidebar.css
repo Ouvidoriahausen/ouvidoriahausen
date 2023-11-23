@@ -9,16 +9,19 @@
     transition: .3s;
     z-index: 99;
 }
-
+.navbrand{
+    padding: 20px;
+}
 .navbrand img {
     width: 250px;
 }
 
 .navbar{
+    position: relative;
     display: flex;
     flex-direction: column;
-    padding: 20px;
     gap: 50px;
+    height: 100%;
 }
 .nav .nav-links{
     display: flex;
@@ -26,12 +29,38 @@
     font-size: 20px;
     gap: 8px;
 }
-.nav-links a{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 40px;
+.nav-links .MuiButton-text{
     color: var(--white);
+    transition: .3s;
+}
+.nav-links .MuiButton-text:hover{
     background-color: var(--orange);
-    border-radius: 4px;
+}
+
+.sidebar-title{
+    text-align: start;
+    color: var(--white);
+    margin-bottom: 12px;
+    margin-left: 24px;
+}
+.nav-logout{
+    display: flex;
+    position: absolute;
+    bottom: 20px;
+    width: 100%;
+    align-items: center;
+    justify-content: space-around;
+    color: var(--white);
+}
+.nav-logout div{
+    display: flex;
+    gap: 8px;
+}
+.nav-logout span{
+    font-size: 20px;
+    color: var(--white);
+    margin-right: 14px;
+}
+.nav-logout span::first-letter{
+    text-transform: uppercase;
 }

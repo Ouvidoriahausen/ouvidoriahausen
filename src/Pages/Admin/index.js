@@ -4,8 +4,8 @@ import { useContext, useEffect, useState } from "react"
 import { db, storage } from "../../services/connectionFirebase";
 import { AuthContext } from "../../contexts/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
-import { SideBar } from "../../components/layout/sidebar";
 import { Content } from "../../components/layout/Content";
+import { SideBarAdmin } from "../../components/layout/sidebar";
 
 
 export default function Admin() {
@@ -108,7 +108,7 @@ export default function Admin() {
 
     return (
         <>
-            <SideBar />
+            <SideBarAdmin />
             <Content>
                 {userAdmin && <h2>Chamados Não Respondidos</h2>}
                 {ChamadoNaoRespondidos.map((chamado) => (

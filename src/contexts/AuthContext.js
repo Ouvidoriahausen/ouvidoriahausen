@@ -13,6 +13,7 @@ export default function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [loadingAuth, setLoadingAuth] = useState(false)
   const [loading, setLoading] = useState(true)
+  const [userAdmin, setUserAdmin] = useState(false)
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -55,17 +56,8 @@ export default function AuthProvider({ children }) {
         navigate("/meus-chamados")
 
       })
-      .catch((error) => {
-        const errorCode = error.code
-
-        switch (errorCode) {
-          case "auth/wrong-password":
-            toast.error("Senha incorreta!")
-            break;
-          case "auth/user-not-found":
-            toast.error("Usuário não encontrado!")
-            break;
-        }
+      .catch(() => {
+        toast.error("Erro ao fazer login, confira todos os dados!!")
         setLoadingAuth(false)
       })
   }
@@ -94,7 +86,7 @@ export default function AuthProvider({ children }) {
             setUser(data)
             storageUser(data)
             setLoadingAuth(false)
-            
+
             navigate("/meus-chamados")
             toast.success("Seja bem vindo ao sistema :D")
           })

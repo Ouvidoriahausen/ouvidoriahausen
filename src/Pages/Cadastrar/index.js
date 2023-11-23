@@ -3,13 +3,11 @@ import React, { useState, useEffect, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../contexts/AuthContext';
 import { toast } from 'react-toastify';
+import { Box, Button, TextField } from '@mui/material';
 
-function Cadastrar() {
-  const [mensagemUsuario, setMensagemUsuario] = useState('');
-  const [mensagemSenha, setMensagemSenha] = useState('');
-
+export default function Cadastrar() {
   const [nomeUsuario, setNomeUsuario] = useState("")
-  const email = `${nomeUsuario}@seuapp.com`;
+  const email = `${nomeUsuario}@hausen.com`;
   const [senha, setSenha] = useState("")
 
   const { Cadastrar, signed } = useContext(AuthContext)
@@ -21,14 +19,6 @@ function Cadastrar() {
     }
   }, [signed]);
 
-
-  const mostrarMensagemUsuario = () => {
-    setMensagemUsuario('*Lembre-se de guardar seu usuário e senha para logins futuros');
-  };
-
-  const mostrarMensagemSenha = () => {
-    setMensagemSenha('*Lembre-se de guardar seu usuário e senha para logins futuros');
-  };
 
   async function handleRegister(e) {
     e.preventDefault()
@@ -42,55 +32,46 @@ function Cadastrar() {
   }
 
   return (
-    <div>
-      <Link to="/" className="voltarinicio">
-        Voltar para home
-      </Link>
+    <div className="container-center">
+      <Box className="form-cadastro" component="form" onSubmit={handleRegister}>
+        <h2>Faça seu cadastro</h2>
 
-      <form className="Cadastro" onSubmit={handleRegister}>
-        <h2>Cadastre-se</h2>
+        <TextField
+          type="text"
+          label="Nome de usuário"
+          required
+          variant="standard"
+          value={nomeUsuario}
+          fullWidth
+          onChange={(e) => setNomeUsuario(e.target.value)}
+        />
 
-        <div className="box">
-          <label htmlFor="nome">Digite seu usuário</label>
-          <input
-            type="text"
-            name="usuario"
-            required
-            maxLength="15"
-            onFocus={mostrarMensagemUsuario}
-            onBlur={() => setMensagemUsuario('')}
-            value={nomeUsuario}
-            onChange={(e) => setNomeUsuario(e.target.value)}
-          />
-          <p className="mensagem">{mensagemUsuario}</p>
+        <TextField
+          type="text"
+          label="Seu E-mail"
+          disabled
+          variant="standard"
+          value={email}
+          fullWidth
+          onChange={(e) => setNomeUsuario(e.target.value)}
+        />
+
+        <TextField
+          label="Senha"
+          type="password"
+          variant="standard"
+          required
+          value={senha}
+          fullWidth
+          onChange={(e) => setSenha(e.target.value)}
+        />
+
+        <Button type="submit" className="cadastrar-btn" variant='contained'>Cadastrar</Button>
+
+        <div className="noLoginContainer">
+          <span>Já tem uma conta ? <Link to="/login" className="noLogin">Faça login</Link></span>
         </div>
-
-        <div className="box">
-          <label htmlFor="senha">Digite sua senha</label>
-          <input
-            type="password"
-            name="senha"
-            required
-            maxLength="13"
-            onFocus={mostrarMensagemSenha}
-            onBlur={() => setMensagemSenha('')}
-            value={senha}
-            onChange={(e) => setSenha(e.target.value)}
-          />
-          <p className="mensagem">{mensagemSenha}</p>
-        </div>
-
-        <button type="submit" className="cadastrar">
-          <span></span>
-          <span></span>
-          <span></span>
-          <span></span>
-          CADASTRAR
-        </button>
-
-      </form>
+      </Box>
     </div>
   );
 }
-
-export default Cadastrar;

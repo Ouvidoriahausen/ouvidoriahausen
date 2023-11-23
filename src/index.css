@@ -1,7 +1,8 @@
-:root{
+:root {
   --orange: #e95525;
+  --dark-blue: #002B49;
+  --white: #fff;
 }
-
 
 * {
   margin: 0;
@@ -14,11 +15,23 @@ body {
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #002b49;
 }
-a{
+
+a {
   text-decoration: none;
 }
-button{
+
+button {
   border: none;
+}
+
+.container-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 50px;
+  min-height: 100vh;
+  color: white;
+  background-color: var(--dark-blue);
 }

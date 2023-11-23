@@ -1,13 +1,14 @@
 import './home.css';
 import { Link } from 'react-router-dom';
-import imagemOuvidoria from '../../assets/ouvidoriaa.png';
+import imagemOuvidoria from '../../assets/ouvidoria.png';
+import { Button } from '@mui/material';
 
 function Home() {
   const prefix = "Bem vindo(a) a ouvidoria do grupo ";
   const name = "Hausen";
 
   return (
-    <div className="container">
+    <div className="container-center">
       <h1 className="texto-ouvidoria">
         {prefix}
         <span>{name}</span>
@@ -16,18 +17,14 @@ function Home() {
       <img src={imagemOuvidoria} alt="Imagem da Ouvidoria" />
 
       <div className="home-btns">
-        <Link className="acessar login-btn" to="/login">
-          Acessar
+        <Link to="/login">
+          <Button size='large' variant='contained'>Acessar</Button>
         </Link>
-
-        <Link className='acessar cadastro-btn' to="/cadastrar">
-          Ou faça seu cadastro
+        
+        <Link className="saiba-mais" to="#">
+          Saiba mais
         </Link>
-
       </div>
-      <Link className="saiba-mais" href="#" target="_blank">
-        Saiba mais
-      </Link>
 
     </div>
   );

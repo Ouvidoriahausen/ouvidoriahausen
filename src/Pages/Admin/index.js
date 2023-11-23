@@ -1,9 +1,11 @@
 import { collection, doc, getDoc, getDocs, query, updateDoc, where } from "firebase/firestore";
-import { getDownloadURL, getStorage, ref } from "firebase/storage"
+import { getDownloadURL, ref } from "firebase/storage"
 import { useContext, useEffect, useState } from "react"
 import { db, storage } from "../../services/connectionFirebase";
 import { AuthContext } from "../../contexts/AuthContext";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { SideBar } from "../../components/layout/sidebar";
+import { Content } from "../../components/layout/Content";
 
 
 export default function Admin() {
@@ -50,7 +52,7 @@ export default function Admin() {
                 if (!querySnapshot.empty) {
 
                     const promises = querySnapshot.docs.map(async (doc) => {
-                        
+
                         // Filtro e promises do array de arquivos(fileURLs)
                         const fileURLs = doc.data().fileURLs || []
                         const fileRefs = fileURLs.map((url) => ref(storage, url));
@@ -105,25 +107,29 @@ export default function Admin() {
     }
 
     return (
-        <div>
-            {userAdmin && <h2>Chamados Não Respondidos</h2>}
-            {ChamadoNaoRespondidos.map((chamado) => (
-                <div key={chamado.id}>
-                    <h3>{chamado.titulo}</h3>
-                    <p>{chamado.descricao}</p>
-                    <input
-                        type="text"
-                        placeholder="Resposta"
-                        onChange={(e) => handleRespond(chamado.id, e.target.value)}
-                    />
-                    {chamado.fileURLs && chamado.fileURLs.map((image, index) => (
-                        <div key={index}>
-                            <img src={image} width={100} alt='Chamado Image' />
-                        </div>
-                    ))}
-                </div>
-            ))}
-            {isEmpty && <p>Nenhum chamado encontrado.</p>}
-        </div>
+        <>
+            <SideBar />
+            <Content>
+                {userAdmin && <h2>Chamados Não Respondidos</h2>}
+                {ChamadoNaoRespondidos.map((chamado) => (
+                    <div key={chamado.id}>
+                        <h3>{chamado.titulo}</h3>
+                        <p>{chamado.descricao}</p>
+                        <input
+                            type="text"
+                            placeholder="Resposta"
+                            onChange={(e) => handleRespond(chamado.id, e.target.value)}
+                        />
+                        {chamado.fileURLs && chamado.fileURLs.map((image, index) => (
+                            <div key={index}>
+                                <img src={image} width={100} alt='Chamado Image' />
+                            </div>
+                        ))}
+                    </div>
+                ))}
+                {isEmpty && <p>Nenhum chamado encontrado.</p>}
+                <Link to="/novo-chamado">Testar chamados</Link>
+            </Content>
+        </>
     )
 }

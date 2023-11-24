@@ -6,8 +6,9 @@ import { AuthContext, LOCAL_STORAGE_KEY } from "../../../contexts/AuthContext"
 import { useContext } from "react"
 
 // Icons
-import { Add, ConfirmationNumber, Done, Grade, Logout, MoreHoriz, Person } from '@mui/icons-material';
-
+import { Done, Grade, Logout, MoreHoriz, Person } from '@mui/icons-material';
+import { PiTicket } from "react-icons/pi";
+import { FiPlus } from "react-icons/fi"
 
 // Sidebar do usuário
 export function SideBar() {
@@ -33,7 +34,7 @@ export function SideBar() {
                     <section className="nav-links">
                         <Link to="/meus-chamados">
                             <Button size="large" fullWidth>
-                                <ConfirmationNumber />
+                                <PiTicket size={30} />
                                 Meus Chamados
                             </Button>
                         </Link>
@@ -41,8 +42,8 @@ export function SideBar() {
 
                         <Link to="/novo-chamado">
                             <Button size="large" fullWidth>
-                                <Add />
-                                Criar novo Chamado
+                                <FiPlus size={30} />
+                                Novo Chamado
                             </Button>
                         </Link>
                     </section>

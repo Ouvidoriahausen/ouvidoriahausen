@@ -109,26 +109,49 @@ export default function Admin() {
     return (
         <>
             <SideBarAdmin />
-            <Content>
-                {userAdmin && <h2>Chamados Não Respondidos</h2>}
-                {ChamadoNaoRespondidos.map((chamado) => (
-                    <div key={chamado.id}>
-                        <h3>{chamado.titulo}</h3>
-                        <p>{chamado.descricao}</p>
-                        <input
-                            type="text"
-                            placeholder="Resposta"
-                            onChange={(e) => handleRespond(chamado.id, e.target.value)}
-                        />
-                        {chamado.fileURLs && chamado.fileURLs.map((image, index) => (
-                            <div key={index}>
-                                <img src={image} width={100} alt='Chamado Image' />
+            {/* <Content className="chamados-container">
+                <Title>Meus Chamados</Title>
+                <section className="cards-chamados-container">
+                    {userChamados.map((chamado) => (
+                        <div style={chamado.resposta ? answered : notAnswered} className="card-chamado" key={chamado.id}>
+                            <div>
+                                <h2>{chamado.titulo}</h2>
+                                <p>Descrição: <strong className="strong">{chamado.descricao}</strong></p>
                             </div>
-                        ))}
-                    </div>
-                ))}
+
+                            <div style={chamado.resposta ? answered : notAnswered} className="card-resposta">
+                                {chamado.resposta ?
+                                    <p>Resposta: <strong>{chamado.resposta}</strong></p>
+                                    :
+                                    <p>Nenhuma resposta encontrada.</p>
+                                }
+                            </div>
+                        </div>
+                    ))}
+                </section>
+                {isEmpty && <p>Nenhum ticket encontrado.</p>}
+            </Content> */}
+
+            <Content className="chamados-container">
+                <section className="cards-chamados-container">
+                    {ChamadoNaoRespondidos.map((chamado) => (
+                        <div key={chamado.id}>
+                            <h3>{chamado.titulo}</h3>
+                            <p>{chamado.descricao}</p>
+                            <input
+                                type="text"
+                                placeholder="Resposta"
+                                onChange={(e) => handleRespond(chamado.id, e.target.value)}
+                            />
+                            {chamado.fileURLs && chamado.fileURLs.map((image, index) => (
+                                <div key={index}>
+                                    <img src={image} width={100} alt='Chamado Image' />
+                                </div>
+                            ))}
+                        </div>
+                    ))}
+                </section>
                 {isEmpty && <p>Nenhum chamado encontrado.</p>}
-                <Link to="/novo-chamado">Testar chamados</Link>
             </Content>
         </>
     )

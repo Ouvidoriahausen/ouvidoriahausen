@@ -2,7 +2,7 @@ import './novoChamado.css';
 import { useCallback, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { auth, db, storage } from '../../services/connectionFirebase';
-import { addDoc, collection } from 'firebase/firestore';
+import { addDoc, collection, getDocs, limit, orderBy, query } from 'firebase/firestore';
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage"
 import { toast } from 'react-toastify';
 import { Content } from '../../components/layout/Content';
@@ -89,6 +89,29 @@ export default function NovoChamado() {
 
         const currentUser = auth.currentUser;
 
+        // Criar ID personalizado para o chamado
+        const q = query(chamadosCollection, orderBy('newID', 'desc'), limit(1));
+
+        const querySnapshot = await getDocs(q);
+        let ultimoNumero = 0;
+
+        if (!querySnapshot.empty) {
+            querySnapshot.forEach((doc) => {
+                // Obtém o último número do último chamado existente
+                const ultimoChamado = doc.data();
+                const ultimoId = ultimoChamado.newID;
+                const ultimoNumeroString = ultimoId.split('-')[1];
+                ultimoNumero = parseInt(ultimoNumeroString);
+            });
+        }
+
+        // Incrementa o número para o próximo chamado
+        const proximoNumero = ultimoNumero + 1;
+
+        const anoAtual = new Date().getFullYear();
+        const numeroFormatado = String(proximoNumero).padStart(4, '0');
+        const idPersonalizado = `${anoAtual}-${numeroFormatado}`;
+
         if (files.length != 0) {
             handleUploadFiles()
             return
@@ -96,6 +119,7 @@ export default function NovoChamado() {
 
         try {
             const chamadoData = {
+                newID: idPersonalizado,
                 titulo: titulo,
                 descricao: descricao,
                 userID: currentUser ? currentUser.uid : '',

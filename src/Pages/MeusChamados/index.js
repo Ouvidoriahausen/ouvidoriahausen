@@ -1,26 +1,25 @@
 import "./meusChamados.css"
-import { collection, getDocs, query, where } from "firebase/firestore";
+import { collection, deleteDoc, doc, getDocs, query, where } from "firebase/firestore";
 import { useContext, useEffect, useState } from "react"
 import { db } from "../../services/connectionFirebase";
 import { AuthContext } from "../../contexts/AuthContext";
 import { Content } from "../../components/layout/Content";
 import { Title } from "../../components/layout/Title";
-import { Button } from "@mui/material";
-import { ArrowForwardIos } from "@mui/icons-material";
+import { Button, CircularProgress, IconButton, Tooltip } from "@mui/material";
+import { Link } from "react-router-dom";
+import { FiPlus, FiTrash } from "react-icons/fi"
+import { CgDetailsMore } from "react-icons/cg";
+import { toast } from "react-toastify";
+
+const listRef = collection(db, "chamados")
 
 export default function MeusChamados() {
 
     const { user } = useContext(AuthContext);
     const [userChamados, setUserChamados] = useState([]);
+    const [loading, setLoading] = useState(true);
     const [isEmpty, setIsEmpty] = useState(false);
 
-    // Estilos para chamados respondidos ou não
-    const answered = {
-        border: "1px solid #00FF2A"
-    }
-    const notAnswered = {
-        border: "1px solid red"
-    }
 
     useEffect(() => {
         async function loadChamados() {
@@ -32,6 +31,7 @@ export default function MeusChamados() {
                     querySnapshot.forEach((doc) => {
                         chamados.push({
                             id: doc.id,
+                            newID: doc.data().newID,
                             titulo: doc.data().titulo,
                             descricao: doc.data().descricao,
                             resposta: doc.data().resposta,
@@ -39,8 +39,10 @@ export default function MeusChamados() {
                     });
                     setUserChamados(chamados);
                     setIsEmpty(false)
+                    setLoading(false)
                 } else {
                     setIsEmpty(true);
+                    setLoading(false)
                 }
             } catch (error) {
                 console.error("Erro ao carregar chamados:", error);
@@ -50,33 +52,86 @@ export default function MeusChamados() {
         loadChamados();
     }, [user.uid]);
 
+    async function handleDeleteTicket(id) {
+
+        await deleteDoc(doc(listRef, id))
+            .then(() => {
+                toast.success("Chamado deletado com sucesso!")
+                window.location.reload()
+
+            })
+            .catch(() => {
+                toast.error("Erro ao deletar chamado!")
+            })
+    }
+
+    if (loading) {
+        return (
+            <Content className="loading-container">
+                <Title>Carregando chamados...</Title>
+                <div>
+                    <CircularProgress color="primary" />
+                </div>
+            </Content>
+        )
+    }
+
     return (
         <Content className="chamados-container">
             <Title>Meus Chamados</Title>
-            <section className="cards-chamados-container">
-                {userChamados.map((chamado) => (
-                    <div style={chamado.resposta ? answered : notAnswered} className="card-chamado" key={chamado.id}>
-                        <div>
-                            <h2>{chamado.titulo}</h2>
-                            <p>Descrição: <strong className="strong">{chamado.descricao}</strong></p>
-                        </div>
 
-                        <div style={chamado.resposta ? answered : notAnswered} className="card-resposta">
-                            {chamado.resposta ?
-                                <p>Resposta: <strong>{chamado.resposta}</strong></p>
-                                :
-                                <p>Nenhuma resposta encontrada.</p>
-                            }
-                        </div>
-
-
-                        <Button>
-                            <ArrowForwardIos />
+            {userChamados.length === 0 ? (
+                <div className="chamadosEmpty">
+                    <h1>Nenhum chamado encontrado.</h1>
+                    <Link to="/novo-chamado" style={{ color: "#fff", float: "right", marginBottom: "15px" }}>
+                        <Button color="thirty" variant="contained" startIcon={<FiPlus size={25} />}>
+                            Novo Chamado
                         </Button>
-                    </div>
-                ))}
-            </section>
-            {isEmpty && <p>Nenhum ticket encontrado.</p>}
+                    </Link>
+                </div>
+            ) : (
+                <table>
+                    <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Titulo</th>
+                            <th scope="col">Descrição</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Ações</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {userChamados.map((item, index) => (
+                            <tr key={index} className={item.resposta === "" ? "naoRespondido" : "respondido"}>
+                                <td data-label="ID">{item.newID}</td>
+                                <td data-label="Titulo">{item.titulo}</td>
+                                <td data-label="Descrição">{item.descricao}</td>
+                                <td data-label="Status">
+                                    <span>
+                                        {item.resposta === "" ? "..." : "Respondido"}
+                                    </span>
+                                </td>
+                                <td className="actions" data-label="Ações">
+                                    <Tooltip title="Detalhes">
+                                        <IconButton color="secondary" size="large" className="action">
+                                            <CgDetailsMore size={20} />
+                                        </IconButton>
+                                    </Tooltip>
+
+                                    <Tooltip title="Excluir" onClick={() => handleDeleteTicket(item.id)}>
+                                        <IconButton color="error" size="large" className="action">
+                                            <FiTrash size={20} />
+                                        </IconButton>
+                                    </Tooltip>
+
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            )}
+
         </Content>
     )
 }

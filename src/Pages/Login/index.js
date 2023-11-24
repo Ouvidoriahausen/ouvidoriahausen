@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../contexts/AuthContext';
 import { toast } from 'react-toastify';
 import { Box, Button, TextField } from '@mui/material';
+import { LoadingButton } from "@mui/lab"
 
 export default function Login() {
 
@@ -11,7 +12,7 @@ export default function Login() {
   const email = `${nomeUsuario}@hausen.com`; // Mantém o domínio fictício
   const [senha, setSenha] = useState("")
 
-  const { FazerLogin, signed } = useContext(AuthContext)
+  const { FazerLogin, signed, loadingAuth } = useContext(AuthContext)
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -56,8 +57,11 @@ export default function Login() {
           onChange={(e) => setSenha(e.target.value)}
         />
 
-        <Button size="large" type="submit" className="acessar-btn" variant='contained'>Acessar</Button>
-
+        {loadingAuth ?
+          <LoadingButton loading size="large" type="submit" className="acessar-btn" variant='contained'>Acessar</LoadingButton>
+          :
+          <Button size="large" type="submit" className="acessar-btn" variant='contained'>Acessar</Button>
+        }
         <div className="noLoginContainer">
           <span>Não tem uma conta ? <Link to="/cadastrar" className="noLogin">Faça seu cadastro</Link></span>
         </div>

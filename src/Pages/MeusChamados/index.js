@@ -5,6 +5,8 @@ import { db } from "../../services/connectionFirebase";
 import { AuthContext } from "../../contexts/AuthContext";
 import { Content } from "../../components/layout/Content";
 import { Title } from "../../components/layout/Title";
+import { Button } from "@mui/material";
+import { ArrowForwardIos } from "@mui/icons-material";
 
 export default function MeusChamados() {
 
@@ -49,24 +51,31 @@ export default function MeusChamados() {
     }, [user.uid]);
 
     return (
-    <Content className="chamados-container">
+        <Content className="chamados-container">
             <Title>Meus Chamados</Title>
-            {userChamados.map((chamado) => (
-                <>
+            <section className="cards-chamados-container">
+                {userChamados.map((chamado) => (
                     <div style={chamado.resposta ? answered : notAnswered} className="card-chamado" key={chamado.id}>
-                        <h2>{chamado.titulo}</h2>
-                        <p>Descrição: <strong>{chamado.descricao}</strong></p>
-                    </div>
+                        <div>
+                            <h2>{chamado.titulo}</h2>
+                            <p>Descrição: <strong className="strong">{chamado.descricao}</strong></p>
+                        </div>
 
-                    <div style={chamado.resposta ? answered : notAnswered} className="card-resposta">
-                        {chamado.resposta ?
-                            <p>Resposta: <strong>{chamado.resposta}</strong></p>
-                            :
-                            <p>Nenhuma resposta encontrada.</p>
-                        }
+                        <div style={chamado.resposta ? answered : notAnswered} className="card-resposta">
+                            {chamado.resposta ?
+                                <p>Resposta: <strong>{chamado.resposta}</strong></p>
+                                :
+                                <p>Nenhuma resposta encontrada.</p>
+                            }
+                        </div>
+
+
+                        <Button>
+                            <ArrowForwardIos />
+                        </Button>
                     </div>
-                </>
-            ))}
+                ))}
+            </section>
             {isEmpty && <p>Nenhum ticket encontrado.</p>}
         </Content>
     )

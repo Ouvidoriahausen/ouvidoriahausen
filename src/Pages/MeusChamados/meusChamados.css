@@ -5,23 +5,48 @@
     color: var(--dark-blue);
 }
 
+.cards-chamados-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
 .card-chamado {
     display: flex;
-    width: 300px;
-    padding: 20px 30px;
+    width: 100%;
+    max-width: 350px;
+    padding: 20px 25px;
+    gap: 8px;
     border-radius: 4px;
     flex-direction: column;
+    justify-content: space-between;
     background-color: var(--white);
     border: 1px solid var(--gray-opacity);
+    box-shadow: 3px 3px 0px rgba(0, 0, 0, 0.08);
+}
+
+.card-chamado h2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 5;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: 8px;
 }
 
 .card-resposta {
     display: flex;
-    width: 300px;
-    margin-top: 4px;
-    padding: 12px 30px;
+    width: 100%;
+    max-width: 550px;
+    margin-top: 16px;
+    padding: 5px 20px;
     border-radius: 4px;
     flex-direction: column;
+    text-align: center;
     background-color: var(--white);
     border: 1px solid var(--gray-opacity);
+}
+
+.card-title::first-letter {
+    text-transform: uppercase !important;
 }

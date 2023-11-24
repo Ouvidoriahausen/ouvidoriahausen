@@ -1,8 +1,27 @@
-.novoChamado{
+.chamados-container {
+    width: 100%;
+    height: 100vh;
+    background-color: var(--bg-gray);
+    color: var(--dark-blue);
+}
+
+.card-chamado {
     display: flex;
-    font-size: 18px;
-    padding: 10px 20px;
+    width: 300px;
+    padding: 20px 30px;
     border-radius: 4px;
-    background-color: #10f00c;
-    color: black;
+    flex-direction: column;
+    background-color: var(--white);
+    border: 1px solid var(--gray-opacity);
+}
+
+.card-resposta {
+    display: flex;
+    width: 300px;
+    margin-top: 4px;
+    padding: 12px 30px;
+    border-radius: 4px;
+    flex-direction: column;
+    background-color: var(--white);
+    border: 1px solid var(--gray-opacity);
 }

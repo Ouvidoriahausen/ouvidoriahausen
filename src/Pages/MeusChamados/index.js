@@ -3,14 +3,22 @@ import { collection, getDocs, query, where } from "firebase/firestore";
 import { useContext, useEffect, useState } from "react"
 import { db } from "../../services/connectionFirebase";
 import { AuthContext } from "../../contexts/AuthContext";
-import { Link } from "react-router-dom";
 import { Content } from "../../components/layout/Content";
+import { Title } from "../../components/layout/Title";
 
 export default function MeusChamados() {
 
     const { user } = useContext(AuthContext);
     const [userChamados, setUserChamados] = useState([]);
     const [isEmpty, setIsEmpty] = useState(false);
+
+    // Estilos para chamados respondidos ou não
+    const answered = {
+        border: "1px solid #00FF2A"
+    }
+    const notAnswered = {
+        border: "1px solid red"
+    }
 
     useEffect(() => {
         async function loadChamados() {
@@ -41,14 +49,23 @@ export default function MeusChamados() {
     }, [user.uid]);
 
     return (
-        <Content>
-            <h2>Meus Chamados</h2>
+    <Content className="chamados-container">
+            <Title>Meus Chamados</Title>
             {userChamados.map((chamado) => (
-                <div key={chamado.id}>
-                    <h3>{chamado.titulo}</h3>
-                    <p>{chamado.descricao}</p>
-                    {chamado.resposta && <p>Resposta: {chamado.resposta}</p>}
-                </div>
+                <>
+                    <div style={chamado.resposta ? answered : notAnswered} className="card-chamado" key={chamado.id}>
+                        <h2>{chamado.titulo}</h2>
+                        <p>Descrição: <strong>{chamado.descricao}</strong></p>
+                    </div>
+
+                    <div style={chamado.resposta ? answered : notAnswered} className="card-resposta">
+                        {chamado.resposta ?
+                            <p>Resposta: <strong>{chamado.resposta}</strong></p>
+                            :
+                            <p>Nenhuma resposta encontrada.</p>
+                        }
+                    </div>
+                </>
             ))}
             {isEmpty && <p>Nenhum ticket encontrado.</p>}
         </Content>

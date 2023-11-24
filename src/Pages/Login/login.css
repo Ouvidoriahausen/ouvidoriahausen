@@ -4,21 +4,26 @@
   gap: 8px;
   background: #f6f6f6;
   width: 90%;
-  max-width: 400px;
+  max-width: 500px;
   padding: 40px;
-  height: 400px;
+  height: 450px;
   border-radius: 8px;
   color: var(--dark-blue);
 }
 
 .form-login h2 {
   text-align: center;
-  font-size: 26px;
+  font-size: 32px;
   color: var(--dark-blue);
   margin-bottom: 24px;
 }
+.form-login input{
+  font-size: 18px;
+  padding: 10px;
+}
 .form-login .acessar-btn{
-  margin-top: 8px;
+  font-size: 18px;
+  margin-top: 12px;
 }
 
 .noLoginContainer{

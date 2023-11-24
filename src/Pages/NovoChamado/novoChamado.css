@@ -4,7 +4,7 @@
     justify-content: center;
     min-height: 100vh;
     width: 100%;
-    background-color: #dcdcdc;
+    background-color: var(--bg-gray);
     overflow-x: hidden;
 }
 
@@ -40,19 +40,15 @@
 .dropzone {
     border: 2px dashed var(--orange);
     border-radius: 8px;
-    height: 94px;
+    height: 10rem;
     width: 100%;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     cursor: pointer;
     color: var(--orange);
-    font-size: 18px;
-}
-
-.dropzone p {
-    margin: 0;
-    text-align: center;
+    font-size: 20px;
 }
 
 .btn-enviar{
@@ -63,29 +59,24 @@
 
 .image-preview,
 .video-preview {
-    flex: 0 0 auto; /* Impede que as imagens redimensionem */
-    width: 50px; /* Tamanho das prévias das imagens */
-    height: 50px; /* Tamanho das prévias das imagens */
+    flex: 0 0 auto;
+    width: 80px;
+    height: 80px;
     object-fit: cover;
-    margin-right: 5px; /* Adiciona espaçamento entre as imagens */
+    margin-right: 5px;
     border: 1px solid #ccc;
 }
 
 .thumbs-container {
     display: flex;
-    flex-wrap: nowrap; /* Impede que as imagens quebrem para a próxima linha */
-    overflow-x: auto; /* Adiciona a barra de rolagem horizontal se necessário */
-    max-width: 100%; /* Define a largura máxima para que as imagens caibam dentro do contêiner */
-    margin-bottom: 10px; /* Adiciona um espaçamento na parte inferior */
-    margin-top: 10px; /* Adiciona um espaçamento na parte superior */
-    padding: 5px; /* Adiciona um preenchimento interno */
-    
+    flex-wrap: nowrap;
+    overflow-x: auto; 
+    max-width: 100%;
 }
 
 .thumbs-container > div {
     order: 1; /* Define o primeiro item para a primeira posição */
 }
-
 
 
 /* Overlay */

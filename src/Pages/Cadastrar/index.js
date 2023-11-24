@@ -66,7 +66,7 @@ export default function Cadastrar() {
           onChange={(e) => setSenha(e.target.value)}
         />
 
-        <Button type="submit" className="cadastrar-btn" variant='contained'>Cadastrar</Button>
+        <Button size="large" type="submit" className="cadastrar-btn" variant='contained'>Cadastrar</Button>
 
         <div className="noLoginContainer">
           <span>Já tem uma conta ? <Link to="/login" className="noLogin">Faça login</Link></span>

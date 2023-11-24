@@ -116,6 +116,7 @@ export default function AuthProvider({ children }) {
   async function logout() {
     await signOut(auth)
     localStorage.removeItem(LOCAL_STORAGE_KEY)
+    navigate("/")
     setUser(null)
   }
 

@@ -2,6 +2,9 @@
   --orange: #e95525;
   --dark-blue: #002B49;
   --white: #fff;
+  --light-blue: #00416f;
+  --gray-opacity: #d2d2d2;
+  --bg-gray: #eaeaea;
 }
 
 * {
@@ -34,4 +37,12 @@ button {
   min-height: 100vh;
   color: white;
   background-color: var(--dark-blue);
+}
+
+.divider{
+  display: flex;
+  width: 85%;
+  margin: 0 20px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  margin-bottom: 8px;
 }

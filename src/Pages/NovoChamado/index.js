@@ -1,12 +1,10 @@
 import './novoChamado.css';
-import React, { useCallback, useContext, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { auth, db, storage } from '../../services/connectionFirebase';
 import { addDoc, collection } from 'firebase/firestore';
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage"
 import { toast } from 'react-toastify';
-import { Link } from 'react-router-dom';
-import { AuthContext } from '../../contexts/AuthContext';
 import { Content } from '../../components/layout/Content';
 import { Box, Button, TextField } from '@mui/material';
 
@@ -15,7 +13,7 @@ export default function NovoChamado() {
     const [descricao, setDescricao] = useState('')
     const [files, setFiles] = useState([]);
     const [displayOverlay, setDisplayOverlay] = useState(true);
-    const { logout } = useContext(AuthContext)
+    const chamadosCollection = collection(db, "chamados");
 
     const onDrop = useCallback(acceptedFiles => {
         setFiles(prevFiles => [...prevFiles, ...acceptedFiles.map(file => Object.assign(file, {
@@ -25,42 +23,37 @@ export default function NovoChamado() {
 
     const { getRootProps, getInputProps } = useDropzone({
         onDrop,
-        accept: 'image/*' // Aceita só imagens (até o momento)
+        accept: 'image/*, video/*' // Aceita só imagens (até o momento)
     });
 
     const closeOverlay = () => {
         setDisplayOverlay(false);
     };
 
-    async function handleSubmitChamado(e) {
-        e.preventDefault()
-
+    async function handleUploadFiles() {
         const currentUser = auth.currentUser;
-        const chamadosCollection = collection(db, "chamados")
-        const fileURLs = []
 
         if (currentUser && files.length > 0) {
             for (const file of files) {
+                // Lógica de upload de arquivos
+                const fileName = `${currentUser.uid}_${Date.now()}_${file.name}`;
+                const storageRef = ref(storage, `chamadoFiles/${currentUser.uid}/${fileName}`);
+                const uploadTask = uploadBytesResumable(storageRef, file);
+                const fileURLs = []
 
-                // Gera um nome unico para cada arquivo, usando o id do usuario e a data atual
-                const fileName = `${currentUser.uid}_${Date.now()}_${file.name}`
-
-                const storageRef = ref(storage, `chamadoFiles/${currentUser.uid}/${fileName}`)
-                const uploadTask = uploadBytesResumable(storageRef, file)
-
-                uploadTask.on("state_changed",
+                uploadTask.on(
+                    "state_changed",
                     (snapshot) => {
                         // Pode colocar alguma lógica aqui também
-                    }, (error) => {
-                        toast.error("Erro no upload do arquivo!!")
-                        console.log("Erro no upload do arquivo", error)
+                    },
+                    (error) => {
+                        toast.error("Erro no upload do arquivo!!");
+                        console.log("Erro no upload do arquivo", error);
                     },
                     async () => {
-
                         try {
-                            // Pega o URL do arquivo dps do upload
-                            const fileURL = await getDownloadURL(uploadTask.snapshot.ref)
-                            fileURLs.push(fileURL)
+                            const fileURL = await getDownloadURL(uploadTask.snapshot.ref);
+                            fileURLs.push(fileURL);
 
                             if (fileURLs.length === files.length) {
                                 await addDoc(chamadosCollection, {
@@ -69,28 +62,65 @@ export default function NovoChamado() {
                                     fileURLs: fileURLs,
                                     userID: currentUser.uid,
                                     resposta: "",
-                                })
+                                });
                             }
 
-                            toast.success("Chamado Enviado com sucesso!")
+                            setTitulo("");
+                            setDescricao("");
+                            setFiles([]);
 
-                            // Limpa os campos de input
-                            setTitulo("")
-                            setDescricao("")
-                            setFiles([])
-
+                            toast.success("Chamado Enviado com sucesso!");
                         } catch (error) {
-                            toast.error("Erro ao adicionar o chamado!!")
-                            console.log("Erro ao adicionar o Chamado: ", error)
+                            toast.warning("Erro ao adicionar o Chamado!");
+                            console.log("Erro ao adicionar o Chamado: ", error);
                         }
                     }
-                )
+                );
             }
+            // Limpeza dos arquivos após o upload
+            setFiles([]);
+        } else {
+            toast.warning("Nenhum arquivo selecionado para upload.");
+        }
+    }
+
+    async function handleSubmitChamado(e) {
+        e.preventDefault();
+
+        const currentUser = auth.currentUser;
+
+        if (files.length != 0) {
+            handleUploadFiles()
+            return
+        }
+
+        try {
+            const chamadoData = {
+                titulo: titulo,
+                descricao: descricao,
+                userID: currentUser ? currentUser.uid : '',
+                resposta: ""
+            };
+
+            // Verifica se há conteúdo nos campos de texto (título ou descrição)
+            if (titulo.trim() !== '' || descricao.trim() !== '') {
+                await addDoc(chamadosCollection, chamadoData);
+                toast.success("Chamado Enviado com sucesso!");
+
+                setTitulo("");
+                setDescricao("");
+            } else {
+                toast.warning("Preencha pelo menos o título ou a descrição.");
+            }
+        } catch (error) {
+            toast.error("Erro ao adicionar o chamado!!");
+            console.log("Erro ao adicionar o Chamado: ", error);
         }
     }
 
     return (
         <Content className="new-chamado-container">
+
             {displayOverlay && (
                 <div className='overlay'>
                     <div className='overlay-content'>
@@ -125,7 +155,7 @@ export default function NovoChamado() {
 
                         <input {...getInputProps()} />
                         {files.length === 0 ? (
-                            <p>Arraste e solte os arquivos, ou clique para selecionar</p>
+                            <p>Arraste e solte os arquivos, ou clique para selecionar (Opcional)</p>
                         ) : null}
                         <aside className="thumbs-container">
                             {files.map(file => (
@@ -140,7 +170,7 @@ export default function NovoChamado() {
                         </aside>
                     </div>
                 </div>
-                <Button fullWidth size="large" variant="contained" className="btn-enviar" type='submit'>Enviar</Button>
+                <Button size="large" variant="contained" className="btn-enviar" type='submit'>Enviar Chamado</Button>
             </Box>
         </Content>
     );

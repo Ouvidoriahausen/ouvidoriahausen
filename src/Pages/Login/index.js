@@ -1,11 +1,9 @@
 import './login.css';
-import React, { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../contexts/AuthContext';
 import { toast } from 'react-toastify';
 import { Box, Button, TextField } from '@mui/material';
-import { doc, getDoc } from 'firebase/firestore';
-import { db } from '../../services/connectionFirebase';
 
 export default function Login() {
 
@@ -13,9 +11,7 @@ export default function Login() {
   const email = `${nomeUsuario}@hausen.com`; // Mantém o domínio fictício
   const [senha, setSenha] = useState("")
 
-  const [userAdmin, setUserAdmin] = useState(false)
-
-  const { FazerLogin, signed, user } = useContext(AuthContext)
+  const { FazerLogin, signed } = useContext(AuthContext)
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -60,7 +56,7 @@ export default function Login() {
           onChange={(e) => setSenha(e.target.value)}
         />
 
-        <Button type="submit" className="acessar-btn" variant='contained'>Acessar</Button>
+        <Button size="large" type="submit" className="acessar-btn" variant='contained'>Acessar</Button>
 
         <div className="noLoginContainer">
           <span>Não tem uma conta ? <Link to="/cadastrar" className="noLogin">Faça seu cadastro</Link></span>

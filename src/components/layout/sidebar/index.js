@@ -6,10 +6,7 @@ import { AuthContext, LOCAL_STORAGE_KEY } from "../../../contexts/AuthContext"
 import { useContext } from "react"
 
 // Icons
-import { Logout, Person } from '@mui/icons-material';
-
-
-
+import { Add, ConfirmationNumber, Done, Grade, Logout, MoreHoriz, Person } from '@mui/icons-material';
 
 
 // Sidebar do usuário
@@ -30,15 +27,21 @@ export function SideBar() {
 
                 <nav variant="pills" className="nav">
                     <h3 className="sidebar-title">Chamados</h3>
+
+                    <span className="divider" />
+
                     <section className="nav-links">
                         <Link to="/meus-chamados">
                             <Button size="large" fullWidth>
+                                <ConfirmationNumber />
                                 Meus Chamados
                             </Button>
                         </Link>
 
+
                         <Link to="/novo-chamado">
                             <Button size="large" fullWidth>
+                                <Add />
                                 Criar novo Chamado
                             </Button>
                         </Link>
@@ -46,14 +49,15 @@ export function SideBar() {
                 </nav>
 
                 <div className="nav-logout">
-                    <div>
+                    <span className="divider" />
+                    <section>
                         <Person />
                         <span>{UserName.nome}</span>
-                    </div>
 
-                    <Button onClick={logout} color="error" variant="contained">
-                        <Logout />
-                    </Button>
+                        <Button onClick={logout} color="error" variant="contained">
+                            <Logout />
+                        </Button>
+                    </section>
                 </div>
             </section>
         </div>
@@ -79,36 +83,43 @@ export function SideBarAdmin() {
 
                 <nav variant="pills" className="nav">
                     <h3 className="sidebar-title">Chamados</h3>
+
+                    <span className="divider" />
+
                     <section className="nav-links">
                         <Link to="#">
                             <Button size="large" fullWidth>
+                                <Grade />
                                 Em aberto
                             </Button>
                         </Link>
 
                         <Link to="#">
                             <Button size="large" fullWidth>
+                                <MoreHoriz />
                                 Em Andamento
                             </Button>
                         </Link>
 
                         <Link to="#">
                             <Button size="large" fullWidth>
-                                Fechados
+                                <Done />
+                                Finalizados
                             </Button>
                         </Link>
                     </section>
                 </nav>
 
                 <div className="nav-logout">
-                    <div>
+                    <span className="divider" />
+                    <section>
                         <Person />
                         <span>{UserName.nome}</span>
-                    </div>
 
-                    <Button onClick={logout} color="error" variant="contained">
-                        <Logout />
-                    </Button>
+                        <Button onClick={logout} color="error" variant="contained">
+                            <Logout />
+                        </Button>
+                    </section>
                 </div>
             </section>
         </div>

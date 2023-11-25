@@ -90,7 +90,7 @@ export function SideBarAdmin() {
                     <span className="divider" />
 
                     <section className="nav-links">
-                        <Link to="#">
+                        <Link to="/admin/em-aberto">
                             <Button size="large" fullWidth>
                                 <FaFolderOpen size={30} />
                                 Em aberto

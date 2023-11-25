@@ -35,6 +35,7 @@ export default function MeusChamados() {
                             titulo: doc.data().titulo,
                             descricao: doc.data().descricao,
                             resposta: doc.data().resposta,
+                            status: doc.data().status
                         });
                     });
                     setUserChamados(chamados);
@@ -109,7 +110,7 @@ export default function MeusChamados() {
                                 <td data-label="Descrição">{item.descricao}</td>
                                 <td data-label="Status">
                                     <span>
-                                        {item.resposta === "" ? "..." : "Respondido"}
+                                        {item.status === "" ? "..." : "Em Aberto"}
                                     </span>
                                 </td>
                                 <td className="actions" data-label="Ações">

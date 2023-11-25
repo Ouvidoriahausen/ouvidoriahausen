@@ -5,12 +5,12 @@ import { getStorage } from 'firebase/storage';
 
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCoawov7wWinuqQ1fMBBp7Klucg0HAX8OU",
-  authDomain: "ouvidoria-grupo-hausen.firebaseapp.com",
-  projectId: "ouvidoria-grupo-hausen",
-  storageBucket: "ouvidoria-grupo-hausen.appspot.com",
-  messagingSenderId: "890407503584",
-  appId: "1:890407503584:web:928648e499c6aca9caf285"
+  apiKey: "AIzaSyBLkPYAijjtxHgvfXmOEH3gBZvauXusC4s",
+  authDomain: "ouvidoria-grupo-hausen02.firebaseapp.com",
+  projectId: "ouvidoria-grupo-hausen02",
+  storageBucket: "ouvidoria-grupo-hausen02.appspot.com",
+  messagingSenderId: "404602041",
+  appId: "1:404602041:web:39ae7616c393c1025eef68"
 };
 
 const firebaseApp = initializeApp(firebaseConfig);

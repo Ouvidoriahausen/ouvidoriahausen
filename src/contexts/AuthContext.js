@@ -25,7 +25,6 @@ export default function AuthProvider({ children }) {
       }
       setLoading(false)
     }
-
     loadUser()
 
   }, []);
@@ -44,7 +43,7 @@ export default function AuthProvider({ children }) {
           uid: uid,
           nome: docSnap.data().nome,
           email: value.user.email,
-          type: "",
+          type: docSnap.data().type,
         }
 
         setUser(data)
@@ -61,7 +60,7 @@ export default function AuthProvider({ children }) {
       })
   }
 
-  async function Cadastrar(email, password, nome) {
+  async function Cadastrar(email, password, userName) {
     setLoadingAuth(true)
 
     await createUserWithEmailAndPassword(auth, email, password)
@@ -70,16 +69,16 @@ export default function AuthProvider({ children }) {
 
         await setDoc(doc(db, "users", uid), {
           userID: uid,
-          nome: nome,
+          nome: userName,
           email: email,
-          type: ""
+          type: "",
         })
           .then(() => {
             let data = {
               uid: uid,
-              nome: nome,
+              nome: userName,
               email: email,
-              type: ""
+              type: "",
             }
 
             setUser(data)

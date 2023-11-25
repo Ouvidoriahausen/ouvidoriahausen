@@ -5,13 +5,13 @@ import Admin, { AdminGlobal } from '..'
 import { Button, TextField } from '@mui/material'
 import { useLoadChamados } from "../utils/loadChamadosNaoRespondidos"
 
-export default function EmAberto() {
+export default function Arquivado() {
 
-    const { resposta, setResposta, handleRespond} = useContext(AdminGlobal)
+    const { resposta, setResposta, handleRespond } = useContext(AdminGlobal)
 
     const { chamadosNaoRespondidos, loadChamadosNaoRespondidos } = useLoadChamados();
 
-    const statusPage = "Aberto"
+    const statusPage = "Arquivado"
     useEffect(() => {
         loadChamadosNaoRespondidos(statusPage)
     }, [loadChamadosNaoRespondidos, statusPage]);

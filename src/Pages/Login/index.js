@@ -19,7 +19,7 @@ export default function Login() {
     if (signed) {
       navigate("/meus-chamados")
     }
-  }, [signed]);
+  }, [signed, navigate]);
 
 
   async function handleLogin(e) {

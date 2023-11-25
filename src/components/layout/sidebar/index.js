@@ -3,21 +3,29 @@ import LogoOuvidoria from "../../../assets/header-ouvidoria.png"
 import { Link } from "react-router-dom"
 import { Button } from "@mui/material"
 import { AuthContext, LOCAL_STORAGE_KEY } from "../../../contexts/AuthContext"
-import { useContext } from "react"
+import { useContext, useEffect } from "react"
 
 // Icons
 import { Logout, Person } from '@mui/icons-material';
-import { PiTicket } from "react-icons/pi";
+import { PiTicketFill } from "react-icons/pi";
 import { FiPlus } from "react-icons/fi"
 import { FaFolderOpen } from "react-icons/fa"
 import { MdArchive, MdDone, MdOutlineMoreHoriz } from "react-icons/md"
+import { RiAdminFill } from "react-icons/ri";
+
+import { useCheckUserType } from "../../../Pages/Admin/utils/checkUserType"
 
 // Sidebar do usuário
 export function SideBar() {
 
     const { logout } = useContext(AuthContext)
+    const { isAdmin, checkUserType } = useCheckUserType()
     const UserLocalStorage = localStorage.getItem(LOCAL_STORAGE_KEY)
-    const UserName = JSON.parse(UserLocalStorage)
+    const userStorage = JSON.parse(UserLocalStorage)
+
+    useEffect(() => {
+        checkUserType(userStorage.uid)
+    }, []);
 
     return (
         <div className="sidebar-container">
@@ -36,7 +44,7 @@ export function SideBar() {
                     <section className="nav-links">
                         <Link to="/meus-chamados">
                             <Button size="large" fullWidth>
-                                <PiTicket size={30} />
+                                <PiTicketFill size={30} />
                                 Meus Chamados
                             </Button>
                         </Link>
@@ -52,10 +60,18 @@ export function SideBar() {
                 </nav>
 
                 <div className="nav-logout">
+                    {isAdmin && <Link to="/admin">
+                        <Button size="large" fullWidth>
+                            <RiAdminFill size={25} />
+                            Admin
+                        </Button>
+                    </Link>}
+
                     <span className="divider" />
+
                     <section>
                         <Person />
-                        <span>{UserName.nome}</span>
+                        <span>{userStorage.nome}</span>
 
                         <Button onClick={logout} color="error" variant="contained">
                             <Logout />
@@ -97,21 +113,21 @@ export function SideBarAdmin() {
                             </Button>
                         </Link>
 
-                        <Link to="#">
+                        <Link to="/admin/em-andamento">
                             <Button size="large" fullWidth>
                                 <MdOutlineMoreHoriz size={30} />
                                 Em Andamento
                             </Button>
                         </Link>
 
-                        <Link to="#">
+                        <Link to="/admin/finalizados">
                             <Button size="large" fullWidth>
                                 <MdDone size={30} />
                                 Finalizados
                             </Button>
                         </Link>
 
-                        <Link to="#">
+                        <Link to="/admin/arquivados">
                             <Button size="large" fullWidth>
                                 <MdArchive size={30} />
                                 Arquivados

@@ -33,23 +33,24 @@
     gap: 8px;
 }
 
-.nav-links .MuiButton-text {
+.sidebar-container .MuiButton-text {
     display: flex;
-    justify-content: flex-start;
-    padding-left: 40px;
+    width: 100% !important;
+    justify-content: center;
     gap: 12px;
     height: 50px;
     color: var(--white);
     transition: .3s;
 }
 
+.sidebar-container .MuiButton-text:hover {
+    background-color: var(--light-blue);
+}
+
 .nav-links svg {
     font-size: 34px !important;
 }
 
-.nav-links .MuiButton-text:hover {
-    background-color: var(--light-blue);
-}
 
 .sidebar-title {
     text-align: start;
@@ -66,14 +67,19 @@
     position: absolute;
     bottom: 20px;
     width: 100%;
-    align-items: center;
-    justify-content: space-around;
     color: var(--white);
+}
+
+.nav-logout .MuiButton-text{
+    display: flex;
+    width: 100%;
+    margin-bottom: 12px;
 }
 
 .nav-logout section {
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 8px;
 }
 

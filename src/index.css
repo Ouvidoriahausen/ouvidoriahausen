@@ -48,3 +48,13 @@ button {
   border: 1px solid rgba(255, 255, 255, 0.05);
   margin-bottom: 8px;
 }
+
+/* Loading Full Screen */
+.loading-full{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 100vh;
+  background-color: rgba(0, 0, 0, 0.4);
+}

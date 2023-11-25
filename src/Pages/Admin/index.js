@@ -1,54 +1,43 @@
-import { doc, getDoc, updateDoc } from "firebase/firestore";
+import { doc, updateDoc } from "firebase/firestore";
 import { createContext, useContext, useEffect, useState } from "react"
 import { db } from "../../services/connectionFirebase";
 import { AuthContext } from "../../contexts/AuthContext";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { useCheckUserType } from "./utils/checkUserType";
+import { CircularProgress } from "@mui/material";
+import { SideBarAdmin } from "../../components/layout/sidebar";
+
 
 export const AdminGlobal = createContext({})
 
 
 export default function Admin({ children }) {
 
+    const { checkUserType, loadingAdmin } = useCheckUserType()
     const { user } = useContext(AuthContext)
     const [chamadosNaoRespondidos, setChamadosNaoRespondidos] = useState([])
     const [resposta, setResposta] = useState("")
     const [isEmpty, setIsEmpty] = useState(false);
-    const [userAdmin, setUserAdmin] = useState(false)
 
     const navigate = useNavigate()
+    const path = useLocation().pathname
 
     useEffect(() => {
-        navigate("/admin/em-aberto")
-    }, [navigate]);
-
-    useEffect(() => {
-        async function checkUserType() {
-            const userDocRef = doc(db, "users", user.uid);
-            try {
-                const userDocSnap = await getDoc(userDocRef);
-                if (userDocSnap.exists()) {
-                    const userType = userDocSnap.data().type;
-                    if (userType === "admin") {
-                        // Se type for "admin"
-                        setUserAdmin(true)
-                    } else {
-                        // Se não for um admin, redirecionar para a página Meus Chamados
-                        setUserAdmin(false)
-                        console.log("Usuário não é um admin ou não tem um tipo definido.");
-                        navigate("/meus-chamados");
-                    }
-                } else {
-                    console.log("Documento do usuário não encontrado no Firestore.");
-                }
-            } catch (error) {
-                console.error("Erro ao verificar o tipo do usuário:", error);
-            }
-        }
-
-        checkUserType();
+        checkUserType(user.uid)
     }, [user.uid]);
 
+    if (path === "/admin" || path === "/admin/") {
+        navigate("/admin/em-aberto")
+    }
+
+    if (loadingAdmin) {
+        return (
+            <div className="loading-full">
+                <CircularProgress color="secondary" />
+            </div>
+        )
+    }
 
     const handleRespond = async (chamadoID, resposta) => {
         try {
@@ -77,6 +66,7 @@ export default function Admin({ children }) {
                 isEmpty,
             }}
         >
+            <SideBarAdmin />
             {children}
         </AdminGlobal.Provider>
     )

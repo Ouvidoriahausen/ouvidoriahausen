@@ -7,6 +7,8 @@ import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage"
 import { toast } from 'react-toastify';
 import { Content } from '../../components/layout/Content';
 import { Box, Button, TextField } from '@mui/material';
+import { Title } from '../../components/layout/Title';
+import { AiOutlineCloudUpload } from "react-icons/ai";
 
 export default function NovoChamado() {
     const [titulo, setTitulo] = useState('')
@@ -15,22 +17,34 @@ export default function NovoChamado() {
     const [displayOverlay, setDisplayOverlay] = useState(true);
     const chamadosCollection = collection(db, "chamados");
 
+
+    // Dropzone
+
     const onDrop = useCallback(acceptedFiles => {
         setFiles(prevFiles => [...prevFiles, ...acceptedFiles.map(file => Object.assign(file, {
             preview: URL.createObjectURL(file)
         }))]);
     }, []);
 
+    const acceptedFileTypes = {
+
+    }
+
     const { getRootProps, getInputProps } = useDropzone({
         onDrop,
-        accept: 'image/*, video/*' // Aceita só imagens (até o momento)
+        accept: {
+            "image/*": [".jpeg", ".jpg", ".png"],
+            "video/*": [".mp4", ".mov", ".mkv", ".avi"]
+        }
     });
+
+
 
     const closeOverlay = () => {
         setDisplayOverlay(false);
     };
 
-    async function handleUploadFiles() {
+    async function handleUploadFiles(newID) {
         const currentUser = auth.currentUser;
 
         if (currentUser && files.length > 0) {
@@ -57,12 +71,13 @@ export default function NovoChamado() {
 
                             if (fileURLs.length === files.length) {
                                 await addDoc(chamadosCollection, {
+                                    newID: newID,
                                     titulo: titulo,
                                     descricao: descricao,
                                     fileURLs: fileURLs,
                                     userID: currentUser.uid,
                                     resposta: "",
-                                    status: "Em Aberto",
+                                    status: "Aberto",
                                 });
                             }
 
@@ -114,7 +129,7 @@ export default function NovoChamado() {
         const idPersonalizado = `${anoAtual}-${numeroFormatado}`;
 
         if (files.length !== 0) {
-            handleUploadFiles()
+            handleUploadFiles(idPersonalizado)
             return
         }
 
@@ -124,7 +139,8 @@ export default function NovoChamado() {
                 titulo: titulo,
                 descricao: descricao,
                 userID: currentUser ? currentUser.uid : '',
-                resposta: ""
+                resposta: "",
+                status: "Aberto",
             };
 
             // Verifica se há conteúdo nos campos de texto (título ou descrição)
@@ -145,7 +161,7 @@ export default function NovoChamado() {
 
     return (
         <Content className="new-chamado-container">
-
+            <Title>Novo Chamado</Title>
             {displayOverlay && (
                 <div className='overlay'>
                     <div className='overlay-content'>
@@ -155,48 +171,54 @@ export default function NovoChamado() {
                 </div>
             )}
 
-            <Box component="form" className='formulario-chamado' onSubmit={handleSubmitChamado}>
+            <section className="form-container">
+                <Box component="form" className='formulario-chamado' onSubmit={handleSubmitChamado}>
 
-                <h1>Novo chamado</h1>
+                    <div className="formulario-inputs">
+                        <TextField
+                            value={titulo}
+                            onChange={(e) => setTitulo(e.target.value)}
+                            type='text'
+                            autoComplete="false"
+                            label='Digite o título da sua denúncia' />
 
-                <div className="formulario-inputs">
-                    <TextField
-                        value={titulo}
-                        onChange={(e) => setTitulo(e.target.value)}
-                        type='text'
-                        autoComplete="false"
-                        label='Digite o título da sua denúncia' />
+                        <TextField
+                            value={descricao}
+                            multiline
+                            autoComplete="false"
+                            maxRows={45}
+                            minRows={5}
+                            onChange={(e) => setDescricao(e.target.value)}
+                            label='Digite aqui a descrição da sua denúncia' />
 
-                    <TextField
-                        value={descricao}
-                        multiline
-                        autoComplete="false"
-                        maxRows={45}
-                        minRows={5}
-                        onChange={(e) => setDescricao(e.target.value)}
-                        label='Digite aqui a descrição da sua denúncia' />
+                        <div {...getRootProps()} className='dropzone'>
 
-                    <div {...getRootProps()} className='dropzone'>
 
-                        <input {...getInputProps()} />
-                        {files.length === 0 ? (
-                            <p>Arraste e solte os arquivos, ou clique para selecionar (Opcional)</p>
-                        ) : null}
-                        <aside className="thumbs-container">
-                            {files.map(file => (
-                                <div key={file.name}>
-                                    {file.type.startsWith('image/') ? (
-                                        <img src={file.preview} alt={file.name} className="image-preview" />
-                                    ) : (
-                                        <video src={file.preview} className="video-preview" controls />
-                                    )}
-                                </div>
-                            ))}
-                        </aside>
+                            {files.length === 0 ?
+                                (
+                                    <>
+                                        <AiOutlineCloudUpload size={40} />
+                                        Enviar arquivos
+                                    </>
+                                ) : null}
+                            <input {...getInputProps()} className="input-files" type="file" />
+
+                            <aside className="thumbs-container">
+                                {files.map(file => (
+                                    <div key={file.name}>
+                                        {file.type.startsWith('image/') ? (
+                                            <img src={file.preview} alt={file.name} className="image-preview" />
+                                        ) : (
+                                            <video src={file.preview} className="video-preview" controls />
+                                        )}
+                                    </div>
+                                ))}
+                            </aside>
+                        </div>
                     </div>
-                </div>
-                <Button size="large" variant="contained" className="btn-enviar" type='submit'>Enviar Chamado</Button>
-            </Box>
+                    <Button size="large" variant="contained" className="btn-enviar" type='submit'>Enviar Chamado</Button>
+                </Box>
+            </section>
         </Content>
     );
 }

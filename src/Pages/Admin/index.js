@@ -1,20 +1,26 @@
-import { collection, doc, getDoc, getDocs, query, updateDoc, where } from "firebase/firestore";
-import { getDownloadURL, ref } from "firebase/storage"
-import { useContext, useEffect, useState } from "react"
-import { db, storage } from "../../services/connectionFirebase";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
+import { createContext, useContext, useEffect, useState } from "react"
+import { db } from "../../services/connectionFirebase";
 import { AuthContext } from "../../contexts/AuthContext";
-import { Link, useNavigate } from "react-router-dom";
-import { Content } from "../../components/layout/Content";
-import { SideBarAdmin } from "../../components/layout/sidebar";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+
+export const AdminGlobal = createContext({})
 
 
-export default function Admin() {
+export default function Admin({ children }) {
 
     const { user } = useContext(AuthContext)
-    const [ChamadoNaoRespondidos, setChamadoNaoRespondidos] = useState([])
+    const [chamadosNaoRespondidos, setChamadosNaoRespondidos] = useState([])
+    const [resposta, setResposta] = useState("")
     const [isEmpty, setIsEmpty] = useState(false);
     const [userAdmin, setUserAdmin] = useState(false)
+
     const navigate = useNavigate()
+
+    useEffect(() => {
+        navigate("/admin/em-aberto")
+    }, [navigate]);
 
     useEffect(() => {
         async function checkUserType() {
@@ -43,116 +49,35 @@ export default function Admin() {
         checkUserType();
     }, [user.uid]);
 
-    useEffect(() => {
-        async function loadChamadosNaoRespondidos() {
-            try {
-                const q = query(collection(db, "chamados"), where("resposta", "==", ""));
-                const querySnapshot = await getDocs(q);
-
-                if (!querySnapshot.empty) {
-
-                    const promises = querySnapshot.docs.map(async (doc) => {
-
-                        // Filtro e promises do array de arquivos(fileURLs)
-                        const fileURLs = doc.data().fileURLs || []
-                        const fileRefs = fileURLs.map((url) => ref(storage, url));
-                        const fileURLsPromises = fileRefs.map(async (fileRef) => {
-                            try {
-                                const url = await getDownloadURL(fileRef);
-                                return url;
-                            } catch (error) {
-                                console.error('Erro ao obter URL do arquivo:', error);
-                                return null;
-                            }
-                        });
-
-                        const resolvedFileURLs = await Promise.all(fileURLsPromises)
-
-                        return {
-                            id: doc.id,
-                            titulo: doc.data().titulo,
-                            descricao: doc.data().descricao,
-                            resposta: doc.data().resposta,
-                            fileURLs: resolvedFileURLs.filter((url) => url !== null),
-                        };
-
-                    });
-
-
-                    const chamadoDataWithImages = await Promise.all(promises);
-                    setChamadoNaoRespondidos(chamadoDataWithImages);
-                    setIsEmpty(false)
-
-                } else {
-                    setIsEmpty(true);
-                }
-            } catch (error) {
-                console.error("Erro ao carregar chamados:", error);
-            }
-        }
-
-        loadChamadosNaoRespondidos();
-    }, []);
-
 
     const handleRespond = async (chamadoID, resposta) => {
         try {
-            await updateDoc(doc(db, "chamados", chamadoID, { resposta }))
-            setChamadoNaoRespondidos((prevChamados) =>
-                prevChamados.filter((chamado) => chamado.id != chamadoID)
-            )
-        } catch (error) {
-            console.error("Erro ao responder chamado: ", error)
+            const chamadoRef = doc(db, "chamados", chamadoID)
+            await updateDoc(chamadoRef, {
+                resposta: resposta
+            })
+            toast.success("Chamado respondido.")
+            setResposta("")
+        }
+        catch (error) {
+            toast.error("Erro ao enviar a resposta!")
+            console.log("Erro ao enviar a resposta: ", error)
         }
     }
 
     return (
-        <>
-            <SideBarAdmin />
-            {/* <Content className="chamados-container">
-                <Title>Meus Chamados</Title>
-                <section className="cards-chamados-container">
-                    {userChamados.map((chamado) => (
-                        <div style={chamado.resposta ? answered : notAnswered} className="card-chamado" key={chamado.id}>
-                            <div>
-                                <h2>{chamado.titulo}</h2>
-                                <p>Descrição: <strong className="strong">{chamado.descricao}</strong></p>
-                            </div>
-
-                            <div style={chamado.resposta ? answered : notAnswered} className="card-resposta">
-                                {chamado.resposta ?
-                                    <p>Resposta: <strong>{chamado.resposta}</strong></p>
-                                    :
-                                    <p>Nenhuma resposta encontrada.</p>
-                                }
-                            </div>
-                        </div>
-                    ))}
-                </section>
-                {isEmpty && <p>Nenhum ticket encontrado.</p>}
-            </Content> */}
-
-            <Content className="chamados-container">
-                <section className="cards-chamados-container">
-                    {ChamadoNaoRespondidos.map((chamado) => (
-                        <div key={chamado.id}>
-                            <h3>{chamado.titulo}</h3>
-                            <p>{chamado.descricao}</p>
-                            <input
-                                type="text"
-                                placeholder="Resposta"
-                                onChange={(e) => handleRespond(chamado.id, e.target.value)}
-                            />
-                            {chamado.fileURLs && chamado.fileURLs.map((image, index) => (
-                                <div key={index}>
-                                    <img src={image} width={100} alt='Chamado Image' />
-                                </div>
-                            ))}
-                        </div>
-                    ))}
-                </section>
-                {isEmpty && <p>Nenhum chamado encontrado.</p>}
-            </Content>
-        </>
+        <AdminGlobal.Provider
+            value={{
+                resposta,
+                setResposta,
+                handleRespond,
+                chamadosNaoRespondidos,
+                setChamadosNaoRespondidos,
+                setIsEmpty,
+                isEmpty,
+            }}
+        >
+            {children}
+        </AdminGlobal.Provider>
     )
 }

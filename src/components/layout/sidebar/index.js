@@ -6,9 +6,11 @@ import { AuthContext, LOCAL_STORAGE_KEY } from "../../../contexts/AuthContext"
 import { useContext } from "react"
 
 // Icons
-import { Done, Grade, Logout, MoreHoriz, Person } from '@mui/icons-material';
+import { Logout, Person } from '@mui/icons-material';
 import { PiTicket } from "react-icons/pi";
 import { FiPlus } from "react-icons/fi"
+import { FaFolderOpen } from "react-icons/fa"
+import { MdArchive, MdDone, MdOutlineMoreHoriz } from "react-icons/md"
 
 // Sidebar do usuário
 export function SideBar() {
@@ -90,22 +92,29 @@ export function SideBarAdmin() {
                     <section className="nav-links">
                         <Link to="#">
                             <Button size="large" fullWidth>
-                                <Grade />
+                                <FaFolderOpen size={30} />
                                 Em aberto
                             </Button>
                         </Link>
 
                         <Link to="#">
                             <Button size="large" fullWidth>
-                                <MoreHoriz />
+                                <MdOutlineMoreHoriz size={30} />
                                 Em Andamento
                             </Button>
                         </Link>
 
                         <Link to="#">
                             <Button size="large" fullWidth>
-                                <Done />
+                                <MdDone size={30} />
                                 Finalizados
+                            </Button>
+                        </Link>
+
+                        <Link to="#">
+                            <Button size="large" fullWidth>
+                                <MdArchive size={30} />
+                                Arquivados
                             </Button>
                         </Link>
                     </section>

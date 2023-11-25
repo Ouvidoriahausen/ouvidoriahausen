@@ -62,6 +62,7 @@ export default function NovoChamado() {
                                     fileURLs: fileURLs,
                                     userID: currentUser.uid,
                                     resposta: "",
+                                    status: "Em Aberto",
                                 });
                             }
 
@@ -112,7 +113,7 @@ export default function NovoChamado() {
         const numeroFormatado = String(proximoNumero).padStart(4, '0');
         const idPersonalizado = `${anoAtual}-${numeroFormatado}`;
 
-        if (files.length != 0) {
+        if (files.length !== 0) {
             handleUploadFiles()
             return
         }

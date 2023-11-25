@@ -8,10 +8,7 @@ import { useLoadChamados } from "../utils/loadChamadosNaoRespondidos"
 
 export default function EmAberto() {
 
-    const { resposta, setResposta,
-        handleRespond,
-        setChamadosNaoRespondidos,
-    } = useContext(AdminGlobal)
+    const { resposta, setResposta, handleRespond} = useContext(AdminGlobal)
 
     const { chamadosNaoRespondidos, loadChamadosNaoRespondidos } = useLoadChamados();
 

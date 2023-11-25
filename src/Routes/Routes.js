@@ -7,12 +7,15 @@ import Cadastrar from '../Pages/Cadastrar';
 import Admin from '../Pages/Admin';
 import NovoChamado from '../Pages/NovoChamado';
 import MeusChamados from '../Pages/MeusChamados';
+import ChamadosDetails from '../Pages/ChamadosDetails';
 
 import Private from "./Private"
 import NotFound from '../Pages/NotFound';
 
 import EmAberto from '../Pages/Admin/EmAberto';
 import Finalizados from '../Pages/Admin/Finalizados';
+import Andamento from '../Pages/Admin/Andamento';
+import Arquivado from '../Pages/Admin/Arquivado';
 
 export default function RoutesApp() {
 
@@ -30,13 +33,14 @@ export default function RoutesApp() {
         <Route path="/cadastrar" element={<Cadastrar />} />
         <Route path="/novo-chamado" element={<Private><NovoChamado /></Private>} />
         <Route path="/meus-chamados" element={<Private><MeusChamados /></Private>} />
+        <Route path="/meus-chamados/:id" element={<Private><ChamadosDetails /></Private>} />
 
         {/* Admin */}
         <Route path="/admin" element={<Private><Admin /></Private>} />
         <Route path="/admin/em-aberto" element={<Private><EmAberto /></Private>} />
-        <Route path="/admin/em-andamento" element={<Private><EmAberto /></Private>} />
+        <Route path="/admin/em-andamento" element={<Private><Andamento /></Private>} />
         <Route path="/admin/finalizados" element={<Private><Finalizados /></Private>} />
-        <Route path="/admin/arquivado" element={<Private><EmAberto /></Private>} />
+        <Route path="/admin/arquivados" element={<Private><Arquivado /></Private>} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </>

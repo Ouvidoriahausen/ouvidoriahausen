@@ -66,6 +66,55 @@ export default function MeusChamados() {
             })
     }
 
+    // Status Styles
+    const statusStyles = {
+        aberto: {
+            backgroundColor: "#ff0000",
+            color: "#fff",
+        },
+        finalizado: {
+            backgroundColor: "#23D500",
+            color: "#fff",
+        },
+        andamento: {
+            backgroundColor: "#FFD000",
+            color: "var(--dark-blue)",
+        },
+        arquivado: {
+            backgroundColor: "#7B7B7B",
+            color: "#fff",
+        }
+    }
+
+    const ChamadoStatus = ({ status }) => {
+        const statusKey = status.toLowerCase();
+        const getStatus = statusStyles[statusKey];
+        let statusText = '';
+
+        switch (statusKey) {
+            case 'aberto':
+                statusText = 'Em Aberto';
+                break;
+            case 'finalizado':
+                statusText = 'Finalizado';
+                break;
+            case 'andamento':
+                statusText = 'Em Andamento';
+                break;
+            case 'arquivado':
+                statusText = 'Arquivado';
+                break;
+            default:
+                statusText = '...';
+        }
+
+        return (
+            <span style={getStatus}>
+                {statusText}
+            </span>
+        );
+    };
+
     if (loading) {
         return (
             <Content className="loading-container">
@@ -104,14 +153,12 @@ export default function MeusChamados() {
 
                     <tbody>
                         {userChamados.map((item, index) => (
-                            <tr key={index} className={item.resposta === "" ? "naoRespondido" : "respondido"}>
+                            <tr key={index}>
                                 <td data-label="ID">{item.newID}</td>
                                 <td data-label="Titulo">{item.titulo}</td>
                                 <td data-label="Descrição">{item.descricao}</td>
-                                <td data-label="Status">
-                                    <span>
-                                        {item.status === "" ? "..." : "Em Aberto"}
-                                    </span>
+                                <td className="chamado-status" data-label="Status">
+                                    <ChamadoStatus status={item.status} />
                                 </td>
                                 <td className="actions" data-label="Ações">
                                     <Tooltip title="Detalhes">

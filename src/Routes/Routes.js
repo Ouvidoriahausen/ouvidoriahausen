@@ -1,4 +1,4 @@
-import { Routes, Route, useLocation } from 'react-router-dom';
+import { Routes, Route, useLocation, Navigate } from 'react-router-dom';
 import { SideBar } from '../components/layout/sidebar';
 
 import Home from '../Pages/Home';
@@ -11,15 +11,17 @@ import ChamadosDetails from '../Pages/ChamadosDetails';
 
 import Private from "./Private"
 import NotFound from '../Pages/NotFound';
-
-import EmAberto from '../Pages/Admin/EmAberto';
-import Finalizados from '../Pages/Admin/Finalizados';
-import Andamento from '../Pages/Admin/Andamento';
-import Arquivado from '../Pages/Admin/Arquivado';
+import ChamadosDetailsAdmin from '../Pages/Admin/ChamadosDetailsAdmin';
 
 export default function RoutesApp() {
 
   const path = useLocation().pathname
+
+  if (path === "/admin" || path === "/admin/") {
+    return (
+      <Navigate to="/admin/em-aberto" />
+    )
+  }
 
   const goodRoutes = ["/novo-chamado", "/meus-chamados"]
 
@@ -37,10 +39,12 @@ export default function RoutesApp() {
 
         {/* Admin */}
         <Route path="/admin" element={<Private><Admin /></Private>} />
-        <Route path="/admin/em-aberto" element={<Private><EmAberto /></Private>} />
-        <Route path="/admin/em-andamento" element={<Private><Andamento /></Private>} />
-        <Route path="/admin/finalizados" element={<Private><Finalizados /></Private>} />
-        <Route path="/admin/arquivados" element={<Private><Arquivado /></Private>} />
+        <Route path="/admin/:statusPage" element={<Private><Admin /></Private>} />
+        <Route path="/admin/:statusPage/:id" element={<Private><ChamadosDetailsAdmin /></Private>} />
+        {/* <Route path="/admin/em-aberto" element={<Private><Admin pageTitle="Em Aberto" /></Private>} />
+        <Route path="/admin/em-andamento" element={<Private><Admin pageTitle="Em Andamento" /></Private>} />
+        <Route path="/admin/finalizados" element={<Private><Admin pageTitle="Finalizados" /></Private>} />
+        <Route path="/admin/arquivados" element={<Private><Admin pageTitle="Arquivados" /></Private>} /> */}
         <Route path="*" element={<NotFound />} />
       </Routes>
     </>

@@ -18,7 +18,8 @@
     background-color: white;
     width: 90%;
     max-width: 700px;
-    height: 580px;
+    height: 100%;
+    min-height: 550px;
     border-radius: 7px;
     border: solid 1px white;
     padding: 20px 30px;
@@ -59,6 +60,7 @@
     color: white;
     border-radius: 5px;
     font-size: 18px !important;
+    margin-top: 32px !important;
 }
 
 .image-preview,
@@ -120,17 +122,9 @@
 
 .close-button {
     display: flex;
-    cursor: pointer;
-    position: absolute;
+    position: absolute !important;
     top: 10px;
     right: 10px;
-    border: none;
-    font-size: 20px;
-    color: rgb(255, 255, 255);
-    /* Define a cor do X como vermelho */
-    padding: 4px 10px;
-    border-radius: 4px;
-    background-color: red;
 }
 
 .input-files {

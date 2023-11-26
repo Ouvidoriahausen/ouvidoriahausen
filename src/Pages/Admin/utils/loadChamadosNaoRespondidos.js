@@ -6,10 +6,31 @@ import { useState } from "react";
 export function useLoadChamados() {
 
     const [chamadosNaoRespondidos, setChamadosNaoRespondidos] = useState([]);
+    const [loadingChamados, setLoadingChamados] = useState(false)
 
-    async function loadChamadosNaoRespondidos(statusPage) {
+    async function loadChamadosNaoRespondidos(pageTitle) {
+        setLoadingChamados(true)
+
+        let pageTitleLower = pageTitle.toLowerCase();
+
+        switch (pageTitleLower) {
+            case "em-aberto":
+                pageTitleLower = "em aberto";
+                break;
+            case "em-andamento":
+                pageTitleLower = "em andamento";
+                break;
+            default:
+                break;
+        }
+
+        
+        // Remover hífens e adicionar espaços
+        pageTitleLower = pageTitleLower.replace(/-/g, ' ');
+
+
         try {
-            const q = query(collection(db, "chamados"), where("status", "==", statusPage));
+            const q = query(collection(db, "chamados"), where("status", "==", pageTitleLower));
             const querySnapshot = await getDocs(q);
 
             if (!querySnapshot.empty) {
@@ -29,6 +50,7 @@ export function useLoadChamados() {
 
                     return {
                         id: doc.id,
+                        newID: doc.data().newID,
                         titulo: doc.data().titulo,
                         descricao: doc.data().descricao,
                         resposta: doc.data().resposta,
@@ -39,13 +61,15 @@ export function useLoadChamados() {
 
                 const chamadoDataWithImages = await Promise.all(promises);
                 setChamadosNaoRespondidos(chamadoDataWithImages);
+                setLoadingChamados(false)
 
             } else {
                 setChamadosNaoRespondidos([]);
+                setLoadingChamados(false)
             }
         } catch (error) {
             console.error("Erro ao carregar chamados:", error);
         }
     }
-    return { chamadosNaoRespondidos, loadChamadosNaoRespondidos }
+    return { chamadosNaoRespondidos, loadChamadosNaoRespondidos, loadingChamados }
 }

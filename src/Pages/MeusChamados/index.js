@@ -1,121 +1,36 @@
 import "./meusChamados.css"
-import { collection, deleteDoc, doc, getDocs, query, where } from "firebase/firestore";
-import { useContext, useEffect, useState } from "react"
-import { db } from "../../services/connectionFirebase";
-import { AuthContext } from "../../contexts/AuthContext";
+import { useContext, useEffect } from "react"
+import { Link } from "react-router-dom";
+
+// Local Components
 import { Content } from "../../components/layout/Content";
 import { Title } from "../../components/layout/Title";
+
+//Utils
+import { AuthContext } from "../../contexts/AuthContext";
+import { useLoadChamados } from "../../utils/useLoadChamados";
+
+//Icons and Components
 import { Button, CircularProgress, IconButton, Tooltip } from "@mui/material";
-import { Link } from "react-router-dom";
 import { FiPlus, FiTrash } from "react-icons/fi"
 import { CgDetailsMore } from "react-icons/cg";
-import { toast } from "react-toastify";
+import { ChamadoStatus } from "../../components/styled/chamadoStatus"
+import { useHandleDeleteChamado } from "../../utils/useHandleDeleteChamado";
 
-const listRef = collection(db, "chamados")
 
 export default function MeusChamados() {
 
     const { user } = useContext(AuthContext);
-    const [userChamados, setUserChamados] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [isEmpty, setIsEmpty] = useState(false);
-
+    const { loadChamados, userChamados, loadingChamados } = useLoadChamados()
+    const { handleDeleteChamado } = useHandleDeleteChamado()
 
     useEffect(() => {
-        async function loadChamados() {
-            const q = query(collection(db, "chamados"), where("userID", "==", user.uid));
-            try {
-                const querySnapshot = await getDocs(q);
-                if (!querySnapshot.empty) {
-                    let chamados = [];
-                    querySnapshot.forEach((doc) => {
-                        chamados.push({
-                            id: doc.id,
-                            newID: doc.data().newID,
-                            titulo: doc.data().titulo,
-                            descricao: doc.data().descricao,
-                            resposta: doc.data().resposta,
-                            status: doc.data().status
-                        });
-                    });
-                    setUserChamados(chamados);
-                    setIsEmpty(false)
-                    setLoading(false)
-                } else {
-                    setIsEmpty(true);
-                    setLoading(false)
-                }
-            } catch (error) {
-                console.error("Erro ao carregar chamados:", error);
-            }
-        }
-
-        loadChamados();
+        loadChamados()
     }, [user.uid]);
 
-    async function handleDeleteTicket(id) {
 
-        await deleteDoc(doc(listRef, id))
-            .then(() => {
-                toast.success("Chamado deletado com sucesso!")
-                window.location.reload()
 
-            })
-            .catch(() => {
-                toast.error("Erro ao deletar chamado!")
-            })
-    }
-
-    // Status Styles
-    const statusStyles = {
-        aberto: {
-            backgroundColor: "#ff0000",
-            color: "#fff",
-        },
-        finalizado: {
-            backgroundColor: "#23D500",
-            color: "#fff",
-        },
-        andamento: {
-            backgroundColor: "#FFD000",
-            color: "var(--dark-blue)",
-        },
-        arquivado: {
-            backgroundColor: "#7B7B7B",
-            color: "#fff",
-        }
-    }
-
-    const ChamadoStatus = ({ status }) => {
-        const statusKey = status.toLowerCase();
-        const getStatus = statusStyles[statusKey];
-        let statusText = '';
-
-        switch (statusKey) {
-            case 'aberto':
-                statusText = 'Em Aberto';
-                break;
-            case 'finalizado':
-                statusText = 'Finalizado';
-                break;
-            case 'andamento':
-                statusText = 'Em Andamento';
-                break;
-            case 'arquivado':
-                statusText = 'Arquivado';
-                break;
-            default:
-                statusText = '...';
-        }
-
-        return (
-            <span style={getStatus}>
-                {statusText}
-            </span>
-        );
-    };
-
-    if (loading) {
+    if (loadingChamados) {
         return (
             <Content className="loading-container">
                 <Title>Carregando chamados...</Title>
@@ -147,32 +62,37 @@ export default function MeusChamados() {
                             <th scope="col">Titulo</th>
                             <th scope="col">Descrição</th>
                             <th scope="col">Status</th>
+                            <th scope="col">Resposta</th>
                             <th scope="col">Ações</th>
                         </tr>
                     </thead>
 
                     <tbody>
-                        {userChamados.map((item, index) => (
+                        {userChamados.map((chamado, index) => (
                             <tr key={index}>
-                                <td data-label="ID">{item.newID}</td>
-                                <td data-label="Titulo">{item.titulo}</td>
-                                <td data-label="Descrição">{item.descricao}</td>
-                                <td className="chamado-status" data-label="Status">
-                                    <ChamadoStatus status={item.status} />
+                                <td data-label="ID">{chamado.newID}</td>
+                                <td data-label="Titulo">{chamado.titulo}</td>
+                                <td data-label="Descrição">{chamado.descricao}</td>
+                                <td data-label="Status">
+                                    <ChamadoStatus status={chamado.status} />
+                                </td>
+                                <td data-label="Resposta">
+                                    <span>{chamado.resposta === "" ? "..." : chamado.resposta}</span>
                                 </td>
                                 <td className="actions" data-label="Ações">
-                                    <Tooltip title="Detalhes">
-                                        <IconButton color="secondary" size="large" className="action">
-                                            <CgDetailsMore size={20} />
-                                        </IconButton>
-                                    </Tooltip>
+                                    <Link to={`/meus-chamados/${chamado.id}`}>
+                                        <Tooltip title="Detalhes">
+                                            <IconButton color="secondary" size="large" className="action">
+                                                <CgDetailsMore size={20} />
+                                            </IconButton>
+                                        </Tooltip>
+                                    </Link>
 
-                                    <Tooltip title="Excluir" onClick={() => handleDeleteTicket(item.id)}>
+                                    <Tooltip title="Excluir" onClick={() => handleDeleteChamado(chamado.id)}>
                                         <IconButton color="error" size="large" className="action">
                                             <FiTrash size={20} />
                                         </IconButton>
                                     </Tooltip>
-
                                 </td>
                             </tr>
                         ))}

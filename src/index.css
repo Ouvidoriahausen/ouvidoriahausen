@@ -5,6 +5,7 @@
   --light-blue: #00416f;
   --gray-opacity: #d2d2d2;
   --bg-gray: #f0f0f0;
+  --medium-gray: #ebebeb;
   --respondido: #54fc0042;
   --nao-respondido: #fc000033;
 }
@@ -57,4 +58,12 @@ button {
   width: 100%;
   min-height: 100vh;
   background-color: rgba(0, 0, 0, 0.4);
+}
+
+.chamado-status{
+  background-color: #ACACAC;
+  padding: 8px 12px;
+  color: var(--dark-blue);
+  border-radius: 4px;
+  font-weight: bold;
 }

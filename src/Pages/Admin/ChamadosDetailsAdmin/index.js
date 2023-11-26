@@ -1,28 +1,26 @@
-import "./chamadoDetails.css"
+import "./chamadoDetailsAdmin.css"
 import { useContext, useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom'
 
 // Local Components
-import { Content } from "../../components/layout/Content";
-import { Title } from "../../components/layout/Title";
-import { SideBar, SideBarAdmin } from "../../components/layout/sidebar"
+import { Content } from "../../../components/layout/Content";
+import { Title } from "../../../components/layout/Title";
+import { SideBarAdmin } from "../../../components/layout/sidebar";
 
 //Utils
-import { AuthContext } from "../../contexts/AuthContext";
-import { useLoadChamados } from "../../utils/useLoadChamados";
-import { useHandleDeleteChamado } from '../../utils/useHandleDeleteChamado';
+import { AuthContext } from "../../../contexts/AuthContext";
+import { useHandleDeleteChamado } from '../../../utils/useHandleDeleteChamado';
+import { useLoadChamados } from "../../../utils/useLoadChamados";
 
 //Icons and Components
 import { Box, Button, CircularProgress, Tooltip } from "@mui/material";
-import { ChamadoStatus } from "../../components/styled/chamadoStatus"
-import { useCheckUserType } from "../Admin/utils/checkUserType";
+import { ChamadoStatus } from "../../../components/styled/chamadoStatus"
 
 
-export default function ChamadosDetails() {
+export default function ChamadosDetailsAdmin() {
 
-    const { id } = useParams()
+    const { id, statusPage } = useParams()
     const { user } = useContext(AuthContext);
-    const { checkUserType } = useCheckUserType();
     const { loadChamadoById,
         newID,
         status,
@@ -38,11 +36,6 @@ export default function ChamadosDetails() {
         loadChamadoById(id)
     }, [user.uid]);
 
-    useEffect(() => {
-        checkUserType(user.uid)
-    }, [user.uid]);
-
-
 
     if (loadingChamadoById) {
         return (
@@ -55,9 +48,10 @@ export default function ChamadosDetails() {
         )
     }
 
+
     return (
         <>
-            <SideBar />
+            <SideBarAdmin />
             <Content className="chamado-details-container">
                 <Title>Chamado {newID}</Title>
 
@@ -82,7 +76,7 @@ export default function ChamadosDetails() {
                             <h4>{resposta === "" ? "..." : resposta}</h4>
                         </div>
 
-                        {resposta === "" && <span className="alert-resposta">Seu chamado tem 5 dias úteis para ser respondido.</span>}
+                        {resposta === "" && <span className="alert-resposta">Esse chamado ainda não foi respondido.</span>}
 
                         {files ? (
                             <section className="chamado-details-files">
@@ -98,13 +92,9 @@ export default function ChamadosDetails() {
                             </section>
                         )}
 
-                        <div className="chamado-details-actions">
-                            <Tooltip title="Excluir" onClick={() => handleDeleteChamado(id)}>
-                                <Button variant="contained" color="error" size="large" className="action">
-                                    Excluir chamado
-                                </Button>
-                            </Tooltip>
-                        </div>
+                        <section className="actions">
+
+                        </section>
                     </section>
                 </Box>
             </Content>

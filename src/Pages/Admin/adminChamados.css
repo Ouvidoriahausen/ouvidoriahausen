@@ -28,6 +28,14 @@
     flex-wrap: wrap;
     gap: 20px;
 }
+.chamados-container h1::first-letter{
+    text-transform: uppercase;
+}
+.zero-chamados{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+}
 
 .card-chamado {
     position: relative;

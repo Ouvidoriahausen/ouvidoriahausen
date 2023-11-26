@@ -21,7 +21,6 @@ export function useLoadChamados() {
                             const url = await getDownloadURL(fileRef);
                             return url;
                         } catch (error) {
-                            console.error('Erro ao obter URL do arquivo:', error);
                             return null;
                         }
                     });
@@ -43,7 +42,6 @@ export function useLoadChamados() {
 
             } else {
                 setChamadosNaoRespondidos([]);
-                console.log("Nenhum chamado encontrado com o status:", statusPage);
             }
         } catch (error) {
             console.error("Erro ao carregar chamados:", error);

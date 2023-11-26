@@ -26,9 +26,6 @@ export default function NovoChamado() {
         }))]);
     }, []);
 
-    const acceptedFileTypes = {
-
-    }
 
     const { getRootProps, getInputProps } = useDropzone({
         onDrop,

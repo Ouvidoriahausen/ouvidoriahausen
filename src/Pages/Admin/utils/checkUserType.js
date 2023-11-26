@@ -24,7 +24,6 @@ export function useCheckUserType() {
                     // Se não for um admin, redirecionar para a página Meus Chamados
                     setIsAdmin(false)
                     setLoadingAdmin(true)
-                    console.log("Usuário não é um admin ou não tem um tipo definido.");
                     navigate("meus-chamados");
                 }
             } else {

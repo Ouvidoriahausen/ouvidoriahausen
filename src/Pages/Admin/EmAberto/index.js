@@ -1,14 +1,15 @@
 import "../adminChamados.css"
-import { useContext, useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { Content } from '../../../components/layout/Content'
-import Admin, { AdminGlobal } from '..'
+import Admin from '..'
 import { Button, TextField } from '@mui/material'
 import { useLoadChamados } from "../utils/loadChamadosNaoRespondidos"
+import useHandleRespond from "../utils/useHandleRespond"
 
 export default function EmAberto() {
 
-    const { resposta, setResposta, handleRespond} = useContext(AdminGlobal)
-
+    const [resposta, setResposta] = useState("")
+    const { handleRespond } = useHandleRespond()
     const { chamadosNaoRespondidos, loadChamadosNaoRespondidos } = useLoadChamados();
 
     const statusPage = "Aberto"
@@ -16,6 +17,9 @@ export default function EmAberto() {
         loadChamadosNaoRespondidos(statusPage)
     }, [loadChamadosNaoRespondidos, statusPage]);
 
+    const handleResponder = (chamadoID) => {
+        handleRespond(chamadoID, resposta, setResposta)
+    }
 
     return (
         <Admin>
@@ -36,7 +40,7 @@ export default function EmAberto() {
                                     <img src={image} width={100} alt='Chamado' />
                                 </div>
                             ))}
-                            <Button onClick={() => handleRespond(chamado.id, resposta)}>Enviar</Button>
+                            <Button onClick={() => handleResponder(chamado.id)}>Enviar</Button>
                         </div>
                     ))}
                 </section>

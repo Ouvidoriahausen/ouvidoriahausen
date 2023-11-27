@@ -1,7 +1,7 @@
 import "./adminChamados.css"
-import { useContext, useEffect } from "react"
+import { useContext, useEffect, useState } from "react"
 import { AuthContext } from "../../contexts/AuthContext";
-import { useLocation, Link, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useCheckUserType } from "./utils/checkUserType";
 import { CircularProgress } from "@mui/material";
 import { SideBarAdmin } from "../../components/layout/sidebar";
@@ -13,13 +13,15 @@ import { Title } from "../../components/layout/Title";
 import { ChamadoStatus } from "../../components/styled/chamadoStatus";
 
 
-export default function Admin({ pageTitle }) {
+export default function Admin() {
 
     const { chamadosNaoRespondidos, loadChamadosNaoRespondidos, loadingChamados } = useLoadChamados();
 
     const { checkUserType, loadingAdmin } = useCheckUserType()
     const { user } = useContext(AuthContext)
     const { statusPage } = useParams()
+    let statusTitle = ""
+
 
     useEffect(() => {
         checkUserType(user.uid)
@@ -53,13 +55,30 @@ export default function Admin({ pageTitle }) {
         )
     }
 
+    switch (statusPage) {
+        case "aberto":
+            statusTitle = "Em Aberto"
+            break
+        case "andamento":
+            statusTitle = "Em Andamento"
+            break
+        case "finalizado":
+            statusTitle = "Finalizados"
+            break
+        case "arquivado":
+            statusTitle = "Arquivados"
+            break
+        default:
+            statusTitle = ""
+            break
+    }
 
     return (
         <>
             <SideBarAdmin />
             <Content className="chamados-container">
                 <Title>
-                    {statusPage.replace("-", " ").charAt(0).toUpperCase() + statusPage.replace("-", " ").slice(1)}
+                    {statusTitle}
                 </Title>
 
                 <section className="cards-chamados-container">
@@ -93,7 +112,7 @@ export default function Admin({ pageTitle }) {
                                             <span>{chamado.resposta === "" ? "..." : chamado.resposta}</span>
                                         </td>
                                         <td className="actions" data-label="Ações">
-                                            <Link to={`/admin/${chamado.status.replace(" ", "-")}/${chamado.id}`}>
+                                            <Link to={`/admin/${chamado.status}/${chamado.id}`}>
                                                 <Tooltip title="Detalhes">
                                                     <IconButton color="secondary" size="large" className="action">
                                                         <CgDetailsMore size={20} />

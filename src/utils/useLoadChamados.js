@@ -18,9 +18,8 @@ export function useLoadChamados() {
     const [titulo, setTitulo] = useState("")
     const [descricao, setDescricao] = useState("")
     const [resposta, setResposta] = useState("")
-    const [status, setStatus] = useState("")
+    const [status, setStatus] = useState("em aberto")
     const [files, setFiles] = useState([])
-
 
 
     // Muitos Chamados
@@ -35,6 +34,7 @@ export function useLoadChamados() {
                     chamados.push({
                         id: doc.id,
                         newID: doc.data().newID,
+                        fileURLs: doc.data().fileURLs,
                         titulo: doc.data().titulo,
                         descricao: doc.data().descricao,
                         resposta: doc.data().resposta,
@@ -103,5 +103,8 @@ export function useLoadChamados() {
         files,
         loadingChamadoById,
         isEmptyById,
+
+        setStatus,
+        setResposta,
     }
 }

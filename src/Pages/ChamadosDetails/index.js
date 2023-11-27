@@ -1,11 +1,11 @@
 import "./chamadoDetails.css"
-import { useContext, useEffect, useState } from 'react';
-import { useParams, Link } from 'react-router-dom'
+import { useContext, useEffect } from 'react';
+import { useParams } from 'react-router-dom'
 
 // Local Components
 import { Content } from "../../components/layout/Content";
 import { Title } from "../../components/layout/Title";
-import { SideBar, SideBarAdmin } from "../../components/layout/sidebar"
+import { SideBar } from "../../components/layout/sidebar"
 
 //Utils
 import { AuthContext } from "../../contexts/AuthContext";
@@ -88,7 +88,7 @@ export default function ChamadosDetails() {
                             <section className="chamado-details-files">
                                 {files.map((file, index) => (
                                     <div key={index}>
-                                        <img width={300} src={file} alt={`chamado ${index}`} />
+                                        <img src={file} alt={`chamado ${index}`} />
                                     </div>
                                 ))}
                             </section>

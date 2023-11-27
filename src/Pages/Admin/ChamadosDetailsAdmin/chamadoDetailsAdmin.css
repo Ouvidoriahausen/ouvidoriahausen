@@ -1,4 +1,4 @@
-.chamado-details{
+.chamado-details-admin {
     display: flex;
     flex-direction: column;
     width: 90%;
@@ -8,73 +8,106 @@
     border: 2px solid var(--medium-gray);
     color: var(--dark-blue);
 }
-.chamado-details-main{
+
+.chamado-details-admin-main {
     display: flex;
     width: 100%;
     justify-content: center;
 }
-.chamado-details-title{
+
+.chamado-details-admin-title {
     font-size: 32px;
 }
-.chamado-details-title p{
+
+.chamado-details-admin-title p {
     font-size: 16px;
 }
-.chamado-details-title,
-.chamado-details-description, .chamado-details-status,
-.chamado-details-resposta
-{
+
+.chamado-details-admin-title,
+.chamado-details-admin-description,
+.chamado-details-admin-status,
+.chamado-details-admin-resposta {
     width: 100%;
     display: flex;
     gap: 8px;
 }
-.chamado-details :where(h3, h4, p, span)::first-letter{
+
+.chamado-details-admin :where(h3, h4, p, span)::first-letter {
     text-transform: uppercase;
 }
-.chamado-details-title{
+
+.chamado-details-admin-title {
     align-items: center;
     justify-content: space-between;
 }
 
-.chamado-details-description{
+.chamado-details-admin-description {
     width: 100%;
     border-radius: 4px;
     padding: 10px 20px;
     margin-top: 20px;
     background-color: var(--medium-gray);
 }
-.chamado-details-status{
+
+.chamado-details-admin-status {
     align-items: center;
     margin: 32px 0;
 }
 
-.chamado-details-resposta{
+.chamado-details-admin-resposta {
     align-items: center;
     padding: 20px;
     border-radius: 4px;
     background-color: var(--medium-gray);
 }
 
-.chamado-details-files{
+.chamado-details-admin-files {
     display: flex;
     justify-content: center;
     padding: 20px;
     margin-top: 32px;
     gap: 8px;
 }
-.chamado-details-files img{
+
+.chamado-details-admin-files img {
     width: 200px;
     height: 200px;
     border-radius: 4px;
     object-fit: cover;
 }
 
-.alert-resposta{
+.alert-resposta {
     margin-top: 12px;
     margin-left: 8px;
     color: red;
 }
-.chamado-details-actions{
+
+.chamado-details-admin-actions {
     display: flex;
     width: 100%;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin: 12px 0;
+    gap: 12px;
+}
+
+.chamado-details-admin-actions div {
+    width: 100%;
+}
+
+.action-radio-input{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.action-radio-input .radio-group{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+.action-resposta-input {
+    display: flex;
     justify-content: center;
 }

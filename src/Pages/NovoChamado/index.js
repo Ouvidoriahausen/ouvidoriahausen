@@ -14,6 +14,7 @@ import { LoadingButton } from '@mui/lab';
 export default function NovoChamado() {
     const [titulo, setTitulo] = useState("")
     const [descricao, setDescricao] = useState("")
+    const [status, setStatus] = useState("aberto")
     const [files, setFiles] = useState([]);
     const [displayOverlay, setDisplayOverlay] = useState(true);
     const [loading, setLoading] = useState(false);
@@ -56,8 +57,8 @@ export default function NovoChamado() {
 
             if (files.length > 0) {
                 const promises = files.map(async (file) => {
-                    const fileName = `${currentUser.uid}_${Date.now()}_${file.name}`;
-                    const storageRef = ref(storage, `chamadoFiles/${currentUser.uid}/${fileName}`);
+                    const fileName = `${currentUser.uid}_${file.name}`;
+                    const storageRef = ref(storage, `chamadoFiles/${currentUser.uid}/${newChamadoId}/${fileName}`);
                     const uploadTask = uploadBytesResumable(storageRef, file);
 
                     return new Promise((resolve, reject) => {
@@ -73,13 +74,12 @@ export default function NovoChamado() {
                                 try {
                                     const fileURL = await getDownloadURL(uploadTask.snapshot.ref);
                                     const chamadoDocRef = doc(db, chamadosCollection, newChamadoId);
-                                    const chamadoDocSnap = await getDoc(chamadoDocRef);
-                                    const chamadoData = chamadoDocSnap.data();
 
                                     const updatedFileURLs = chamadoData.fileURLs || [];
                                     updatedFileURLs.push(fileURL);
 
                                     await updateDoc(chamadoDocRef, { fileURLs: updatedFileURLs });
+
                                     resolve();
                                 } catch (error) {
                                     reject(error);
@@ -98,7 +98,7 @@ export default function NovoChamado() {
             toast.error("Erro ao adicionar o chamado e enviar arquivos.");
             console.log("Erro ao adicionar o chamado e enviar arquivos: ", error);
         }
-        finally{
+        finally {
             setLoading(false)
         }
     }
@@ -141,7 +141,7 @@ export default function NovoChamado() {
                 userID: currentUser ? currentUser.uid : '',
                 resposta: "",
                 fileURLs: [],
-                status: "Aberto",
+                status: status,
                 created: new Date(),
             };
 

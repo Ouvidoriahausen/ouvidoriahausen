@@ -13,20 +13,10 @@ export function useLoadChamados() {
 
         let pageTitleLower = pageTitle.toLowerCase();
 
-        switch (pageTitleLower) {
-            case "em-aberto":
-                pageTitleLower = "em aberto";
-                break;
-            case "em-andamento":
-                pageTitleLower = "em andamento";
-                break;
-            default:
-                break;
+        if (pageTitleLower.startsWith("em-")) {
+            pageTitleLower = pageTitleLower.substring(3); // Remover "em-" (3 caracteres)
+            pageTitleLower = pageTitleLower.replace(/-/g, " "); // Substituir todos os hífens por espaços
         }
-
-        
-        // Remover hífens e adicionar espaços
-        pageTitleLower = pageTitleLower.replace(/-/g, ' ');
 
 
         try {

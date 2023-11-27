@@ -41,10 +41,6 @@ export default function RoutesApp() {
         <Route path="/admin" element={<Private><Admin /></Private>} />
         <Route path="/admin/:statusPage" element={<Private><Admin /></Private>} />
         <Route path="/admin/:statusPage/:id" element={<Private><ChamadosDetailsAdmin /></Private>} />
-        {/* <Route path="/admin/em-aberto" element={<Private><Admin pageTitle="Em Aberto" /></Private>} />
-        <Route path="/admin/em-andamento" element={<Private><Admin pageTitle="Em Andamento" /></Private>} />
-        <Route path="/admin/finalizados" element={<Private><Admin pageTitle="Finalizados" /></Private>} />
-        <Route path="/admin/arquivados" element={<Private><Admin pageTitle="Arquivados" /></Private>} /> */}
         <Route path="*" element={<NotFound />} />
       </Routes>
     </>

@@ -106,28 +106,28 @@ export function SideBarAdmin() {
                     <span className="divider" />
 
                     <section className="nav-links">
-                        <Link to="/admin/em-aberto">
+                        <Link to="/admin/aberto">
                             <Button size="large" fullWidth>
                                 <FaFolderOpen size={30} />
                                 Em aberto
                             </Button>
                         </Link>
 
-                        <Link to="/admin/em-andamento">
+                        <Link to="/admin/andamento">
                             <Button size="large" fullWidth>
                                 <MdOutlineMoreHoriz size={30} />
                                 Em Andamento
                             </Button>
                         </Link>
 
-                        <Link to="/admin/finalizados">
+                        <Link to="/admin/finalizado">
                             <Button size="large" fullWidth>
                                 <MdDone size={30} />
                                 Finalizados
                             </Button>
                         </Link>
 
-                        <Link to="/admin/arquivados">
+                        <Link to="/admin/arquivado">
                             <Button size="large" fullWidth>
                                 <MdArchive size={30} />
                                 Arquivados

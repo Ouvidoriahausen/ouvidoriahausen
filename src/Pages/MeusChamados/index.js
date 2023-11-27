@@ -88,7 +88,7 @@ export default function MeusChamados() {
                                         </Tooltip>
                                     </Link>
 
-                                    <Tooltip title="Excluir" onClick={() => handleDeleteChamado(chamado.id)}>
+                                    <Tooltip title="Excluir" onClick={() => handleDeleteChamado(chamado.id, chamado.fileURLs)}>
                                         <IconButton color="error" size="large" className="action">
                                             <FiTrash size={20} />
                                         </IconButton>

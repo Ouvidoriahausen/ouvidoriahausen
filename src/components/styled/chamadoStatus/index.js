@@ -1,6 +1,6 @@
 // Status Styles
 const statusStyles = {
-    "em aberto": {
+    "aberto": {
         backgroundColor: "#ff0000",
         color: "#fff",
     },
@@ -8,7 +8,7 @@ const statusStyles = {
         backgroundColor: "#23D500",
         color: "#fff",
     },
-    "em andamento": {
+    "andamento": {
         backgroundColor: "#FFD000",
         color: "var(--dark-blue)",
     },
@@ -24,13 +24,13 @@ export const ChamadoStatus = ({ status }) => {
     let statusText = '';
 
     switch (statusKey) {
-        case 'em aberto':
+        case 'aberto':
             statusText = 'Em Aberto';
             break;
         case 'finalizado':
             statusText = 'Finalizado';
             break;
-        case 'em andamento':
+        case 'andamento':
             statusText = 'Em Andamento';
             break;
         case 'arquivado':

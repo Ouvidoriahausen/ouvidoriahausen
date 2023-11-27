@@ -4,13 +4,14 @@ import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../contexts/AuthContext';
 import { toast } from 'react-toastify';
 import { Box, Button, TextField } from '@mui/material';
+import { LoadingButton } from '@mui/lab';
 
 export default function Cadastrar() {
   const [nomeUsuario, setNomeUsuario] = useState("")
   const email = `${nomeUsuario}@hausen.com`;
   const [senha, setSenha] = useState("")
 
-  const { Cadastrar, signed } = useContext(AuthContext)
+  const { Cadastrar, signed, loadingAuth } = useContext(AuthContext)
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -66,7 +67,11 @@ export default function Cadastrar() {
           onChange={(e) => setSenha(e.target.value)}
         />
 
-        <Button size="large" type="submit" className="cadastrar-btn" variant='contained'>Cadastrar</Button>
+        {loadingAuth ? (
+          <LoadingButton loading size="large" className="cadastrar-btn" variant='contained'>Cadastrar</LoadingButton>
+        ) : (
+          <Button size="large" type="submit" className="cadastrar-btn" variant='contained'>Cadastrar</Button>
+        )}
 
         <div className="noLoginContainer">
           <span>Já tem uma conta ? <Link to="/login" className="noLogin">Faça login</Link></span>

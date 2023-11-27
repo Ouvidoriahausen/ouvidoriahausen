@@ -1,6 +1,6 @@
 import "./chamadoDetailsAdmin.css"
-import { useContext, useEffect, useState } from 'react';
-import { useParams, Link, useNavigate } from 'react-router-dom'
+import { useContext, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom'
 
 // Local Components
 import { Content } from "../../../components/layout/Content";

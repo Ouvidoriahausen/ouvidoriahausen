@@ -77,7 +77,9 @@ export default function MeusChamados() {
                                     <ChamadoStatus status={chamado.status} />
                                 </td>
                                 <td data-label="Resposta">
-                                    <span>{chamado.resposta === "" ? "..." : chamado.resposta}</span>
+                                    <span>
+                                        {chamado.resposta === "" ? "..." : chamado.resposta}
+                                    </span>
                                 </td>
                                 <td className="actions" data-label="Ações">
                                     <Link to={`/meus-chamados/${chamado.id}`}>
@@ -99,7 +101,6 @@ export default function MeusChamados() {
                     </tbody>
                 </table>
             )}
-
         </Content>
     )
 }

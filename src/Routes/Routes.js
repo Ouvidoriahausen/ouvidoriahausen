@@ -1,4 +1,4 @@
-import { Routes, Route, useLocation, Navigate } from 'react-router-dom';
+import { Routes, Route, useLocation, Navigate, useParams, useNavigate } from 'react-router-dom';
 import { SideBar } from '../components/layout/sidebar';
 
 import Home from '../Pages/Home';
@@ -12,16 +12,20 @@ import ChamadosDetails from '../Pages/ChamadosDetails';
 import Private from "./Private"
 import NotFound from '../Pages/NotFound';
 import ChamadosDetailsAdmin from '../Pages/Admin/ChamadosDetailsAdmin';
+import { useEffect } from 'react';
 
 export default function RoutesApp() {
 
   const path = useLocation().pathname
+  const navigate = useNavigate()
 
-  if (path === "/admin" || path === "/admin/") {
-    return (
-      <Navigate to="/admin/em-aberto" />
-    )
-  }
+  useEffect(() => {
+    if (path === "/admin" || path === "/admin/") {
+      navigate("/admin/aberto")
+    }
+  }, [path, navigate]);
+
+
 
   const goodRoutes = ["/novo-chamado", "/meus-chamados"]
 

@@ -11,16 +11,8 @@ export function useLoadChamados() {
     async function loadChamadosNaoRespondidos(pageTitle) {
         setLoadingChamados(true)
 
-        let pageTitleLower = pageTitle.toLowerCase();
-
-        if (pageTitleLower.startsWith("em-")) {
-            pageTitleLower = pageTitleLower.substring(3); // Remover "em-" (3 caracteres)
-            pageTitleLower = pageTitleLower.replace(/-/g, " "); // Substituir todos os hífens por espaços
-        }
-
-
         try {
-            const q = query(collection(db, "chamados"), where("status", "==", pageTitleLower));
+            const q = query(collection(db, "chamados"), where("status", "==", pageTitle));
             const querySnapshot = await getDocs(q);
 
             if (!querySnapshot.empty) {
@@ -58,7 +50,7 @@ export function useLoadChamados() {
                 setLoadingChamados(false)
             }
         } catch (error) {
-            console.error("Erro ao carregar chamados:", error);
+            //
         }
     }
     return { chamadosNaoRespondidos, loadChamadosNaoRespondidos, loadingChamados }

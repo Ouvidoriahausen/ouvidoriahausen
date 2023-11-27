@@ -5,6 +5,7 @@ import { AuthContext } from '../../contexts/AuthContext';
 import { toast } from 'react-toastify';
 import { Box, Button, TextField } from '@mui/material';
 import { LoadingButton } from "@mui/lab"
+import { FaLock } from "react-icons/fa";
 
 export default function Login() {
 

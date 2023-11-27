@@ -24,7 +24,7 @@ export function useCheckUserType() {
                     // Se não for um admin, redirecionar para a página Meus Chamados
                     setIsAdmin(false)
                     setLoadingAdmin(true)
-                    navigate("meus-chamados");
+                    navigate("/meus-chamados");
                 }
             } else {
                 console.log("Documento do usuário não encontrado no Firestore.");

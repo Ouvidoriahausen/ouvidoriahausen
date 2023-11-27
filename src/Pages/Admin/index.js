@@ -1,9 +1,9 @@
 import "./adminChamados.css"
-import { useContext, useEffect, useState } from "react"
+import { useContext, useEffect } from "react"
 import { AuthContext } from "../../contexts/AuthContext";
-import { Link, useParams } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { useCheckUserType } from "./utils/checkUserType";
-import { CircularProgress } from "@mui/material";
+import { Backdrop, CircularProgress } from "@mui/material";
 import { SideBarAdmin } from "../../components/layout/sidebar";
 import { IconButton, Tooltip } from '@mui/material'
 import { useLoadChamados } from "./utils/loadChamadosNaoRespondidos"
@@ -22,21 +22,20 @@ export default function Admin() {
     const { statusPage } = useParams()
     let statusTitle = ""
 
-
     useEffect(() => {
         checkUserType(user.uid)
     }, [user.uid]);
 
     useEffect(() => {
-        loadChamadosNaoRespondidos(statusPage);
+        loadChamadosNaoRespondidos(statusPage)
     }, [statusPage]);
 
 
     if (loadingAdmin) {
         return (
-            <div className="loading-full">
+            <Backdrop open>
                 <CircularProgress color="secondary" />
-            </div>
+            </Backdrop>
         )
     }
 

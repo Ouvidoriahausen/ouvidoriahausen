@@ -1,12 +1,12 @@
 import "./adminChamados.css"
 import { useContext, useEffect } from "react"
 import { AuthContext } from "../../contexts/AuthContext";
-import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useCheckUserType } from "./utils/checkUserType";
 import { Backdrop, CircularProgress } from "@mui/material";
 import { SideBarAdmin } from "../../components/layout/sidebar";
 import { IconButton, Tooltip } from '@mui/material'
-import { useLoadChamados } from "./utils/loadChamadosNaoRespondidos"
+import { useLoadChamadosAdmin } from "./utils/loadChamadosNaoRespondidos"
 import { CgDetailsMore } from "react-icons/cg"
 import { Content } from "../../components/layout/Content";
 import { Title } from "../../components/layout/Title";
@@ -15,7 +15,7 @@ import { ChamadoStatus } from "../../components/styled/chamadoStatus";
 
 export default function Admin() {
 
-    const { chamadosNaoRespondidos, loadChamadosNaoRespondidos, loadingChamados } = useLoadChamados();
+    const { chamadosNaoRespondidos, loadChamadosNaoRespondidos, loadingChamados } = useLoadChamadosAdmin();
 
     const { checkUserType, loadingAdmin } = useCheckUserType()
     const { user } = useContext(AuthContext)
@@ -23,7 +23,7 @@ export default function Admin() {
     let statusTitle = ""
 
     useEffect(() => {
-        checkUserType(user.uid)
+        checkUserType(user.uid, "/meus-chamados")
     }, [user.uid]);
 
     useEffect(() => {

@@ -1,4 +1,4 @@
-import { Routes, Route, useLocation, Navigate, useParams, useNavigate } from 'react-router-dom';
+import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import { SideBar } from '../components/layout/sidebar';
 
 import Home from '../Pages/Home';

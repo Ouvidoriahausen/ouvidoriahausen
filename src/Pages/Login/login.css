@@ -17,21 +17,75 @@
   color: var(--dark-blue);
   margin-bottom: 24px;
 }
-.form-login input{
+
+.form-login input {
   font-size: 18px;
   padding: 10px;
 }
-.form-login .acessar-btn{
+
+.form-login .acessar-btn {
   font-size: 18px;
   margin-top: 12px;
 }
 
-.noLoginContainer{
+.noLoginContainer {
   display: flex;
   margin-top: 12px;
   justify-content: center;
   align-items: center;
 }
-.noLogin{
+
+.noLogin {
   color: var(--orange);
+}
+
+
+
+
+/* Overlay */
+
+.overlay {
+  display: flex;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  transition: .3s;
+}
+
+.overlay-close-bg{
+  position: absolute;
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+
+.overlay-content {
+  display: flex;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background-color: white;
+  width: 90%;
+  max-width: 800px;
+  height: 12rem;
+  padding: 0 40px;
+  border-radius: 4px;
+  font-size: 24px;
+  color: var(--dark-blue);
+  transition: .3s;
+}
+
+.close-button {
+  display: flex;
+  position: absolute !important;
+  top: 10px;
+  right: 10px;
 }

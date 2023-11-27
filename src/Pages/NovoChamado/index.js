@@ -2,7 +2,7 @@ import './novoChamado.css';
 import { useCallback, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { auth, db, storage } from '../../services/connectionFirebase';
-import { addDoc, collection, doc, getDoc, getDocs, limit, orderBy, query, updateDoc } from 'firebase/firestore';
+import { addDoc, collection, doc, getDocs, limit, orderBy, query, updateDoc } from 'firebase/firestore';
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage"
 import { toast } from 'react-toastify';
 import { Content } from '../../components/layout/Content';
@@ -16,7 +16,7 @@ export default function NovoChamado() {
     const [descricao, setDescricao] = useState("")
     const [status, setStatus] = useState("aberto")
     const [files, setFiles] = useState([]);
-    const [displayOverlay, setDisplayOverlay] = useState(true);
+
     const [loading, setLoading] = useState(false);
     const chamadosCollection = "chamados"
 
@@ -37,11 +37,6 @@ export default function NovoChamado() {
         }
     });
 
-
-
-    const closeOverlay = () => {
-        setDisplayOverlay(false);
-    };
 
     async function handleUploadFiles(chamadoData) {
         setLoading(true)
@@ -167,14 +162,6 @@ export default function NovoChamado() {
     return (
         <Content className="new-chamado-container">
             <Title>Novo Chamado</Title>
-            {displayOverlay && (
-                <div className='overlay'>
-                    <div className='overlay-content'>
-                        <p>Sinta-se seguro ao fazer sua demanda, você está totalmente anônimo e protegido.</p>
-                        <Button color="error" variant="contained" onClick={closeOverlay} className="close-button">x</Button>
-                    </div>
-                </div>
-            )}
 
             <section className="form-container">
                 <Box component="form" className='formulario-chamado' onSubmit={handleSubmitChamado}>
@@ -229,9 +216,14 @@ export default function NovoChamado() {
                             Loading...
                         </LoadingButton>
                     ) : (
-                        <Button size="large" variant="contained" className="btn-enviar" type="submit">
-                            Enviar Chamado
-                        </Button>
+                        <>
+                            <Button size="large" variant="contained" className="btn-enviar" type="submit">
+                                Enviar Chamado
+                            </Button>
+                            <span style={{textAlign: "center", margin: "12px 0", color: "red"}}>
+                                Seu chamado terá 5 dias úteis para ser respondido.
+                            </span>
+                        </>
                     )}
                 </Box>
             </section>

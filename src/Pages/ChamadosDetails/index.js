@@ -15,14 +15,12 @@ import { useHandleDeleteChamado } from '../../utils/useHandleDeleteChamado';
 //Icons and Components
 import { Box, Button, CircularProgress, Tooltip } from "@mui/material";
 import { ChamadoStatus } from "../../components/styled/chamadoStatus"
-import { useCheckUserType } from "../Admin/utils/checkUserType";
 
 
 export default function ChamadosDetails() {
 
     const { id } = useParams()
     const { user } = useContext(AuthContext);
-    const { checkUserType } = useCheckUserType();
     const { loadChamadoById,
         newID,
         status,
@@ -30,7 +28,7 @@ export default function ChamadosDetails() {
         titulo,
         resposta,
         files,
-        loadingChamadoById,
+        loadingChamados,
     } = useLoadChamados()
     const { handleDeleteChamado } = useHandleDeleteChamado()
 
@@ -38,13 +36,7 @@ export default function ChamadosDetails() {
         loadChamadoById(id)
     }, [user.uid]);
 
-    useEffect(() => {
-        checkUserType(user.uid)
-    }, [user.uid]);
-
-
-
-    if (loadingChamadoById) {
+    if (loadingChamados) {
         return (
             <Content className="loading-container">
                 <Title>Carregando chamados...</Title>
@@ -84,12 +76,12 @@ export default function ChamadosDetails() {
 
                         {resposta === "" && <span className="alert-resposta">Seu chamado tem 5 dias úteis para ser respondido.</span>}
 
-                        {files ? (
+                        {files.length !== 0 ? (
                             <section className="chamado-details-files">
                                 {files.map((file, index) => (
                                     <div key={index}>
                                         <img src={file} alt={`chamado ${index}`} />
-                                    </div>
+                                    </div>  
                                 ))}
                             </section>
                         ) : (

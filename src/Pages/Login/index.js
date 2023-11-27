@@ -3,9 +3,9 @@ import { useContext, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../contexts/AuthContext';
 import { toast } from 'react-toastify';
-import { Box, Button, TextField } from '@mui/material';
+import { Box, Button, IconButton, TextField, Tooltip } from '@mui/material';
 import { LoadingButton } from "@mui/lab"
-import { FaLock } from "react-icons/fa";
+import { IoClose } from "react-icons/io5";
 
 export default function Login() {
 
@@ -13,6 +13,7 @@ export default function Login() {
   const email = `${nomeUsuario}@hausen.com`; // Mantém o domínio fictício
   const [senha, setSenha] = useState("")
 
+  const [displayOverlay, setDisplayOverlay] = useState(true)
   const { FazerLogin, signed, loadingAuth } = useContext(AuthContext)
   const navigate = useNavigate()
 
@@ -22,6 +23,9 @@ export default function Login() {
     }
   }, [signed, navigate]);
 
+  const closeOverlay = () => {
+    setDisplayOverlay(false);
+  };
 
   async function handleLogin(e) {
     e.preventDefault()
@@ -35,6 +39,20 @@ export default function Login() {
 
   return (
     <div className="container-center">
+
+      {displayOverlay && (
+        <div className='overlay'>
+          <span className="overlay-close-bg" onClick={closeOverlay} />
+          <div className='overlay-content'>
+            <p>Sinta-se seguro ao fazer sua demanda, você está totalmente anônimo e protegido.</p>
+            
+            <IconButton color="error" size="large" onClick={closeOverlay} className="close-button">
+              <IoClose size={20} />
+            </IconButton>
+          </div>
+        </div>
+      )}
+
       <Box className="form-login" component="form" onSubmit={handleLogin}>
         <h2>Faça seu login</h2>
 

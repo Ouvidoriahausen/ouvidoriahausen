@@ -5,7 +5,7 @@
     max-width: 900px;
     border-radius: 12px;
     padding: 24px 40px;
-    border: 2px solid var(--medium-gray);
+    border: 1px solid lightgray;
     color: var(--dark-blue);
 }
 .chamado-details-main{

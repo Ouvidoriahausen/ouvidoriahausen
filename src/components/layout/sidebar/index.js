@@ -1,14 +1,14 @@
 import "./sidebar.css"
 import LogoOuvidoria from "../../../assets/header-ouvidoria.png"
 import { Link } from "react-router-dom"
-import { Button } from "@mui/material"
+import { Button, IconButton, Tooltip } from "@mui/material"
 import { AuthContext, LOCAL_STORAGE_KEY } from "../../../contexts/AuthContext"
 import { useContext, useEffect } from "react"
 
 // Icons
-import { Logout, Person } from '@mui/icons-material';
+import { Person } from '@mui/icons-material';
 import { PiTicketFill } from "react-icons/pi";
-import { FiPlus } from "react-icons/fi"
+import { FiPlus, FiLogOut } from "react-icons/fi"
 import { FaFolderOpen } from "react-icons/fa"
 import { MdArchive, MdDone, MdOutlineMoreHoriz } from "react-icons/md"
 import { RiAdminFill } from "react-icons/ri";
@@ -73,9 +73,11 @@ export function SideBar() {
                         <Person />
                         <span>{userStorage.nome}</span>
 
-                        <Button onClick={logout} color="error" variant="contained">
-                            <Logout />
-                        </Button>
+                        <Tooltip title="Sair">
+                            <Button onClick={logout} color="error" variant="contained">
+                                <FiLogOut size={25} />
+                            </Button>
+                        </Tooltip>
                     </section>
                 </div>
             </section>
@@ -143,7 +145,7 @@ export function SideBarAdmin() {
                         <span>{UserName.nome}</span>
 
                         <Button onClick={logout} color="error" variant="contained">
-                            <Logout />
+                            <FiLogOut size={25} />
                         </Button>
                     </section>
                 </div>

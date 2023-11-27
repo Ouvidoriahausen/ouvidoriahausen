@@ -3,7 +3,7 @@ import { getDownloadURL, ref } from "firebase/storage";
 import { db, storage } from "../../../services/connectionFirebase";
 import { useState } from "react";
 
-export function useLoadChamados() {
+export function useLoadChamadosAdmin() {
 
     const [chamadosNaoRespondidos, setChamadosNaoRespondidos] = useState([]);
     const [loadingChamados, setLoadingChamados] = useState(false)

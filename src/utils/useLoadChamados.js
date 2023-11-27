@@ -12,7 +12,6 @@ export function useLoadChamados() {
     const [isEmpty, setIsEmpty] = useState(false);
 
     // Um chamado
-    const [loadingChamadoById, setLoadingChamadoById] = useState([])
     const [isEmptyById, setIsEmptyById] = useState(false);
     const [newID, setNewID] = useState("")
     const [titulo, setTitulo] = useState("")
@@ -58,7 +57,7 @@ export function useLoadChamados() {
     // Apenas um chamado
 
     async function loadChamadoById(id) {
-        setLoadingChamadoById(true)
+        setLoadingChamados(true)
 
         const docRef = doc(db, "chamados", id);
         try {
@@ -73,10 +72,10 @@ export function useLoadChamados() {
                 setFiles(data.fileURLs)
 
                 setIsEmptyById(false)
-                setLoadingChamadoById(false)
+                setLoadingChamados(false)
             } else {
                 setIsEmptyById(true)
-                setLoadingChamadoById(false)
+                setLoadingChamados(false)
             }
         } catch (error) {
             console.error("Erro ao carregar chamado:", error);
@@ -101,7 +100,6 @@ export function useLoadChamados() {
         status,
         resposta,
         files,
-        loadingChamadoById,
         isEmptyById,
 
         setStatus,

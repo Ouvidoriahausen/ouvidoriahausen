@@ -9,8 +9,10 @@ export function useCheckUserType() {
     const [loadingAdmin, setLoadingAdmin] = useState(false)
     const navigate = useNavigate()
 
-    async function checkUserType(userID) {
+    async function checkUserType(userID, rota) {
+
         setLoadingAdmin(true)
+        
         const userDocRef = doc(db, "users", userID);
         try {
             const userDocSnap = await getDoc(userDocRef);
@@ -24,7 +26,7 @@ export function useCheckUserType() {
                     // Se não for um admin, redirecionar para a página Meus Chamados
                     setIsAdmin(false)
                     setLoadingAdmin(true)
-                    navigate("/meus-chamados");
+                    {rota && navigate(rota);}
                 }
             } else {
                 console.log("Documento do usuário não encontrado no Firestore.");
@@ -33,5 +35,5 @@ export function useCheckUserType() {
             console.error("Erro ao verificar o tipo do usuário:", error);
         }
     }
-    return { checkUserType, setIsAdmin, isAdmin, loadingAdmin, setLoadingAdmin}
+    return { checkUserType, setIsAdmin, isAdmin, loadingAdmin, setLoadingAdmin }
 }

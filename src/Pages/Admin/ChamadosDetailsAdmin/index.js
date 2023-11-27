@@ -30,7 +30,7 @@ export default function ChamadosDetailsAdmin() {
         titulo,
         resposta,
         files,
-        loadingChamadoById,
+        loadingChamados,
         setResposta,
         setStatus,
     } = useLoadChamados()
@@ -41,7 +41,7 @@ export default function ChamadosDetailsAdmin() {
     }, [user.uid]);
 
 
-    if (loadingChamadoById) {
+    if (loadingChamados) {
         return (
             <Content className="loading-container">
                 <Title>Carregando chamados...</Title>

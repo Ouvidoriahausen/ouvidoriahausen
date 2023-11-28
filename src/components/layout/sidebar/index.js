@@ -26,6 +26,7 @@ export function SideBar() {
         checkIsMaster(userStorage.uid)
     }, [userStorage]);
 
+
     return (
         <div className="sidebar-container">
             <section className="navbar">
@@ -33,8 +34,6 @@ export function SideBar() {
                 <div className="navbrand">
                     <img src={LogoOuvidoria} alt='Ouvidoria' />
                 </div>
-
-
 
                 {isAdmin ? (
                     <nav variant="pills" className="nav">
@@ -109,10 +108,17 @@ export function SideBar() {
                     <section>
                         <div className="nav-userName">
                             <FaUser size={25} />
-                            <span>{userStorage.nome}</span>
+                            <p>
+                                {userStorage.nome}
+                                {isAdmin &&(
+                                    <span>
+                                        {userStorage.type === "admin" ? "Admin" : "Master"}
+                                    </span>
+                                )}
+                            </p>
                         </div>
 
-                        <Tooltip title="Sair" placement="top">
+                        <Tooltip title="Sair" placement="right">
                             <Button onClick={logout} color="error" variant="contained">
                                 <FiLogOut size={25} />
                             </Button>

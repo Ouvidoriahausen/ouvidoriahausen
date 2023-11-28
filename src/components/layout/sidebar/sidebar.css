@@ -65,7 +65,7 @@
     display: flex;
     flex-direction: column;
     position: absolute;
-    bottom: 50px;
+    bottom: 30px;
     width: 100%;
     gap: 12px;
     color: var(--white);
@@ -79,9 +79,10 @@
 
 .nav-logout section {
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 12px;
+    gap: 20px;
 }
 .nav-logout section .nav-userName{
     display: flex;
@@ -90,11 +91,20 @@
     gap: 8px;
 }
 
-.nav-logout .nav-userName span {
+.nav-logout .nav-userName p {
     font-size: 20px;
     color: var(--white);
 }
 
-.nav-logout .nav-userName span::first-letter {
+.nav-logout .nav-userName p::first-letter {
     text-transform: uppercase;
+}
+
+.nav-logout .nav-userName span{
+    margin-left: 8px;
+    font-size: 16px;
+    padding: 4px 8px;
+    border-radius: 8px;
+    user-select: none;
+    background-color: var(--orange);
 }

@@ -1,13 +1,13 @@
 import "./meusChamados.css"
 import { useContext, useEffect } from "react"
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 
 // Local Components
 import { Content } from "../../components/layout/Content";
 import { Title } from "../../components/layout/Title";
 
 //Utils
-import { AuthContext } from "../../contexts/AuthContext";
+import { AuthContext, LOCAL_STORAGE_KEY } from "../../contexts/AuthContext";
 import { useLoadChamados } from "../../utils/useLoadChamados";
 
 //Icons and Components
@@ -16,13 +16,26 @@ import { FiPlus, FiTrash } from "react-icons/fi"
 import { CgDetailsMore } from "react-icons/cg";
 import { ChamadoStatus } from "../../components/styled/chamadoStatus"
 import { useHandleDeleteChamado } from "../../utils/useHandleDeleteChamado";
+import { useCheckUserType } from "../../utils/useCheckUserType";
 
 
 export default function MeusChamados() {
 
     const { user } = useContext(AuthContext);
     const { loadChamados, userChamados, loadingChamados } = useLoadChamados()
+    const { checkUserType, isMaster, isAdmin } = useCheckUserType()
     const { handleDeleteChamado } = useHandleDeleteChamado()
+    const UserLocalStorage = localStorage.getItem(LOCAL_STORAGE_KEY)
+    const userStorage = JSON.parse(UserLocalStorage)
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        checkUserType(userStorage.uid)
+
+        if (isAdmin || isMaster) {
+            navigate("/admin")
+        }
+    }, [isAdmin, isMaster, checkUserType]);
 
     useEffect(() => {
         loadChamados()

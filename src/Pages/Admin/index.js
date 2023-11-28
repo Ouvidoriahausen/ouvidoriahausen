@@ -6,7 +6,6 @@ import { Link, useParams } from "react-router-dom";
 import { Backdrop, CircularProgress, IconButton, Tooltip } from "@mui/material";
 
 // Local Components
-import { SideBarAdmin } from "../../components/layout/sidebar";
 import { Content } from "../../components/layout/Content";
 import { Title } from "../../components/layout/Title";
 import { ChamadoStatus } from "../../components/styled/chamadoStatus";

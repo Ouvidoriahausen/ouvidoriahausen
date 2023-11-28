@@ -3,7 +3,7 @@
     flex-direction: column;
     width: 90%;
     max-width: 900px;
-    border-radius: 12px;
+    border-radius: 8px;
     padding: 24px 40px;
     border: 1px solid lightgray;
     color: var(--dark-blue);

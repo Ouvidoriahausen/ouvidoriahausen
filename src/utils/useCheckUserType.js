@@ -37,7 +37,7 @@ export function useCheckUserType() {
         }
     }
 
-    async function checkIsMaster(userID) {
+    async function checkIsMaster(userID, rota) {
         setLoadingUserType(true)
         
         const userDocRef = doc(db, "users", userID);
@@ -49,10 +49,15 @@ export function useCheckUserType() {
                 if (userType === "master") {
                     setIsMaster(true);
                     setLoadingUserType(false)
-                } else {
+                } else if(userType === "admin") {
                     setIsMaster(false);
                     setLoadingUserType(false)
-                    navigate("/admin");
+                    { rota && navigate(rota); }
+                }
+                else{
+                    setIsMaster(false)
+                    setLoadingUserType(false)
+                    { rota && navigate(rota); }
                 }
             } else {
                 console.log("Documento do usuário não encontrado no Firestore.");

@@ -10,7 +10,7 @@ export default function DashboardMaster() {
     const { checkIsMaster, loadingUserType } = useCheckUserType()
 
     useEffect(() => {
-        checkIsMaster(user.uid)
+        checkIsMaster(user.uid, "/admin")
     }, [user.uid]);
 
     if (loadingUserType) {

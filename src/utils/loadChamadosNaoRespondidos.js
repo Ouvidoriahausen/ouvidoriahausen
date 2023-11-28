@@ -1,7 +1,7 @@
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { getDownloadURL, ref } from "firebase/storage";
-import { db, storage } from "../../../services/connectionFirebase";
 import { useState } from "react";
+import { db, storage } from "../services/connectionFirebase";
 
 export function useLoadChamadosAdmin() {
 

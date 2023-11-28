@@ -1,18 +1,22 @@
+import { useContext, useEffect } from 'react';
 import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import { SideBar } from '../components/layout/sidebar';
 
+// Common user pages
 import Home from '../Pages/Home';
 import Login from '../Pages/Login';
 import Cadastrar from '../Pages/Cadastrar';
-import Admin from '../Pages/Admin';
 import NovoChamado from '../Pages/NovoChamado';
 import MeusChamados from '../Pages/MeusChamados';
 import ChamadosDetails from '../Pages/ChamadosDetails';
 
 import Private from "./Private"
 import NotFound from '../Pages/NotFound';
+
+// Admin and Master
+import Admin from '../Pages/Admin';
 import ChamadosDetailsAdmin from '../Pages/Admin/ChamadosDetailsAdmin';
-import { useEffect } from 'react';
+import DashboardMaster from '../Pages/DashboardMaster';
 
 export default function RoutesApp() {
 
@@ -20,18 +24,26 @@ export default function RoutesApp() {
   const navigate = useNavigate()
 
   useEffect(() => {
-    if (path === "/admin" || path === "/admin/") {
-      navigate("/admin/aberto")
+    // Caso o usuário acessar rotas sem componentes
+    switch (path) {
+      case "/admin":
+        navigate("/admin/aberto")
+        break;
+      case "/admin/":
+        navigate("/admin/aberto")
+        break;
+
+      default:
+        break;
     }
   }, [path, navigate]);
 
 
-
-  const goodRoutes = ["/novo-chamado", "/meus-chamados"]
+  const badRoutes = ["/login", "/cadastrar", "/"]
 
   return (
     <>
-      {goodRoutes.find(route => route === path) ? <SideBar /> : null}
+      {!badRoutes.find(route => route === path) ? <SideBar /> : null}
       <Routes>
         {/* User */}
         <Route path="/" element={<Home />} />
@@ -45,6 +57,10 @@ export default function RoutesApp() {
         <Route path="/admin" element={<Private><Admin /></Private>} />
         <Route path="/admin/:statusPage" element={<Private><Admin /></Private>} />
         <Route path="/admin/:statusPage/:id" element={<Private><ChamadosDetailsAdmin /></Private>} />
+
+        {/* Master */}
+        <Route path="/dashboard" element={<Private><DashboardMaster /></Private>} />
+
         <Route path="*" element={<NotFound />} />
       </Routes>
     </>

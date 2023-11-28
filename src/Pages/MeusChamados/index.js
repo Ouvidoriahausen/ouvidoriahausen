@@ -1,6 +1,6 @@
 import "./meusChamados.css"
 import { useContext, useEffect } from "react"
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 // Local Components
 import { Content } from "../../components/layout/Content";
@@ -27,7 +27,6 @@ export default function MeusChamados() {
     useEffect(() => {
         loadChamados()
     }, [user.uid]);
-
 
 
     if (loadingChamados) {

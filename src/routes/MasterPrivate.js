@@ -4,7 +4,7 @@ import { AuthContext } from "../contexts/AuthContext"
 import { Backdrop, CircularProgress } from "@mui/material";
 import { useUserType } from "../hooks/useUserType";
 
-export default function Private({ children }) {
+export default function MasterPrivate({ children }) {
 
     const { signed, loading } = useContext(AuthContext)
     const userType = useUserType()
@@ -17,9 +17,9 @@ export default function Private({ children }) {
         )
     }
 
-    if (userType !== "comum" && !signed) {
+    if (userType !== "master" && !signed) {
         return <Navigate to="/" />
     }
 
-    return children
+    return children;
 }

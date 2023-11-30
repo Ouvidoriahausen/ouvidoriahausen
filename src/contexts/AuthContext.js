@@ -71,14 +71,14 @@ export default function AuthProvider({ children }) {
           userID: uid,
           nome: userName,
           email: email,
-          type: "",
+          type: "comum",
         })
           .then(() => {
             let data = {
               uid: uid,
               nome: userName,
               email: email,
-              type: "",
+              type: "comum",
             }
 
             setUser(data)

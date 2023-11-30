@@ -71,7 +71,7 @@
     color: var(--white);
 }
 
-.nav-logout .MuiButton-text{
+.nav-logout .MuiButton-text {
     display: flex;
     width: 100%;
     margin-bottom: 12px;
@@ -84,7 +84,8 @@
     justify-content: center;
     gap: 20px;
 }
-.nav-logout section .nav-userName{
+
+.nav-logout section .nav-userName {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -96,15 +97,16 @@
     color: var(--white);
 }
 
-.nav-logout .nav-userName p::first-letter {
-    text-transform: uppercase;
-}
-
-.nav-logout .nav-userName span{
+.nav-logout .nav-userName span {
     margin-left: 8px;
     font-size: 16px;
     padding: 4px 8px;
     border-radius: 8px;
     user-select: none;
     background-color: var(--orange);
+}
+
+.nav-userName p::first-letter,
+.nav-userName span::first-letter {
+    text-transform: uppercase;
 }

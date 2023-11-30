@@ -67,6 +67,8 @@ export default function Cadastrar() {
           onChange={(e) => setSenha(e.target.value)}
         />
 
+        {nomeUsuario.length !== 0 && <span style={{ color: "red" }}>Sugestão: Para maior segurança, não coloque seu nome real.</span>}
+
         {loadingAuth ? (
           <LoadingButton loading size="large" className="cadastrar-btn" variant='contained'>Cadastrar</LoadingButton>
         ) : (

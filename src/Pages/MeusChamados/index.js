@@ -1,46 +1,43 @@
 import "./meusChamados.css"
-import { useContext, useEffect } from "react"
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { useContext, useEffect, useState } from "react"
+import { Link, useNavigate } from "react-router-dom";
 
 // Local Components
 import { Content } from "../../components/layout/Content";
 import { Title } from "../../components/layout/Title";
 
 //Utils
-import { AuthContext, LOCAL_STORAGE_KEY } from "../../contexts/AuthContext";
-import { useLoadChamados } from "../../utils/useLoadChamados";
+import { AuthContext } from "../../contexts/AuthContext";
+import { useLoadChamados } from "../../hooks/useLoadChamados";
+import { useHandleDeleteChamado } from "../../hooks/useHandleDeleteChamado";
 
 //Icons and Components
 import { Button, CircularProgress, IconButton, Tooltip } from "@mui/material";
 import { FiPlus, FiTrash } from "react-icons/fi"
 import { CgDetailsMore } from "react-icons/cg";
 import { ChamadoStatus } from "../../components/styled/chamadoStatus"
-import { useHandleDeleteChamado } from "../../utils/useHandleDeleteChamado";
-import { useCheckUserType } from "../../utils/useCheckUserType";
+import { useUserType } from "../../hooks/useUserType";
 
 
 export default function MeusChamados() {
 
     const { user } = useContext(AuthContext);
     const { loadChamados, userChamados, loadingChamados } = useLoadChamados()
-    const { checkUserType, isMaster, isAdmin } = useCheckUserType()
     const { handleDeleteChamado } = useHandleDeleteChamado()
-    const UserLocalStorage = localStorage.getItem(LOCAL_STORAGE_KEY)
-    const userStorage = JSON.parse(UserLocalStorage)
+
+    const userType = useUserType()
     const navigate = useNavigate()
 
+    // Verificação de usuário
     useEffect(() => {
-        checkUserType(userStorage.uid)
-
-        if (isAdmin || isMaster) {
+        if (userType !== "comum") {
             navigate("/admin")
         }
-    }, [isAdmin, isMaster, checkUserType]);
+    }, [userType]);
 
     useEffect(() => {
         loadChamados()
     }, [user.uid]);
-
 
     if (loadingChamados) {
         return (
@@ -52,6 +49,7 @@ export default function MeusChamados() {
             </Content>
         )
     }
+
 
     return (
         <Content className="chamados-container">

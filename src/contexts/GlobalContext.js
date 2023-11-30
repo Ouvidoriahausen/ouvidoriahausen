@@ -1,9 +1,12 @@
+import { UserTypeProvider } from "../hooks/useUserType";
 import AuthProvider from "./AuthContext";
 
-export default function GlobalProvider({ children }){
-    return(
+export default function GlobalProvider({ children }) {
+    return (
         <AuthProvider>
-            {children}
+            <UserTypeProvider>
+                {children}
+            </UserTypeProvider>
         </AuthProvider>
     )
 }

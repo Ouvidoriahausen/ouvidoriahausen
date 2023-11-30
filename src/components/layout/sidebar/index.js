@@ -3,7 +3,7 @@ import LogoOuvidoria from "../../../assets/header-ouvidoria.png"
 import { Link } from "react-router-dom"
 import { Button, Tooltip } from "@mui/material"
 import { AuthContext, LOCAL_STORAGE_KEY } from "../../../contexts/AuthContext"
-import { useContext, useEffect } from "react"
+import { useContext } from "react"
 
 // Icons
 import { PiTicketFill } from "react-icons/pi";
@@ -11,21 +11,15 @@ import { FiPlus, FiLogOut } from "react-icons/fi"
 import { FaFolderOpen, FaUser } from "react-icons/fa"
 import { MdArchive, MdDone, MdOutlineMoreHoriz } from "react-icons/md"
 import { RiAdminFill } from "react-icons/ri";
-import { useCheckUserType } from "../../../utils/useCheckUserType"
+import { useUserType } from "../../../hooks/useUserType"
 
-// Sidebar do usuário
+
 export function SideBar() {
 
     const { logout } = useContext(AuthContext)
-    const { isAdmin, isMaster, checkUserType, checkIsMaster } = useCheckUserType()
     const UserLocalStorage = localStorage.getItem(LOCAL_STORAGE_KEY)
     const userStorage = JSON.parse(UserLocalStorage)
-
-    useEffect(() => {
-        checkUserType(userStorage.uid)
-        checkIsMaster(userStorage.uid)
-    }, [userStorage]);
-
+    const userType = useUserType()
 
     return (
         <div className="sidebar-container">
@@ -35,7 +29,7 @@ export function SideBar() {
                     <img src={LogoOuvidoria} alt='Ouvidoria' />
                 </div>
 
-                {isAdmin ? (
+                {userType === "admin" || userType === "master" ? (
                     <nav variant="pills" className="nav">
                         <h3 className="sidebar-title">Chamados</h3>
 
@@ -96,7 +90,7 @@ export function SideBar() {
                 )}
 
                 <div className="nav-logout">
-                    {isMaster && <Link to="/dashboard">
+                    {userType === "master" && <Link to="/dashboard">
                         <Button size="large" fullWidth>
                             <RiAdminFill size={25} />
                             Dashboard
@@ -110,11 +104,7 @@ export function SideBar() {
                             <FaUser size={25} />
                             <p>
                                 {userStorage.nome}
-                                {isAdmin &&(
-                                    <span>
-                                        {userStorage.type === "admin" ? "Admin" : "Master"}
-                                    </span>
-                                )}
+                                {userType !== "comum" && <span>{userType}</span>}
                             </p>
                         </div>
 

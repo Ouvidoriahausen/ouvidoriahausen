@@ -1,9 +1,9 @@
 import "./adminChamados.css"
-import { useContext, useEffect } from "react"
-import { Link, useParams } from "react-router-dom";
+import { useEffect } from "react"
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 // Material UI
-import { Backdrop, CircularProgress, IconButton, Tooltip } from "@mui/material";
+import { CircularProgress, IconButton, Tooltip } from "@mui/material";
 
 // Local Components
 import { Content } from "../../components/layout/Content";
@@ -14,36 +14,31 @@ import { ChamadoStatus } from "../../components/styled/chamadoStatus";
 import { CgDetailsMore } from "react-icons/cg"
 
 // Utils
-import { AuthContext } from "../../contexts/AuthContext";
-import { useCheckUserType } from "../../utils/useCheckUserType";
-import { useLoadChamadosAdmin } from "../../utils/loadChamadosNaoRespondidos";
+import { useLoadChamadosAdmin } from "../../hooks/useLoadChamadosSemResposta";
+import { useUserType } from "../../hooks/useUserType";
 
 
 export default function Admin() {
 
     const { chamadosNaoRespondidos, loadChamadosNaoRespondidos, loadingChamados } = useLoadChamadosAdmin();
-
-    const { checkUserType, loadingAdmin } = useCheckUserType()
-    const { user } = useContext(AuthContext)
     const { statusPage } = useParams()
     let statusTitle = ""
 
+    const userType = useUserType()
+    const navigate = useNavigate()
+
+    // Verificação de usuário
     useEffect(() => {
-        checkUserType(user.uid, "/meus-chamados")
-    }, [user.uid]);
+        if (userType !== "admin" || userType !== "master") {
+            navigate("/meus-chamados")
+        }
+    }, [userType]);
+
 
     useEffect(() => {
         loadChamadosNaoRespondidos(statusPage)
     }, [statusPage]);
 
-
-    if (loadingAdmin) {
-        return (
-            <Backdrop open>
-                <CircularProgress color="secondary" />
-            </Backdrop>
-        )
-    }
 
     if (loadingChamados) {
         return (

@@ -1,25 +1,19 @@
-import { useContext, useEffect } from "react"
-import { AuthContext } from "../../contexts/AuthContext"
-import { CircularProgress } from "@mui/material";
+import { useEffect } from "react";
 import { Content } from "../../components/layout/Content";
-import { useCheckUserType } from "../../utils/useCheckUserType";
+import { useUserType } from "../../hooks/useUserType";
+import { useNavigate } from "react-router-dom";
 
 export default function DashboardMaster() {
 
-    const { user } = useContext(AuthContext)
-    const { checkIsMaster, loadingUserType } = useCheckUserType()
+    const userType = useUserType()
+    const navigate = useNavigate()
 
+    // Verificação de usuário
     useEffect(() => {
-        checkIsMaster(user.uid, "/admin")
-    }, [user.uid]);
-
-    if (loadingUserType) {
-        return (
-            <div className="loading-full">
-                <CircularProgress color="secondary" />
-            </div>
-        )
-    }
+        if (userType !== "master") {
+            navigate("/admin")
+        }
+    }, [userType]);
 
     return (
         <Content>

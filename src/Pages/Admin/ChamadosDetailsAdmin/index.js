@@ -1,6 +1,8 @@
 import "./chamadoDetailsAdmin.css"
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom'
+import { doc, updateDoc } from "firebase/firestore";
+import { db } from "../../../services/connectionFirebase";
 
 // Local Components
 import { Content } from "../../../components/layout/Content";
@@ -8,14 +10,13 @@ import { Title } from "../../../components/layout/Title";
 
 //Utils
 import { AuthContext } from "../../../contexts/AuthContext";
-import { useLoadChamados } from "../../../utils/useLoadChamados";
+import { useLoadChamados } from "../../../hooks/useLoadChamados";
 
 //Icons and Components
 import { Box, Button, CircularProgress, FormControlLabel, Radio, RadioGroup, TextField, Tooltip } from "@mui/material";
 import { ChamadoStatus } from "../../../components/styled/chamadoStatus"
-import { doc, updateDoc } from "firebase/firestore";
-import { db } from "../../../services/connectionFirebase";
 import { toast } from "react-toastify";
+import { useUserType } from "../../../hooks/useUserType";
 
 
 export default function ChamadosDetailsAdmin() {
@@ -33,7 +34,16 @@ export default function ChamadosDetailsAdmin() {
         setResposta,
         setStatus,
     } = useLoadChamados()
+
     const navigate = useNavigate()
+    const userType = useUserType()
+
+    // Verificação de usuário
+    useEffect(() => {
+        if (userType === "comum") {
+            navigate("/meus-chamados")
+        }
+    }, [userType, navigate]);
 
     useEffect(() => {
         loadChamadoById(id)

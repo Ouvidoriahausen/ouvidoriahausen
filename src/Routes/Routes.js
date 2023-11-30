@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
-import { SideBar } from '../components/layout/sidebar';
+import { SideBar } from '../components/layout/Sidebar';
 
 // Common user pages
 import Home from '../Pages/Home';
@@ -13,10 +13,12 @@ import ChamadosDetails from '../Pages/ChamadosDetails';
 import Private from "./Private"
 import NotFound from '../Pages/NotFound';
 
-// Admin and Master
+// Admin and Master pages
 import Admin from '../Pages/Admin';
 import ChamadosDetailsAdmin from '../Pages/Admin/ChamadosDetailsAdmin';
 import DashboardMaster from '../Pages/DashboardMaster';
+import AdminPrivate from './AdminPrivate';
+import MasterPrivate from './MasterPrivate';
 
 export default function RoutesApp() {
 
@@ -53,13 +55,11 @@ export default function RoutesApp() {
         <Route path="/meus-chamados" element={<Private><MeusChamados /></Private>} />
         <Route path="/meus-chamados/:id" element={<Private><ChamadosDetails /></Private>} />
 
-        {/* Admin */}
-        <Route path="/admin" element={<Private><Admin /></Private>} />
-        <Route path="/admin/:statusPage" element={<Private><Admin /></Private>} />
-        <Route path="/admin/:statusPage/:id" element={<Private><ChamadosDetailsAdmin /></Private>} />
+        <Route path="/admin" element={<AdminPrivate><Admin /></AdminPrivate>} />
+        <Route path="/admin/:statusPage" element={<AdminPrivate><Admin /></AdminPrivate>} />
+        <Route path="/admin/:statusPage/:id" element={<AdminPrivate><ChamadosDetailsAdmin /></AdminPrivate>} />
 
-        {/* Master */}
-        <Route path="/dashboard" element={<Private><DashboardMaster /></Private>} />
+        <Route path="/dashboard" element={<MasterPrivate><DashboardMaster /></MasterPrivate>} />
 
         <Route path="*" element={<NotFound />} />
       </Routes>

@@ -1,26 +1,27 @@
 import "./chamadoDetails.css"
-import { useContext, useEffect } from 'react';
-import { useParams } from 'react-router-dom'
+import { useContext, useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom'
 
 // Local Components
 import { Content } from "../../components/layout/Content";
 import { Title } from "../../components/layout/Title";
-import { SideBar } from "../../components/layout/sidebar"
+import { SideBar } from "../../components/layout/Sidebar"
 
 //Utils
 import { AuthContext } from "../../contexts/AuthContext";
-import { useLoadChamados } from "../../utils/useLoadChamados";
-import { useHandleDeleteChamado } from '../../utils/useHandleDeleteChamado';
+import { useLoadChamados } from "../../hooks/useLoadChamados";
+import { useHandleDeleteChamado } from '../../hooks/useHandleDeleteChamado';
 
 //Icons and Components
 import { Box, Button, CircularProgress, Tooltip } from "@mui/material";
 import { ChamadoStatus } from "../../components/styled/chamadoStatus"
+import { useUserType } from "../../hooks/useUserType";
 
 
 export default function ChamadosDetails() {
 
     const { id } = useParams()
-    const { user } = useContext(AuthContext);
+    const { user } = useContext(AuthContext)
     const { loadChamadoById,
         newID,
         status,
@@ -32,9 +33,20 @@ export default function ChamadosDetails() {
     } = useLoadChamados()
     const { handleDeleteChamado } = useHandleDeleteChamado()
 
+    const userType = useUserType()
+    const navigate = useNavigate()
+
+    // Verificação de usuário
+    useEffect(() => {
+        if (userType !== "comum") {
+            navigate("/")
+        }
+    }, [userType]);
+
     useEffect(() => {
         loadChamadoById(id)
     }, [user.uid]);
+
 
     if (loadingChamados) {
         return (
@@ -46,6 +58,7 @@ export default function ChamadosDetails() {
             </Content>
         )
     }
+
 
     return (
         <>
@@ -81,7 +94,7 @@ export default function ChamadosDetails() {
                                 {files.map((file, index) => (
                                     <div key={index}>
                                         <img src={file} alt={`chamado ${index}`} />
-                                    </div>  
+                                    </div>
                                 ))}
                             </section>
                         ) : (

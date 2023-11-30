@@ -6,6 +6,7 @@ import { toast } from 'react-toastify';
 import { Box, Button, IconButton, TextField, Tooltip } from '@mui/material';
 import { LoadingButton } from "@mui/lab"
 import { IoClose } from "react-icons/io5";
+import { useUserType } from '../../hooks/useUserType';
 
 export default function Login() {
 
@@ -16,12 +17,17 @@ export default function Login() {
   const [displayOverlay, setDisplayOverlay] = useState(true)
   const { FazerLogin, signed, loadingAuth } = useContext(AuthContext)
   const navigate = useNavigate()
+  const userType = useUserType()
 
   useEffect(() => {
-    if (signed) {
+    if (signed && userType === "comum") {
       navigate("/meus-chamados")
+    } else if(signed && userType !== "comum"){
+      navigate("/admin")
+    } else {
+      return
     }
-  }, [signed, navigate]);
+  }, [signed, navigate, userType]);
 
   const closeOverlay = () => {
     setDisplayOverlay(false);

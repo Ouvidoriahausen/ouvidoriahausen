@@ -17,8 +17,8 @@ import NotFound from '../Pages/NotFound';
 import Admin from '../Pages/Admin';
 import ChamadosDetailsAdmin from '../Pages/Admin/ChamadosDetailsAdmin';
 import DashboardMaster from '../Pages/DashboardMaster';
-import AdminPrivate from './AdminPrivate';
 import MasterPrivate from './MasterPrivate';
+import AdminPrivate from './AdminPrivate';
 
 export default function RoutesApp() {
 

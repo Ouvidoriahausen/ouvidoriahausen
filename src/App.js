@@ -1,4 +1,4 @@
-import RoutesApp from "./routes/Routes";
+import RoutesApp from "./Routes/Routes";
 import { BrowserRouter } from "react-router-dom";
 
 // Global Context (Provider)

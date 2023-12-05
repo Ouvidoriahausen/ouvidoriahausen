@@ -50,7 +50,7 @@ export default function AuthProvider({ children }) {
         storageUser(data)
         setLoadingAuth(false)
 
-        toast.success("Bem vindo(a) de volta :D")
+        toast.success("Bem-vindo(a) de volta")
         navigate("/meus-chamados")
 
       })
@@ -86,7 +86,7 @@ export default function AuthProvider({ children }) {
             setLoadingAuth(false)
 
             navigate("/meus-chamados")
-            toast.success("Seja bem vindo ao sistema :D")
+            toast.success("Seja bem-vindo(a) ao sistema")
           })
       })
       .catch((error) => {

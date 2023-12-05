@@ -27,10 +27,12 @@ export default function NovoChamado() {
 
     // Verificação de usuário
     useEffect(() => {
-        if (userType !== "comum") {
+        if (userType === "admin" || userType === "master") {
             navigate("/admin")
+        } else {
+            return
         }
-    }, [userType, navigate]);
+    }, [userType]);
 
     // Dropzone
     const onDrop = useCallback(acceptedFiles => {
@@ -226,14 +228,9 @@ export default function NovoChamado() {
                             Loading...
                         </LoadingButton>
                     ) : (
-                        <>
-                            <Button size="large" variant="contained" className="btn-enviar" type="submit">
-                                Enviar Chamado
-                            </Button>
-                            <span style={{ textAlign: "center", margin: "12px 0", color: "red" }}>
-                                Seu chamado terá 5 dias úteis para ser respondido.
-                            </span>
-                        </>
+                        <Button size="large" variant="contained" className="btn-enviar" type="submit">
+                            Enviar Chamado
+                        </Button>
                     )}
                 </Box>
             </section>

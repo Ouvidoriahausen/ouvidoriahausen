@@ -48,16 +48,6 @@ export default function Cadastrar() {
         />
 
         <TextField
-          type="text"
-          label="Seu E-mail"
-          disabled
-          variant="standard"
-          value={email}
-          fullWidth
-          onChange={(e) => setNomeUsuario(e.target.value)}
-        />
-
-        <TextField
           label="Senha"
           type="password"
           variant="standard"
@@ -67,7 +57,7 @@ export default function Cadastrar() {
           onChange={(e) => setSenha(e.target.value)}
         />
 
-        {nomeUsuario.length !== 0 && <span style={{ color: "red" }}>Sugestão: Para maior segurança, não coloque seu nome real.</span>}
+        {nomeUsuario.length !== 0 && <span style={{ color: "red" }}>Para preservação do sigilo, evite colocar dados pessoais.</span>}
 
         {loadingAuth ? (
           <LoadingButton loading size="large" className="cadastrar-btn" variant='contained'>Cadastrar</LoadingButton>

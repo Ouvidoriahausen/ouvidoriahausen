@@ -97,8 +97,7 @@
     color: var(--white);
 }
 
-.nav-logout .nav-userName span {
-    margin-left: 8px;
+.nav-logout .nav-userName .userType{
     font-size: 16px;
     padding: 4px 8px;
     border-radius: 8px;
@@ -107,6 +106,6 @@
 }
 
 .nav-userName p::first-letter,
-.nav-userName span::first-letter {
+.nav-userName .userType::first-letter {
     text-transform: uppercase;
 }

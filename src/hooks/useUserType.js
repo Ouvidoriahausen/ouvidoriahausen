@@ -6,7 +6,7 @@ export const UserTypeContext = createContext();
 
 export const useUserType = () => {
     return useContext(UserTypeContext);
-  };
+};
 
 export const UserTypeProvider = ({ children }) => {
 

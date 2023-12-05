@@ -43,7 +43,7 @@ export default function ChamadosDetailsAdmin() {
         if (userType === "comum") {
             navigate("/meus-chamados")
         }
-    }, [userType, navigate]);
+    }, [userType]);
 
     useEffect(() => {
         loadChamadoById(id)

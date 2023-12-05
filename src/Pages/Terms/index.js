@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import "./terms.css"
 import { LuFileCheck } from "react-icons/lu";
+import { Button } from '@mui/material';
 
 export default function Terms() {
     const [terms, setTerms] = useState(false);
@@ -24,7 +25,7 @@ export default function Terms() {
                     <h2>Nossos Termos</h2>
                 </div>
                 <p>Aqui estão os termos que o usuário deve aceitar.Aqui estão os termos que o usuário deve aceitar.Aqui estão os termos que o usuário deve aceitar.Aqui estão os termos que o usuário deve aceitar.Aqui estão os termos que o usuário deve aceitar.Aqui estão os termos que o usuário deve aceitar.Aqui estão os termos que o usuário deve aceitar.Aqui estão os termos que o usuário deve aceitar.Aqui estão os termos que o usuário deve aceitar.Aqui estão os termos que o usuário deve aceitar.</p>
-                <button className="terms-accept" onClick={handleAceitarTermos}>Aceitar</button>
+                <Button variant="contained" fullWidth color="thirty" size="large" onClick={handleAceitarTermos}>Aceitar</Button>
             </div>
         </section>
     );

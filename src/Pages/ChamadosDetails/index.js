@@ -1,5 +1,5 @@
 import "./chamadoDetails.css"
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom'
 
 // Local Components
@@ -38,14 +38,16 @@ export default function ChamadosDetails() {
 
     // Verificação de usuário
     useEffect(() => {
-        if (userType !== "comum") {
+        if (userType === "admin" || userType === "master") {
             navigate("/")
+        } else {
+            return
         }
-    }, [userType]);
+    }, [userType, navigate]);
 
     useEffect(() => {
         loadChamadoById(id)
-    }, [user.uid]);
+    }, [user.uid, loadChamadoById, id]);
 
 
     if (loadingChamados) {
@@ -87,7 +89,7 @@ export default function ChamadosDetails() {
                             <h4>{resposta === "" ? "..." : resposta}</h4>
                         </div>
 
-                        {resposta === "" && <span className="alert-resposta">Seu chamado tem 5 dias úteis para ser respondido.</span>}
+                        {/* {resposta === "" && <span className="alert-resposta">Seu chamado tem 5 dias úteis para ser respondido.</span>} */}
 
                         {files.length !== 0 ? (
                             <section className="chamado-details-files">
@@ -99,15 +101,21 @@ export default function ChamadosDetails() {
                             </section>
                         ) : (
                             <section className="chamado-details-files">
-                                <p style={{ color: "red" }}> Você não tem nenhum aquivo a ser mostrado...</p>
+                                <p style={{ color: "gray" }}> Você não tem nenhum aquivo a ser mostrado...</p>
                             </section>
                         )}
 
                         <div className="chamado-details-actions">
-                            <Tooltip title="Excluir" onClick={() => handleDeleteChamado(id)}>
-                                <Button variant="contained" color="error" size="large" className="action">
-                                    Excluir chamado
-                                </Button>
+                            <Tooltip title="Cancelar">
+                                <span>
+                                    <Button variant="contained"
+                                        disabled={status === "aberto" ? false : true}
+                                        color="error" size="large" className="action"
+                                        onClick={() => handleDeleteChamado(id)}
+                                    >
+                                        Cancelar chamado
+                                    </Button>
+                                </span>
                             </Tooltip>
                         </div>
                     </section>

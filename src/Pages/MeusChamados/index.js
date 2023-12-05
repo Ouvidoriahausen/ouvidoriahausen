@@ -1,5 +1,5 @@
 import "./meusChamados.css"
-import { useContext, useEffect, useState } from "react"
+import { useContext, useEffect } from "react"
 import { Link, useNavigate } from "react-router-dom";
 
 // Local Components
@@ -31,14 +31,16 @@ export default function MeusChamados() {
 
     // Verificação de usuário
     useEffect(() => {
-        if (userType !== "comum") {
+        if (userType === "admin" || userType === "master") {
             navigate("/admin")
+        } else {
+            return
         }
-    }, [userType]);
+    }, [userType, navigate]);
 
     useEffect(() => {
         loadChamados()
-    }, [user.uid]);
+    }, [user.uid, loadChamados]);
 
     if (loadingChamados) {
         return (

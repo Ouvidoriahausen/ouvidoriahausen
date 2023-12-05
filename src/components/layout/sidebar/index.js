@@ -104,8 +104,8 @@ export function SideBar() {
                             <FaUser size={25} />
                             <p>
                                 {userStorage.nome}
-                                {userType !== "comum" && <span>{userType}</span>}
                             </p>
+                            {userType !== "comum" && <p className="userType">{userType}</p>}
                         </div>
 
                         <Tooltip title="Sair" placement="right">

@@ -6,6 +6,7 @@ import { useContext, useState } from "react";
 export function useLoadChamados() {
 
     const { user } = useContext(AuthContext);
+
     // Muitos Chamados
     const [userChamados, setUserChamados] = useState([]);
     const [loadingChamados, setLoadingChamados] = useState(true);
@@ -30,7 +31,7 @@ export function useLoadChamados() {
             if (!querySnapshot.empty) {
                 let chamados = [];
                 querySnapshot.forEach((doc) => {
-                    chamados.push({
+                    const chamadoData = {
                         id: doc.id,
                         newID: doc.data().newID,
                         fileURLs: doc.data().fileURLs,
@@ -39,15 +40,23 @@ export function useLoadChamados() {
                         resposta: doc.data().resposta,
                         status: doc.data().status,
                         created: doc.data().created,
-                    });
+                    };
+
+                    // Adiciona à lista somente se o status não for "morto"
+                    if (chamadoData.status !== "morto") {
+                        chamados.push(chamadoData);
+                    }
                 });
-                setUserChamados(chamados);
-                setIsEmpty(false)
-                setLoadingChamados(false)
+
+                setUserChamados(chamados)
+                setIsEmpty(chamados.length === 0)
+
             } else {
-                setIsEmpty(true);
-                setLoadingChamados(false)
+                setIsEmpty(true)
             }
+
+            setLoadingChamados(false)
+
         } catch (error) {
             console.error("Erro ao carregar chamados:", error);
         }

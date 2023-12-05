@@ -1,4 +1,3 @@
-import "./meusChamados.css"
 import { useContext, useEffect } from "react"
 import { Link, useNavigate } from "react-router-dom";
 
@@ -8,22 +7,21 @@ import { Title } from "../../components/layout/Title";
 
 //Utils
 import { AuthContext } from "../../contexts/AuthContext";
-import { useLoadChamados } from "../../hooks/useLoadChamados";
 import { useHandleCancelChamado } from "../../hooks/useHandleCancelChamado";
 import { useUserType } from "../../hooks/useUserType";
 
 //Icons and Components
-import { Button, CircularProgress, IconButton, Tooltip } from "@mui/material";
+import { CircularProgress, IconButton, Tooltip } from "@mui/material";
 import { ImCancelCircle } from "react-icons/im";
-import { FiPlus } from "react-icons/fi"
 import { CgDetailsMore } from "react-icons/cg";
 import { ChamadoStatus } from "../../components/styled/chamadoStatus"
+import { useLoadChamadosCancelados } from "../../hooks/useLoadChamadosCancelados";
 
 
-export default function MeusChamados() {
+export default function ChamadosCancelados() {
 
     const { user } = useContext(AuthContext);
-    const { loadChamados, userChamados, loadingChamados } = useLoadChamados()
+    const { chamadosCancelados, loadingChamados, loadChamadosCancelados } = useLoadChamadosCancelados()
     const { handleCancelChamado } = useHandleCancelChamado()
 
     const userType = useUserType()
@@ -40,8 +38,8 @@ export default function MeusChamados() {
     }, [userType, navigate]);
 
     useEffect(() => {
-        loadChamados()
-    }, [user.uid, loadChamados]);
+        loadChamadosCancelados()
+    }, [user.uid]);
 
     if (loadingChamados) {
         return (
@@ -57,16 +55,11 @@ export default function MeusChamados() {
 
     return (
         <Content className="chamados-container">
-            <Title>Meus Chamados</Title>
+            <Title>Chamados Cancelados</Title>
 
-            {userChamados.length === 0 ? (
+            {chamadosCancelados.length === 0 ? (
                 <div className="chamadosEmpty">
-                    <h1>Nenhum chamado encontrado.</h1>
-                    <Link to="/novo-chamado" style={{ color: "#fff", float: "right", marginBottom: "15px" }}>
-                        <Button color="thirty" variant="contained" startIcon={<FiPlus size={25} />}>
-                            Novo Chamado
-                        </Button>
-                    </Link>
+                    <h1>Nenhum chamado cancelado encontrado.</h1>
                 </div>
             ) : (
                 <table>
@@ -82,7 +75,7 @@ export default function MeusChamados() {
                     </thead>
 
                     <tbody>
-                        {userChamados.map((chamado, index) => (
+                        {chamadosCancelados.map((chamado, index) => (
                             <tr key={index}>
                                 <td data-label="ID">{chamado.newID}</td>
                                 <td data-label="Titulo">{chamado.titulo}</td>
@@ -96,19 +89,13 @@ export default function MeusChamados() {
                                     </span>
                                 </td>
                                 <td className="actions" data-label="Ações">
-                                    <Link to={`/meus-chamados/${chamado.id}`}>
+                                    <Link to={`/chamados/${chamado.id}`}>
                                         <Tooltip title="Detalhes">
                                             <IconButton color="secondary" size="large" className="action">
                                                 <CgDetailsMore size={20} />
                                             </IconButton>
                                         </Tooltip>
                                     </Link>
-
-                                    <Tooltip title="Cancelar" onClick={() => handleCancelChamado(chamado.id)}>
-                                        <IconButton color="error" size="large" className="action">
-                                            <ImCancelCircle size={20} />
-                                        </IconButton>
-                                    </Tooltip>
                                 </td>
                             </tr>
                         ))}

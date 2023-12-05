@@ -6,11 +6,13 @@ import { AuthContext, LOCAL_STORAGE_KEY } from "../../../contexts/AuthContext"
 import { useContext } from "react"
 
 // Icons
-import { PiTicketFill } from "react-icons/pi";
+import { PiTicketFill, PiSkullBold } from "react-icons/pi";
 import { FiPlus, FiLogOut } from "react-icons/fi"
 import { FaFolderOpen, FaUser } from "react-icons/fa"
-import { MdArchive, MdDone, MdOutlineMoreHoriz } from "react-icons/md"
+import { MdArchive, MdDone, MdOutlineMoreHoriz, MdClose } from "react-icons/md"
 import { RiAdminFill } from "react-icons/ri";
+
+// Utils
 import { useUserType } from "../../../hooks/useUserType"
 
 
@@ -63,6 +65,13 @@ export function SideBar() {
                                     Arquivados
                                 </Button>
                             </Link>
+
+                            <Link to="/admin/morto">
+                                <Button size="large" fullWidth>
+                                    <PiSkullBold size={30} />
+                                    Arq. Mortos
+                                </Button>
+                            </Link>
                         </section>
                     </nav>
                 ) : (
@@ -71,13 +80,12 @@ export function SideBar() {
 
                         <span className="divider" />
                         <section className="nav-links">
-                            <Link to="/meus-chamados">
+                            <Link to="/chamados">
                                 <Button size="large" fullWidth>
                                     <PiTicketFill size={30} />
                                     Meus Chamados
                                 </Button>
                             </Link>
-
 
                             <Link to="/novo-chamado">
                                 <Button size="large" fullWidth>
@@ -90,6 +98,13 @@ export function SideBar() {
                 )}
 
                 <div className="nav-logout">
+                    {userType === "comum" && <Link to="/cancelados">
+                        <Button size="large" fullWidth>
+                            <MdClose size={30} />
+                            Cancelados
+                        </Button>
+                    </Link>}
+
                     {userType === "master" && <Link to="/dashboard">
                         <Button size="large" fullWidth>
                             <RiAdminFill size={25} />

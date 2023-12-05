@@ -20,6 +20,7 @@ import DashboardMaster from '../Pages/DashboardMaster';
 import MasterPrivate from "./MasterPrivate"
 import AdminPrivate from './AdminPrivate';
 import Terms from '../Pages/Terms';
+import ChamadosCancelados from '../Pages/ChamadosCancelados';
 
 export default function RoutesApp() {
 
@@ -54,8 +55,10 @@ export default function RoutesApp() {
         <Route path="/login" element={<Login />} />
         <Route path="/cadastrar" element={<Cadastrar />} />
         <Route path="/novo-chamado" element={<Private><NovoChamado /></Private>} />
-        <Route path="/meus-chamados" element={<Private><MeusChamados /></Private>} />
-        <Route path="/meus-chamados/:id" element={<Private><ChamadosDetails /></Private>} />
+        <Route path="/chamados" element={<Private><MeusChamados /></Private>} />
+        <Route path="/chamados/:id" element={<Private><ChamadosDetails /></Private>} />
+        <Route path="/cancelados" element={<Private><ChamadosCancelados /></Private>} />
+        <Route path="/cancelados/:id" element={<Private><ChamadosDetails /></Private>} />
 
         <Route path="/admin" element={<AdminPrivate><Admin /></AdminPrivate>} />
         <Route path="/admin/:statusPage" element={<AdminPrivate><Admin /></AdminPrivate>} />

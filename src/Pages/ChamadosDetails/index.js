@@ -10,7 +10,7 @@ import { SideBar } from "../../components/layout/Sidebar"
 //Utils
 import { AuthContext } from "../../contexts/AuthContext";
 import { useLoadChamados } from "../../hooks/useLoadChamados";
-import { useHandleDeleteChamado } from '../../hooks/useHandleDeleteChamado';
+import { useHandleCancelChamado } from "../../hooks/useHandleCancelChamado";
 
 //Icons and Components
 import { Box, Button, CircularProgress, Tooltip } from "@mui/material";
@@ -31,7 +31,7 @@ export default function ChamadosDetails() {
         files,
         loadingChamados,
     } = useLoadChamados()
-    const { handleDeleteChamado } = useHandleDeleteChamado()
+    const { handleCancelChamado } = useHandleCancelChamado()
 
     const userType = useUserType()
     const navigate = useNavigate()
@@ -43,11 +43,11 @@ export default function ChamadosDetails() {
         } else {
             return
         }
-    }, [userType, navigate]);
+    }, [userType]);
 
     useEffect(() => {
         loadChamadoById(id)
-    }, [user.uid, loadChamadoById, id]);
+    }, [user.uid]);
 
 
     if (loadingChamados) {
@@ -111,7 +111,7 @@ export default function ChamadosDetails() {
                                     <Button variant="contained"
                                         disabled={status === "aberto" ? false : true}
                                         color="error" size="large" className="action"
-                                        onClick={() => handleDeleteChamado(id)}
+                                        onClick={() => handleCancelChamado(id)}
                                     >
                                         Cancelar chamado
                                     </Button>

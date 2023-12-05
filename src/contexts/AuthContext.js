@@ -51,7 +51,7 @@ export default function AuthProvider({ children }) {
         setLoadingAuth(false)
 
         toast.success("Bem-vindo(a) de volta")
-        navigate("/meus-chamados")
+        navigate("/chamados")
 
       })
       .catch(() => {
@@ -85,7 +85,7 @@ export default function AuthProvider({ children }) {
             storageUser(data)
             setLoadingAuth(false)
 
-            navigate("/meus-chamados")
+            navigate("/chamados")
             toast.success("Seja bem-vindo(a) ao sistema")
           })
       })

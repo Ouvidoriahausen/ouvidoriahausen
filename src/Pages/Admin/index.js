@@ -30,7 +30,7 @@ export default function Admin() {
     // Verificação de usuário
     useEffect(() => {
         if (userType !== "admin" || userType !== "master") {
-            navigate("/meus-chamados")
+            navigate("/chamados")
         }
     }, [userType]);
 
@@ -63,6 +63,9 @@ export default function Admin() {
             break
         case "arquivado":
             statusTitle = "Arquivados"
+            break
+        case "morto":
+            statusTitle = "Arquivos Mortos"
             break
         default:
             statusTitle = ""

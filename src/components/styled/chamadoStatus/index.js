@@ -15,6 +15,10 @@ const statusStyles = {
     "arquivado": {
         backgroundColor: "#7B7B7B",
         color: "#fff",
+    },
+    "morto": {
+        backgroundColor: "#7B7B7B",
+        color: "#fff",
     }
 }
 
@@ -35,6 +39,9 @@ export const ChamadoStatus = ({ status }) => {
             break;
         case 'arquivado':
             statusText = 'Arquivado';
+            break;
+        case 'morto':
+            statusText = 'Cancelado';
             break;
         default:
             statusText = '...';

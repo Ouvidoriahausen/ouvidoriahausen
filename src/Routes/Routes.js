@@ -17,7 +17,7 @@ import NotFound from '../Pages/NotFound';
 import Admin from '../Pages/Admin';
 import ChamadosDetailsAdmin from '../Pages/Admin/ChamadosDetailsAdmin';
 import DashboardMaster from '../Pages/DashboardMaster';
-import MasterPrivate from './MasterPrivate';
+import MasterPrivate from "./MasterPrivate"
 import AdminPrivate from './AdminPrivate';
 import Terms from '../Pages/Terms';
 

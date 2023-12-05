@@ -5,7 +5,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 // Local Components
 import { Content } from "../../components/layout/Content";
 import { Title } from "../../components/layout/Title";
-import { SideBar } from "../../components/layout/sidebar"
+import { SideBar } from "../../components/layout/Sidebar"
 
 //Utils
 import { AuthContext } from "../../contexts/AuthContext";

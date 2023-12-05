@@ -28,6 +28,7 @@ export default function MeusChamados() {
     const userType = useUserType()
     const navigate = useNavigate()
 
+
     // Verificação de usuário
     useEffect(() => {
         if (userType !== "comum") {

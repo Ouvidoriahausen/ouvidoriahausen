@@ -19,6 +19,7 @@ import ChamadosDetailsAdmin from '../Pages/Admin/ChamadosDetailsAdmin';
 import DashboardMaster from '../Pages/DashboardMaster';
 import MasterPrivate from './MasterPrivate';
 import AdminPrivate from './AdminPrivate';
+import Terms from '../Pages/Terms';
 
 export default function RoutesApp() {
 
@@ -49,6 +50,7 @@ export default function RoutesApp() {
       <Routes>
         {/* User */}
         <Route path="/" element={<Home />} />
+        <Route path="/termos" element={<Terms />} />
         <Route path="/login" element={<Login />} />
         <Route path="/cadastrar" element={<Cadastrar />} />
         <Route path="/novo-chamado" element={<Private><NovoChamado /></Private>} />

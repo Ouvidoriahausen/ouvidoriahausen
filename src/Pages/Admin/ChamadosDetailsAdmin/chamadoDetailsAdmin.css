@@ -97,6 +97,14 @@
     width: 100%;
 }
 
+.file-image{
+    cursor: zoom-in;
+    transition: .3s;
+}
+.file-image:hover{
+    transform: scale(1.05);
+}
+
 .action-radio-input {
     display: flex;
     flex-direction: column;
@@ -113,4 +121,43 @@
 .action-resposta-input {
     display: flex;
     justify-content: center;
+}
+
+/* Arquivo tela cheia */
+.file-modal{
+    position: fixed;
+    display: flex;
+    width: 100%;
+    min-height: 100vh;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 99999;
+    backdrop-filter: blur(5px);
+}
+.file-modal-content{
+    position: relative;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    align-content: center;
+    justify-content: center;
+    padding: 30px;
+    margin-left: 50px;
+}
+.file-modal-content img{
+    display: flex;
+    cursor: zoom-out;
+}
+.close-file-modal{
+    display: flex;
+    position: relative;
+    width: 55px;
+    height: 55px;
+    align-items: center;
+    justify-content: center;
+    right: -20px;
+    border-radius: 100px;
+    cursor: pointer;
+    color: var(--dark-blue);
+    background-color: rgba(255, 255, 255, 0.5);
 }

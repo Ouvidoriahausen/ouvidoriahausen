@@ -224,9 +224,13 @@ export default function NovoChamado() {
                         </div>
                     </div>
                     {loading ? (
-                        <LoadingButton loading size="large" variant="contained" className="btn-enviar">
-                            Loading...
-                        </LoadingButton>
+                        <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+                            <LoadingButton loading size="large" variant="contained" className="btn-enviar">
+                                Loading...
+                            </LoadingButton>
+
+                            <span style={{ color: "red", textAlign: "center" }}>Por favor, não atualizar a página enquanto o upload seja feito.</span>
+                        </div>
                     ) : (
                         <Button size="large" variant="contained" className="btn-enviar" type="submit">
                             Enviar Chamado

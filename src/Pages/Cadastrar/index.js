@@ -16,7 +16,7 @@ export default function Cadastrar() {
 
   useEffect(() => {
     if (signed) {
-      navigate("/meus-chamados")
+      navigate("/chamados")
     }
   }, [signed]);
 

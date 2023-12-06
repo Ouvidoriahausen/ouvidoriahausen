@@ -96,7 +96,7 @@ export default function MeusChamados() {
                                     </span>
                                 </td>
                                 <td className="actions" data-label="Ações">
-                                    <Link to={`/meus-chamados/${chamado.id}`}>
+                                    <Link to={`/chamados/${chamado.id}`}>
                                         <Tooltip title="Detalhes">
                                             <IconButton color="secondary" size="large" className="action">
                                                 <CgDetailsMore size={20} />

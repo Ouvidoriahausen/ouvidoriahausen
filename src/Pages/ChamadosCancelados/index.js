@@ -7,12 +7,10 @@ import { Title } from "../../components/layout/Title";
 
 //Utils
 import { AuthContext } from "../../contexts/AuthContext";
-import { useHandleCancelChamado } from "../../hooks/useHandleCancelChamado";
 import { useUserType } from "../../hooks/useUserType";
 
 //Icons and Components
 import { CircularProgress, IconButton, Tooltip } from "@mui/material";
-import { ImCancelCircle } from "react-icons/im";
 import { CgDetailsMore } from "react-icons/cg";
 import { ChamadoStatus } from "../../components/styled/chamadoStatus"
 import { useLoadChamadosCancelados } from "../../hooks/useLoadChamadosCancelados";
@@ -22,7 +20,6 @@ export default function ChamadosCancelados() {
 
     const { user } = useContext(AuthContext);
     const { chamadosCancelados, loadingChamados, loadChamadosCancelados } = useLoadChamadosCancelados()
-    const { handleCancelChamado } = useHandleCancelChamado()
 
     const userType = useUserType()
     const navigate = useNavigate()

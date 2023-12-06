@@ -13,7 +13,8 @@ import { AuthContext } from "../../../contexts/AuthContext";
 import { useLoadChamados } from "../../../hooks/useLoadChamados";
 
 //Icons and Components
-import { Box, Button, CircularProgress, FormControlLabel, Radio, RadioGroup, TextField, Tooltip } from "@mui/material";
+import { Box, Button, CircularProgress, FormControlLabel, Radio, RadioGroup, TextField } from "@mui/material";
+import { CgClose } from "react-icons/cg";
 import { ChamadoStatus } from "../../../components/styled/chamadoStatus"
 import { toast } from "react-toastify";
 import { useUserType } from "../../../hooks/useUserType";
@@ -35,15 +36,21 @@ export default function ChamadosDetailsAdmin() {
         setStatus,
     } = useLoadChamados()
 
+    // Files
+    const [showFile, setShowFile] = useState(null);
+    const VIDEO_TYPES = ['.webm', '.mp4'];
+    const IMAGE_TYPES = ['.jpg', '.jpeg', '.png', '.gif', '.bmp'];
+
     const navigate = useNavigate()
     const userType = useUserType()
 
     // Verificação de usuário
     useEffect(() => {
         if (userType === "comum") {
-            navigate("/meus-chamados")
+            navigate("/chamados")
         }
     }, [userType]);
+
 
     useEffect(() => {
         loadChamadoById(id)
@@ -116,18 +123,44 @@ export default function ChamadosDetailsAdmin() {
 
                     {resposta === "" && <span className="alert-resposta">Esse chamado ainda não foi respondido.</span>}
 
-                    {files ? (
+                    {files.length === 0 ? (
                         <section className="chamado-details-admin-files">
-                            {files.map((file, index) => (
-                                <div key={index}>
-                                    <img width={300} src={file} alt={`chamado ${index}`} />
-                                </div>
-                            ))}
+                            <p style={{ color: "gray" }}> Este chamado não tem nenhum aquivo a ser mostrado...</p>
                         </section>
                     ) : (
                         <section className="chamado-details-admin-files">
-                            <p style={{ color: "red" }}> Você não tem nenhum aquivo a ser mostrado...</p>
+                            {files.map((file, index) => (
+                                <div key={index} onClick={() => setShowFile(file)}>
+                                    {VIDEO_TYPES.some(type => file.endsWith(type)) ? (
+                                        <video className="file-video" width={300} controls>
+                                            <source src={file} type={`video/${VIDEO_TYPES.find(type => file.endsWith(type)).substring(1)}`} />
+                                            Seu navegador não suporta este vídeo.
+                                        </video>
+                                    ) : (
+                                        <img className="file-image" width={300} src={file} alt={`chamado ${index}`} />
+                                    )}
+                                </div>
+                            ))}
                         </section>
+                    )}
+
+                    {/* Mostrar o arquivo em tela cheia */}
+                    {showFile && (
+                        <div className="file-modal">
+                            <div className="file-modal-content" >
+                                {VIDEO_TYPES.some(type => showFile.endsWith(type)) ? (
+                                    <video src={showFile} controls onClick={() => setShowFile(null)}>
+                                        Seu navegador não suporta este vídeo.
+                                    </video>
+                                ) : (
+                                    <img src={showFile} alt="Arquivo em tamanho grande" onClick={() => setShowFile(null)} />
+                                )}
+
+                                <button className="close-file-modal" onClick={() => setShowFile(null)}>
+                                    <CgClose size={30} />
+                                </button>
+                            </div>
+                        </div>
                     )}
 
                     <span className="divider" style={{ borderColor: "var(--medium-gray)" }} />

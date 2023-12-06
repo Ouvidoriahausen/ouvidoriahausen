@@ -3,10 +3,11 @@ import { useContext, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../contexts/AuthContext';
 import { toast } from 'react-toastify';
-import { Box, Button, IconButton, TextField, Tooltip } from '@mui/material';
+import { Box, Button, IconButton, TextField } from '@mui/material';
 import { LoadingButton } from "@mui/lab"
 import { IoClose } from "react-icons/io5";
 import { useUserType } from '../../hooks/useUserType';
+import OuvidoriaImage from "../../assets/header-ouvidoria.png"
 
 export default function Login() {
 
@@ -21,8 +22,8 @@ export default function Login() {
 
   useEffect(() => {
     if (signed && userType === "comum") {
-      navigate("/meus-chamados")
-    } else if(signed && userType !== "comum"){
+      navigate("/chamados")
+    } else if (signed && userType !== "comum") {
       navigate("/admin")
     } else {
       return
@@ -51,7 +52,7 @@ export default function Login() {
           <span className="overlay-close-bg" onClick={closeOverlay} />
           <div className='overlay-content'>
             <p>Sinta-se seguro ao fazer sua demanda, você está totalmente anônimo e protegido.</p>
-            
+
             <IconButton color="error" size="large" onClick={closeOverlay} className="close-button">
               <IoClose size={20} />
             </IconButton>
@@ -60,6 +61,8 @@ export default function Login() {
       )}
 
       <Box className="form-login" component="form" onSubmit={handleLogin}>
+
+
         <h2>Faça seu login</h2>
 
         <TextField

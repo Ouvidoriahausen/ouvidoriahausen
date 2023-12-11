@@ -29,6 +29,7 @@ export default function AuthProvider({ children }) {
 
   }, []);
 
+
   async function FazerLogin(email, password) {
     setLoadingAuth(true)
 
@@ -51,7 +52,6 @@ export default function AuthProvider({ children }) {
         setLoadingAuth(false)
 
         toast.success("Bem-vindo(a) de volta")
-        navigate("/chamados")
 
       })
       .catch(() => {

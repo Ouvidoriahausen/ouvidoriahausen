@@ -5,6 +5,7 @@ import { AuthContext } from '../../contexts/AuthContext';
 import { toast } from 'react-toastify';
 import { Box, Button, TextField } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
+import { useUserType } from '../../hooks/useUserType';
 
 export default function Cadastrar() {
   const [nomeUsuario, setNomeUsuario] = useState("")
@@ -13,12 +14,17 @@ export default function Cadastrar() {
 
   const { Cadastrar, signed, loadingAuth } = useContext(AuthContext)
   const navigate = useNavigate()
+  const userType = useUserType()
 
   useEffect(() => {
     if (signed) {
-      navigate("/chamados")
+      if (userType === "comum") {
+        navigate("/chamados")
+      } else if (userType === "admin" || userType === "master") {
+        navigate("/admin")
+      }
     }
-  }, [signed]);
+  }, [signed, userType, navigate]);
 
 
   async function handleRegister(e) {

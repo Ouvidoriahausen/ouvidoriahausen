@@ -105,10 +105,10 @@ export function SideBar() {
                         </Button>
                     </Link>}
 
-                    {userType === "master" && <Link to="/dashboard">
+                    {userType === "master" && <Link to="/menu">
                         <Button size="large" fullWidth>
                             <RiAdminFill size={25} />
-                            Dashboard
+                            Menu
                         </Button>
                     </Link>}
 

@@ -34,8 +34,6 @@ export default function MeusChamados() {
     useEffect(() => {
         if (userType === "admin" || userType === "master") {
             navigate("/admin")
-        } else {
-            return
         }
     }, [userType, navigate]);
 

@@ -27,12 +27,12 @@ export default function ChamadosCancelados() {
 
     // Verificação de usuário
     useEffect(() => {
-        if (userType === "admin" || userType === "master") {
+        if (userType === "admin" && userType === "master") {
             navigate("/admin")
         } else {
             return
         }
-    }, [userType, navigate]);
+    }, [userType]);
 
     useEffect(() => {
         loadChamadosCancelados()
@@ -54,9 +54,13 @@ export default function ChamadosCancelados() {
         <Content className="chamados-container">
             <Title>Chamados Cancelados</Title>
 
-            {chamadosCancelados.length === 0 ? (
-                <div className="chamadosEmpty">
-                    <h1>Nenhum chamado cancelado encontrado.</h1>
+            {chamadosCancelados === null || chamadosCancelados === undefined ? (
+                <div className="loading-container">
+                    <CircularProgress />
+                </div>
+            ) : chamadosCancelados.length === 0 ? (
+                <div className="zero-chamados">
+                    <h3>Nenhum chamado foi encontrado!</h3>
                 </div>
             ) : (
                 <table>

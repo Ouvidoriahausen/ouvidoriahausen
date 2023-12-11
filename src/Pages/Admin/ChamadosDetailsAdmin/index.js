@@ -14,11 +14,11 @@ import { useLoadChamados } from "../../../hooks/useLoadChamados";
 
 //Icons and Components
 import { Box, Button, CircularProgress, FormControlLabel, Radio, RadioGroup, TextField } from "@mui/material";
-import { CgClose } from "react-icons/cg";
 import { ChamadoStatus } from "../../../components/styled/chamadoStatus"
 import { toast } from "react-toastify";
 import { useUserType } from "../../../hooks/useUserType";
 
+import Viewer from "react-viewer";
 
 export default function ChamadosDetailsAdmin() {
 
@@ -36,10 +36,10 @@ export default function ChamadosDetailsAdmin() {
         setStatus,
     } = useLoadChamados()
 
-    // Files
-    const [showFile, setShowFile] = useState(null);
-    const VIDEO_TYPES = ['.webm', '.mp4'];
-    const IMAGE_TYPES = ['.jpg', '.jpeg', '.png', '.gif', '.bmp'];
+    // Images
+    const imagesTypeAccepted = ["jpeg", "jpg", "png", "gif"] // Adicionar mais tipos de imagens aqui caso necessário...
+    const [showImage, setShowImage] = useState(false);
+    const [viewerImages, setViewerImages] = useState([]);
 
     const navigate = useNavigate()
     const userType = useUserType()
@@ -55,6 +55,17 @@ export default function ChamadosDetailsAdmin() {
     useEffect(() => {
         loadChamadoById(id)
     }, [user.uid]);
+
+
+    useEffect(() => {
+        // Filtra apenas os arquivos de imagem e vídeo e os converte para o formato esperado pelo Viewer
+        const preparedViewerImages = files.map((file, index) => ({
+            src: file,
+            alt: `File ${index + 1}`,
+            type: imagesTypeAccepted.includes(getTypeFile(file)) ? 'image' : 'video',
+        }));
+        setViewerImages(preparedViewerImages);
+    }, [files]);
 
 
     if (loadingChamados) {
@@ -94,6 +105,15 @@ export default function ChamadosDetailsAdmin() {
             })
     }
 
+    // Pegar o tipo de arquivo
+    function getTypeFile(url) {
+        const parsedUrl = new URL(url);
+        const filePath = parsedUrl.pathname;
+        const fileName = filePath.substring(filePath.lastIndexOf('/') + 1);
+        const fileExtension = fileName.substring(fileName.lastIndexOf('.') + 1).toLowerCase();
+        return fileExtension;
+    }
+
 
     return (
 
@@ -129,39 +149,28 @@ export default function ChamadosDetailsAdmin() {
                         </section>
                     ) : (
                         <section className="chamado-details-admin-files">
+
                             {files.map((file, index) => (
-                                <div key={index} onClick={() => setShowFile(file)}>
-                                    {VIDEO_TYPES.some(type => file.endsWith(type)) ? (
-                                        <video className="file-video" width={300} controls>
-                                            <source src={file} type={`video/${VIDEO_TYPES.find(type => file.endsWith(type)).substring(1)}`} />
-                                            Seu navegador não suporta este vídeo.
-                                        </video>
+                                <div key={index} onClick={() => setShowImage(true)}>
+                                    {imagesTypeAccepted.includes(getTypeFile(file)) ? (
+                                        <img src={file} alt={`File ${index + 1}`} className="image-preview" />
                                     ) : (
-                                        <img className="file-image" width={300} src={file} alt={`chamado ${index}`} />
+                                        <video width="100%" height={200} src={file} controls />
                                     )}
                                 </div>
                             ))}
                         </section>
                     )}
 
-                    {/* Mostrar o arquivo em tela cheia */}
-                    {showFile && (
-                        <div className="file-modal">
-                            <div className="file-modal-content" >
-                                {VIDEO_TYPES.some(type => showFile.endsWith(type)) ? (
-                                    <video src={showFile} controls onClick={() => setShowFile(null)}>
-                                        Seu navegador não suporta este vídeo.
-                                    </video>
-                                ) : (
-                                    <img src={showFile} alt="Arquivo em tamanho grande" onClick={() => setShowFile(null)} />
-                                )}
-
-                                <button className="close-file-modal" onClick={() => setShowFile(null)}>
-                                    <CgClose size={30} />
-                                </button>
-                            </div>
-                        </div>
-                    )}
+                    {/* Visualizador de imagens */}
+                    <Viewer
+                        visible={showImage} onClose={() => setShowImage(false)}
+                        images={viewerImages}
+                        drag={false}
+                        loop={false}
+                        rotatable={false}
+                        scalable={false}
+                    />
 
                     <span className="divider" style={{ borderColor: "var(--medium-gray)" }} />
 

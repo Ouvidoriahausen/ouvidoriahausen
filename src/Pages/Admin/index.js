@@ -29,7 +29,7 @@ export default function Admin() {
 
     // Verificação de usuário
     useEffect(() => {
-        if (userType !== "admin" || userType !== "master") {
+        if (userType === "comum") {
             navigate("/chamados")
         }
     }, [userType]);
@@ -79,7 +79,11 @@ export default function Admin() {
             </Title>
 
             <section className="cards-chamados-container">
-                {chamadosNaoRespondidos.length === 0 ? (
+                {chamadosNaoRespondidos === null || chamadosNaoRespondidos === undefined ? (
+                    <div className="loading-container">
+                        <CircularProgress />
+                    </div>
+                ) : chamadosNaoRespondidos.length === 0 ? (
                     <div className="zero-chamados">
                         <h3>Nenhum chamado foi encontrado!</h3>
                     </div>

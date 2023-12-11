@@ -38,7 +38,7 @@ export default function ChamadosDetails() {
 
     // Verificação de usuário
     useEffect(() => {
-        if (userType === "admin" || userType === "master") {
+        if (userType === "admin" && userType === "master") {
             navigate("/")
         } else {
             return
@@ -88,8 +88,6 @@ export default function ChamadosDetails() {
                             <p>Resposta:</p>
                             <h4>{resposta === "" ? "..." : resposta}</h4>
                         </div>
-
-                        {/* {resposta === "" && <span className="alert-resposta">Seu chamado tem 5 dias úteis para ser respondido.</span>} */}
 
                         {files.length !== 0 ? (
                             <section className="chamado-details-files">

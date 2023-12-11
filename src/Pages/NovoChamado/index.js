@@ -25,15 +25,6 @@ export default function NovoChamado() {
     const userType = useUserType()
     const navigate = useNavigate()
 
-    // Verificação de usuário
-    useEffect(() => {
-        if (userType === "admin" || userType === "master") {
-            navigate("/admin")
-        } else {
-            return
-        }
-    }, [userType]);
-
     // Dropzone
     const onDrop = useCallback(acceptedFiles => {
         setFiles(prevFiles => [...prevFiles, ...acceptedFiles.map(file => Object.assign(file, {

@@ -7,7 +7,6 @@ import { Box, Button, IconButton, TextField } from '@mui/material';
 import { LoadingButton } from "@mui/lab"
 import { IoClose } from "react-icons/io5";
 import { useUserType } from '../../hooks/useUserType';
-import OuvidoriaImage from "../../assets/header-ouvidoria.png"
 
 export default function Login() {
 
@@ -21,14 +20,15 @@ export default function Login() {
   const userType = useUserType()
 
   useEffect(() => {
-    if (signed && userType === "comum") {
-      navigate("/chamados")
-    } else if (signed && userType !== "comum") {
-      navigate("/admin")
-    } else {
-      return
+    if (signed) {
+      if (userType === "comum") {
+        navigate("/chamados")
+      } else if (userType === "admin" || "master") {
+        navigate("/admin")
+      }
     }
-  }, [signed, navigate, userType]);
+  }, [signed, userType]);
+
 
   const closeOverlay = () => {
     setDisplayOverlay(false);

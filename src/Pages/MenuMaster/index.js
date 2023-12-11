@@ -4,7 +4,7 @@ import { useUserType } from "../../hooks/useUserType";
 import { useNavigate } from "react-router-dom";
 import { Backdrop, CircularProgress } from "@mui/material";
 
-export default function DashboardMaster() {
+export default function MenuMaster() {
 
     const userType = useUserType()
     const navigate = useNavigate()
@@ -17,7 +17,6 @@ export default function DashboardMaster() {
             setLoading(false)
             return
         }
-
         if (userType === "admin") {
             navigate("/admin")
         } else if (userType === "comum") {

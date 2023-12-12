@@ -1,6 +1,6 @@
 import "./chamadoDetails.css"
-import { useContext, useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom'
+import { useContext, useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom'
 
 // Local Components
 import { Content } from "../../components/layout/Content";
@@ -15,7 +15,8 @@ import { useHandleCancelChamado } from "../../hooks/useHandleCancelChamado";
 //Icons and Components
 import { Box, Button, CircularProgress, Tooltip } from "@mui/material";
 import { ChamadoStatus } from "../../components/styled/chamadoStatus"
-import { useUserType } from "../../hooks/useUserType";
+
+import Viewer from "react-viewer";
 
 
 export default function ChamadosDetails() {
@@ -33,22 +34,33 @@ export default function ChamadosDetails() {
     } = useLoadChamados()
     const { handleCancelChamado } = useHandleCancelChamado()
 
-    const userType = useUserType()
-    const navigate = useNavigate()
-
-    // Verificação de usuário
-    useEffect(() => {
-        if (userType === "admin" && userType === "master") {
-            navigate("/")
-        } else {
-            return
-        }
-    }, [userType]);
+    // Images
+    const imagesTypeAccepted = ["jpeg", "jpg", "png", "gif"] // Adicionar mais tipos de imagens aqui caso necessário...
+    const [showImage, setShowImage] = useState(false);
+    const [viewerImages, setViewerImages] = useState([]);
 
     useEffect(() => {
         loadChamadoById(id)
     }, [user.uid]);
 
+    useEffect(() => {
+        // Filtra apenas os arquivos de imagem e vídeo e os converte para o formato esperado pelo Viewer
+        const preparedViewerImages = files.map((file, index) => ({
+            src: file,
+            alt: `File ${index + 1}`,
+            type: imagesTypeAccepted.includes(getTypeFile(file)) ? 'image' : 'video',
+        }));
+        setViewerImages(preparedViewerImages);
+    }, [files]);
+
+    // Pegar o tipo de arquivo
+    function getTypeFile(url) {
+        const parsedUrl = new URL(url);
+        const filePath = parsedUrl.pathname;
+        const fileName = filePath.substring(filePath.lastIndexOf('/') + 1);
+        const fileExtension = fileName.substring(fileName.lastIndexOf('.') + 1).toLowerCase();
+        return fileExtension;
+    }
 
     if (loadingChamados) {
         return (
@@ -60,7 +72,6 @@ export default function ChamadosDetails() {
             </Content>
         )
     }
-
 
     return (
         <>
@@ -93,7 +104,15 @@ export default function ChamadosDetails() {
                             <section className="chamado-details-files">
                                 {files.map((file, index) => (
                                     <div key={index}>
-                                        <img src={file} alt={`chamado ${index}`} />
+                                        {imagesTypeAccepted.includes(getTypeFile(file)) ? (
+                                            <div onClick={() => setShowImage(true)} style={{ cursor: "pointer" }}>
+                                                <img src={file} alt={`File ${index + 1}`} className="image-preview" />
+                                            </div>
+                                        ) : (
+                                            <div>
+                                                <video width="100%" height={200} src={file} controls />
+                                            </div>
+                                        )}
                                     </div>
                                 ))}
                             </section>
@@ -102,6 +121,16 @@ export default function ChamadosDetails() {
                                 <p style={{ color: "gray" }}> Você não tem nenhum aquivo a ser mostrado...</p>
                             </section>
                         )}
+
+                        {/* Visualizador de imagens */}
+                        <Viewer
+                            visible={showImage} onClose={() => setShowImage(false)}
+                            images={viewerImages}
+                            drag={false}
+                            loop={false}
+                            rotatable={false}
+                            scalable={false}
+                        />
 
                         <div className="chamado-details-actions">
                             <Tooltip title="Cancelar">

@@ -26,17 +26,6 @@ export default function MeusChamados() {
     const { loadChamados, userChamados, loadingChamados } = useLoadChamados()
     const { handleCancelChamado } = useHandleCancelChamado()
 
-    const userType = useUserType()
-    const navigate = useNavigate()
-
-
-    // Verificação de usuário
-    useEffect(() => {
-        if (userType === "admin" || userType === "master") {
-            navigate("/admin")
-        }
-    }, [userType, navigate]);
-
     useEffect(() => {
         loadChamados()
     }, [user.uid, loadChamados]);

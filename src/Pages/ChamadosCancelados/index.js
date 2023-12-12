@@ -1,5 +1,5 @@
 import { useContext, useEffect } from "react"
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 // Local Components
 import { Content } from "../../components/layout/Content";
@@ -7,7 +7,6 @@ import { Title } from "../../components/layout/Title";
 
 //Utils
 import { AuthContext } from "../../contexts/AuthContext";
-import { useUserType } from "../../hooks/useUserType";
 
 //Icons and Components
 import { CircularProgress, IconButton, Tooltip } from "@mui/material";
@@ -20,19 +19,6 @@ export default function ChamadosCancelados() {
 
     const { user } = useContext(AuthContext);
     const { chamadosCancelados, loadingChamados, loadChamadosCancelados } = useLoadChamadosCancelados()
-
-    const userType = useUserType()
-    const navigate = useNavigate()
-
-
-    // Verificação de usuário
-    useEffect(() => {
-        if (userType === "admin" && userType === "master") {
-            navigate("/admin")
-        } else {
-            return
-        }
-    }, [userType]);
 
     useEffect(() => {
         loadChamadosCancelados()

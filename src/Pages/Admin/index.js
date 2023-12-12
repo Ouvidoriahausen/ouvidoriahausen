@@ -1,6 +1,6 @@
 import "./adminChamados.css"
 import { useEffect } from "react"
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 // Material UI
 import { CircularProgress, IconButton, Tooltip } from "@mui/material";
@@ -15,7 +15,6 @@ import { CgDetailsMore } from "react-icons/cg"
 
 // Utils
 import { useLoadChamadosAdmin } from "../../hooks/useLoadChamadosSemResposta";
-import { useUserType } from "../../hooks/useUserType";
 
 
 export default function Admin() {
@@ -23,16 +22,6 @@ export default function Admin() {
     const { chamadosNaoRespondidos, loadChamadosNaoRespondidos, loadingChamados } = useLoadChamadosAdmin();
     const { statusPage } = useParams()
     let statusTitle = ""
-
-    const userType = useUserType()
-    const navigate = useNavigate()
-
-    // Verificação de usuário
-    useEffect(() => {
-        if (userType === "comum") {
-            navigate("/chamados")
-        }
-    }, [userType]);
 
 
     useEffect(() => {

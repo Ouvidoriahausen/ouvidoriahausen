@@ -15,7 +15,7 @@ export function Private({ children, allowedUserType }) {
         setIsReloading(true);
         setTimeout(() => {
             setIsReloading(false);
-        }, 500);// (não altere esse valor) // Defina um tempo para o estado mudar após o carregamento inicial, para evitar redirecionamentos indesejados
+        }, 600);// (não altere esse valor) // tempo para o estado mudar após o carregamento inicial, para evitar redirecionamentos indesejados
     }, [location.pathname]);
 
     if (loading || isReloading) {
@@ -27,7 +27,7 @@ export function Private({ children, allowedUserType }) {
     }
 
     if (!allowedUserType.includes(userType) || !signed) {
-        return <Navigate to="/" />;
+        return <Navigate to="/not-found" />;
     }
 
     return children;

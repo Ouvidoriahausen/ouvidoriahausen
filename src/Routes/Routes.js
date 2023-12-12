@@ -37,7 +37,7 @@ export default function RoutesApp() {
   
 
 
-  const badRoutes = ["/login", "/cadastrar", "/"]
+  const badRoutes = ["/login", "/cadastrar", "/", "/termos"]
 
   return (
     <>
@@ -45,7 +45,6 @@ export default function RoutesApp() {
 
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/termos" element={<Terms />} />
         <Route path="/login" element={<Login />} />
         <Route path="/cadastrar" element={<Cadastrar />} />
         <Route path="/novo-chamado" element={<ComumPrivate><NovoChamado /></ComumPrivate>} />
@@ -59,7 +58,7 @@ export default function RoutesApp() {
         <Route path="/admin/:statusPage/:id" element={<AdminPrivate><ChamadosDetailsAdmin /></AdminPrivate>} />
 
         <Route path="/menu" element={<MasterPrivate><MenuMaster /></MasterPrivate>} />
-
+        
         <Route path="*" element={<NotFound />} />
       </Routes>
     </>

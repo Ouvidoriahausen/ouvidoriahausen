@@ -16,7 +16,6 @@ import { useLoadChamados } from "../../../hooks/useLoadChamados";
 import { Box, Button, CircularProgress, FormControlLabel, Radio, RadioGroup, TextField } from "@mui/material";
 import { ChamadoStatus } from "../../../components/styled/chamadoStatus"
 import { toast } from "react-toastify";
-import { useUserType } from "../../../hooks/useUserType";
 
 import Viewer from "react-viewer";
 
@@ -24,6 +23,7 @@ export default function ChamadosDetailsAdmin() {
 
     const { id } = useParams()
     const { user } = useContext(AuthContext);
+    const navigate = useNavigate()
     const { loadChamadoById,
         newID,
         status,
@@ -41,17 +41,6 @@ export default function ChamadosDetailsAdmin() {
     const [showImage, setShowImage] = useState(false);
     const [viewerImages, setViewerImages] = useState([]);
 
-    const navigate = useNavigate()
-    const userType = useUserType()
-
-    // Verificação de usuário
-    useEffect(() => {
-        if (userType === "comum") {
-            navigate("/chamados")
-        }
-    }, [userType]);
-
-
     useEffect(() => {
         loadChamadoById(id)
     }, [user.uid]);
@@ -66,6 +55,15 @@ export default function ChamadosDetailsAdmin() {
         }));
         setViewerImages(preparedViewerImages);
     }, [files]);
+
+    // Pegar o tipo de arquivo
+    function getTypeFile(url) {
+        const parsedUrl = new URL(url);
+        const filePath = parsedUrl.pathname;
+        const fileName = filePath.substring(filePath.lastIndexOf('/') + 1);
+        const fileExtension = fileName.substring(fileName.lastIndexOf('.') + 1).toLowerCase();
+        return fileExtension;
+    }
 
 
     if (loadingChamados) {
@@ -105,16 +103,6 @@ export default function ChamadosDetailsAdmin() {
             })
     }
 
-    // Pegar o tipo de arquivo
-    function getTypeFile(url) {
-        const parsedUrl = new URL(url);
-        const filePath = parsedUrl.pathname;
-        const fileName = filePath.substring(filePath.lastIndexOf('/') + 1);
-        const fileExtension = fileName.substring(fileName.lastIndexOf('.') + 1).toLowerCase();
-        return fileExtension;
-    }
-
-
     return (
 
         <Content className="chamado-details-admin-container">
@@ -151,11 +139,15 @@ export default function ChamadosDetailsAdmin() {
                         <section className="chamado-details-admin-files">
 
                             {files.map((file, index) => (
-                                <div key={index} onClick={() => setShowImage(true)}>
+                                <div key={index}>
                                     {imagesTypeAccepted.includes(getTypeFile(file)) ? (
-                                        <img src={file} alt={`File ${index + 1}`} className="image-preview" />
+                                        <div onClick={() => setShowImage(true)} style={{cursor: "pointer"}}>
+                                            <img src={file} alt={`File ${index + 1}`} className="image-preview" />
+                                        </div>
                                     ) : (
-                                        <video width="100%" height={200} src={file} controls />
+                                        <div>
+                                            <video width="100%" height={200} src={file} controls />
+                                        </div>
                                     )}
                                 </div>
                             ))}

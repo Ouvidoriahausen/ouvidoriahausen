@@ -1,5 +1,5 @@
 import './novoChamado.css';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { auth, db, storage } from '../../services/connectionFirebase';
 import { addDoc, collection, doc, getDocs, limit, orderBy, query, updateDoc } from 'firebase/firestore';
@@ -10,8 +10,6 @@ import { Box, Button, TextField } from '@mui/material';
 import { Title } from '../../components/layout/Title';
 import { AiOutlineCloudUpload } from "react-icons/ai";
 import { LoadingButton } from '@mui/lab';
-import { useNavigate } from 'react-router-dom';
-import { useUserType } from '../../hooks/useUserType';
 
 export default function NovoChamado() {
     const [titulo, setTitulo] = useState("")
@@ -21,9 +19,6 @@ export default function NovoChamado() {
 
     const [loading, setLoading] = useState(false);
     const chamadosCollection = "chamados"
-
-    const userType = useUserType()
-    const navigate = useNavigate()
 
     // Dropzone
     const onDrop = useCallback(acceptedFiles => {

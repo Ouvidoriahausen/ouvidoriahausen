@@ -23,6 +23,10 @@ export function SideBar() {
     const userStorage = JSON.parse(UserLocalStorage)
     const userType = useUserType()
 
+    if(!userType){
+        return
+    }
+
     return (
         <div className="sidebar-container">
             <section className="navbar">

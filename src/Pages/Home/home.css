@@ -1,12 +1,31 @@
-.texto-ouvidoria {
-  font-size: 40px;
-  color: white;
+.home-container section {
+  position: absolute;
+  top: 20%;
+  left: 15%;
+  display: flex;
+  flex-direction: column;
 }
 
-.texto-ouvidoria span {
+.home-container section h1 {
+  font-size: 8rem;
+  margin-top: 25px;
+}
+
+.home-container section h2 {
+  font-size: 2rem;
+  font-weight: lighter;
+  margin-top: 10px;
+}
+
+.home-container section .trace {
+  width: 128px;
+  height: 10px;
+  background-color: var(--orange);
+}
+
+.hausenTxt {
   color: var(--orange);
 }
-
 
 .home-btns {
   display: flex;
@@ -14,16 +33,24 @@
   align-items: center;
   justify-content: center;
   gap: 12px;
+  width: 100%;
+  max-width: 400px;
+  margin-top: 15%;
 }
-.home-btns button{
-  font-size: 20px;
+
+.home-btns a {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+}
+.home-btns button {
+  font-size: 1.8rem;
+  width: 100% !important;
 }
 
 .saiba-mais {
-  color: var(--orange);
-}
-
-.orange-texto {
+  font-size: 22px;
   color: var(--orange);
 }
 
@@ -44,12 +71,19 @@
   font-size: 20px;
 }
 
-.cadastro-btn {
-  padding: 14px 30px;
-  border: 1px solid var(--orange);
+
+/* Traçados canto inferior direito */
+.traces {
+  position: absolute;
+  bottom: 12%;
+  right: 5%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
-
-.acessar:hover {
-  opacity: .8;
+.traces span {
+  width: 100px;
+  height: 8px;
+  background-color: var(--orange);
 }

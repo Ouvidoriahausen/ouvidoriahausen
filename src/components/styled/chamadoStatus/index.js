@@ -19,6 +19,10 @@ const statusStyles = {
     "morto": {
         backgroundColor: "#7B7B7B",
         color: "#fff",
+    },
+    "detalhes": {
+        backgroundColor: "#FFD000",
+        color: "var(--dark-blue)",
     }
 }
 
@@ -42,6 +46,9 @@ export const ChamadoStatus = ({ status }) => {
             break;
         case 'morto':
             statusText = 'Cancelado';
+            break;
+        case 'detalhes':
+            statusText = 'Precisa de detalhes';
             break;
         default:
             statusText = '...';

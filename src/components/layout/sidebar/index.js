@@ -11,6 +11,7 @@ import { FiPlus, FiLogOut } from "react-icons/fi"
 import { FaFolderOpen, FaUser } from "react-icons/fa"
 import { MdArchive, MdDone, MdOutlineMoreHoriz, MdClose } from "react-icons/md"
 import { RiAdminFill } from "react-icons/ri";
+import { GrDocumentMissing } from "react-icons/gr";
 
 // Utils
 import { useUserType } from "../../../hooks/useUserType"
@@ -53,6 +54,13 @@ export function SideBar() {
                                 <Button size="large" fullWidth>
                                     <MdOutlineMoreHoriz size={30} />
                                     Em Andamento
+                                </Button>
+                            </Link>
+
+                            <Link to="/admin/detalhes">
+                                <Button size="large" fullWidth>
+                                    <GrDocumentMissing size={25} />
+                                    Falta detalhes
                                 </Button>
                             </Link>
 

@@ -56,6 +56,9 @@ export default function Admin() {
         case "morto":
             statusTitle = "Arquivos Mortos"
             break
+        case "detalhes":
+            statusTitle = "Falta de Detalhes"
+            break
         default:
             statusTitle = ""
             break

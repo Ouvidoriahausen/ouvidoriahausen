@@ -19,6 +19,7 @@ export function useLoadChamados() {
     const [descricao, setDescricao] = useState("")
     const [resposta, setResposta] = useState("")
     const [status, setStatus] = useState("em aberto")
+    const [moreDetails, setMoreDetails] = useState("")
     const [files, setFiles] = useState([])
 
 
@@ -39,6 +40,7 @@ export function useLoadChamados() {
                         descricao: doc.data().descricao,
                         resposta: doc.data().resposta,
                         status: doc.data().status,
+                        moreDetails: doc.data().moreDetails,
                         created: doc.data().created,
                     };
 
@@ -79,6 +81,7 @@ export function useLoadChamados() {
                 setResposta(data.resposta);
                 setStatus(data.status);
                 setFiles(data.fileURLs)
+                setMoreDetails(data.moreDetails)
 
                 setIsEmptyById(false)
                 setLoadingChamados(false)
@@ -107,11 +110,13 @@ export function useLoadChamados() {
         newID,
         descricao,
         status,
+        moreDetails,
         resposta,
         files,
         isEmptyById,
 
         setStatus,
         setResposta,
+        setMoreDetails,
     }
 }

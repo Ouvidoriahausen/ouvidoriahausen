@@ -14,8 +14,8 @@ import { LoadingButton } from '@mui/lab';
 export default function NovoChamado() {
     const [titulo, setTitulo] = useState("")
     const [descricao, setDescricao] = useState("")
-    const [status, setStatus] = useState("aberto")
     const [files, setFiles] = useState([]);
+    const status = "aberto"
 
     const [loading, setLoading] = useState(false);
     const chamadosCollection = "chamados"
@@ -31,7 +31,7 @@ export default function NovoChamado() {
     const { getRootProps, getInputProps } = useDropzone({
         onDrop,
         accept: {
-            "image/*": [".jpeg", ".jpg", ".png"],
+            "image/*": [".jpeg", ".jpg", ".png", ".gif"],
             "video/*": [".mp4", ".mov", ".mkv", ".avi"]
         }
     });
@@ -135,6 +135,7 @@ export default function NovoChamado() {
                 resposta: "",
                 fileURLs: [],
                 status: status,
+                moreDetails: "",
                 created: new Date(),
             };
 

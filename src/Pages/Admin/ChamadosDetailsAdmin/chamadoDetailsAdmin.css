@@ -26,7 +26,8 @@
 .chamado-details-admin-title,
 .chamado-details-admin-description,
 .chamado-details-admin-status,
-.chamado-details-admin-resposta {
+.chamado-details-admin-resposta,
+.chamado-details-admin-detalhes {
     width: 100%;
     display: flex;
     gap: 8px;
@@ -52,9 +53,11 @@
 .chamado-details-admin-status {
     align-items: center;
     margin: 32px 0;
+    padding: 0 20px;
 }
 
-.chamado-details-admin-resposta {
+.chamado-details-admin-resposta,
+.chamado-details-admin-detalhes {
     align-items: center;
     padding: 20px;
     border-radius: 4px;
@@ -78,8 +81,7 @@
 }
 
 .alert-resposta {
-    margin-top: 12px;
-    margin-left: 8px;
+    margin: 15px 5px;
     color: red;
 }
 
@@ -97,11 +99,12 @@
     width: 100%;
 }
 
-.file-image{
+.file-image {
     cursor: zoom-in;
     transition: .3s;
 }
-.file-image:hover{
+
+.file-image:hover {
     transform: scale(1.05);
 }
 
@@ -116,6 +119,8 @@
     display: flex;
     flex-direction: row;
     justify-content: center;
+    padding: 10px;
+    background-color: var(--medium-gray);
 }
 
 .action-resposta-input {
@@ -123,8 +128,14 @@
     justify-content: center;
 }
 
+.action-title {
+    display: flex;
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
 /* Arquivo tela cheia */
-.file-modal{
+.file-modal {
     position: fixed;
     display: flex;
     width: 100%;
@@ -134,7 +145,8 @@
     z-index: 99999;
     backdrop-filter: blur(5px);
 }
-.file-modal-content{
+
+.file-modal-content {
     position: relative;
     display: flex;
     width: 100%;
@@ -144,11 +156,13 @@
     padding: 30px;
     margin-left: 50px;
 }
-.file-modal-content img{
+
+.file-modal-content img {
     display: flex;
     cursor: zoom-out;
 }
-.close-file-modal{
+
+.close-file-modal {
     display: flex;
     position: relative;
     width: 55px;

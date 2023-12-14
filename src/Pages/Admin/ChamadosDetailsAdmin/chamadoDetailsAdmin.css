@@ -60,6 +60,7 @@
 .chamado-details-admin-detalhes {
     align-items: center;
     padding: 20px;
+    margin-bottom: 8px;
     border-radius: 4px;
     background-color: var(--medium-gray);
 }

@@ -1,6 +1,6 @@
-import { useState } from 'react';
 import "./terms.css"
-import { LuFileCheck } from "react-icons/lu";
+import { useState } from 'react';
+import { LuFileText } from "react-icons/lu";
 import { Button } from '@mui/material';
 
 export default function Terms() {
@@ -21,7 +21,7 @@ export default function Terms() {
         <section className="terms-container">
             <div className="terms-content">
                 <div>
-                    <LuFileCheck size={100} />
+                    <LuFileText size={100} />
                     <h2>Nossos Termos</h2>
                 </div>
                 <p>Aqui estão os termos que o usuário deve aceitar.Aqui estão os termos que o usuário deve aceitar.Aqui estão os termos que o usuário deve aceitar.Aqui estão os termos que o usuário deve aceitar.Aqui estão os termos que o usuário deve aceitar.Aqui estão os termos que o usuário deve aceitar.Aqui estão os termos que o usuário deve aceitar.Aqui estão os termos que o usuário deve aceitar.Aqui estão os termos que o usuário deve aceitar.Aqui estão os termos que o usuário deve aceitar.</p>

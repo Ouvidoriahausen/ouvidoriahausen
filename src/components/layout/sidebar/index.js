@@ -6,12 +6,12 @@ import { AuthContext, LOCAL_STORAGE_KEY } from "../../../contexts/AuthContext"
 import { useContext } from "react"
 
 // Icons
-import { PiTicketFill, PiSkullBold } from "react-icons/pi";
+import { PiTicketFill } from "react-icons/pi";
 import { FiPlus, FiLogOut } from "react-icons/fi"
-import { FaFolderOpen, FaUser } from "react-icons/fa"
-import { MdArchive, MdDone, MdOutlineMoreHoriz, MdClose } from "react-icons/md"
+import { FaUser } from "react-icons/fa"
+import { MdArchive, MdDone, MdClose } from "react-icons/md"
 import { RiAdminFill } from "react-icons/ri";
-import { GrDocumentMissing } from "react-icons/gr";
+import { LuFileWarning, LuFileX, LuFile, LuFileClock } from "react-icons/lu";
 
 // Utils
 import { useUserType } from "../../../hooks/useUserType"
@@ -23,6 +23,8 @@ export function SideBar() {
     const UserLocalStorage = localStorage.getItem(LOCAL_STORAGE_KEY)
     const userStorage = JSON.parse(UserLocalStorage)
     const userType = useUserType()
+
+    const iconSize = 25
 
     if(!userType){
         return
@@ -45,42 +47,42 @@ export function SideBar() {
                         <section className="nav-links">
                             <Link to="/admin/aberto">
                                 <Button size="large" fullWidth>
-                                    <FaFolderOpen size={30} />
+                                    <LuFile size={iconSize} />
                                     Em aberto
                                 </Button>
                             </Link>
 
                             <Link to="/admin/andamento">
                                 <Button size="large" fullWidth>
-                                    <MdOutlineMoreHoriz size={30} />
+                                    <LuFileClock size={iconSize} />
                                     Em Andamento
                                 </Button>
                             </Link>
 
                             <Link to="/admin/detalhes">
                                 <Button size="large" fullWidth>
-                                    <GrDocumentMissing size={25} />
+                                    <LuFileWarning size={iconSize} />
                                     Falta detalhes
                                 </Button>
                             </Link>
 
                             <Link to="/admin/finalizado">
                                 <Button size="large" fullWidth>
-                                    <MdDone size={30} />
+                                    <MdDone size={iconSize} />
                                     Finalizados
                                 </Button>
                             </Link>
 
                             <Link to="/admin/arquivado">
                                 <Button size="large" fullWidth>
-                                    <MdArchive size={30} />
+                                    <MdArchive size={iconSize} />
                                     Arquivados
                                 </Button>
                             </Link>
 
                             <Link to="/admin/morto">
                                 <Button size="large" fullWidth>
-                                    <PiSkullBold size={30} />
+                                    <LuFileX size={iconSize} />
                                     Arq. Mortos
                                 </Button>
                             </Link>

@@ -3,7 +3,6 @@ import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import { SideBar } from '../components/layout/Sidebar';
 
 // Common user pages
-import Terms from '../Pages/Terms';
 import Home from '../Pages/Home';
 import Login from '../Pages/Login';
 import Cadastrar from '../Pages/Cadastrar';

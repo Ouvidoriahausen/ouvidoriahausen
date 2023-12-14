@@ -128,14 +128,15 @@ export default function NovoChamado() {
 
         try {
             const chamadoData = {
+                userID: currentUser ? currentUser.uid : '',
                 newID: idPersonalizado,
                 titulo: titulo,
                 descricao: descricao,
-                userID: currentUser ? currentUser.uid : '',
-                resposta: "",
-                fileURLs: [],
                 status: status,
+                resposta: "",
                 moreDetails: "",
+                respostaDetails: "",
+                fileURLs: [],
                 created: new Date(),
             };
 

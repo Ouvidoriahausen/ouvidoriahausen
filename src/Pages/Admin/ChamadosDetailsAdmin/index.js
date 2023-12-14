@@ -13,7 +13,7 @@ import { AuthContext } from "../../../contexts/AuthContext";
 import { useLoadChamados } from "../../../hooks/useLoadChamados";
 
 //Icons and Components
-import { Box, Button, Checkbox, CircularProgress, FormControlLabel, FormGroup, Radio, RadioGroup, TextField } from "@mui/material";
+import { Box, Button, CircularProgress, FormControlLabel, Radio, RadioGroup, TextField } from "@mui/material";
 import { ChamadoStatus } from "../../../components/styled/chamadoStatus"
 import { toast } from "react-toastify";
 
@@ -36,6 +36,7 @@ export default function ChamadosDetailsAdmin() {
         setStatus,
         moreDetails,
         setMoreDetails,
+        respostaDetails,
     } = useLoadChamados()
 
     // Images
@@ -91,6 +92,7 @@ export default function ChamadosDetailsAdmin() {
             status: status,
             resposta: resposta,
             moreDetails: moreDetails,
+            respostaDetails: respostaDetails,
         })
             .then(() => {
                 toast.success("Chamado atualizado com sucesso!")
@@ -137,8 +139,13 @@ export default function ChamadosDetailsAdmin() {
                     {resposta === "" && <span className="alert-resposta">Esse chamado ainda não foi respondido.</span>}
 
                     {moreDetails && <div className="chamado-details-admin-detalhes">
-                        <p>Mais detalhes: </p>
+                        <span>Mais detalhes: (Descrito por um admin.)</span>
                         <h4>{moreDetails}</h4>
+                    </div>}
+
+                    {respostaDetails && <div className="chamado-details-admin-detalhes2">
+                        <span>Resposta dada pelo usuário:</span>
+                        <h4>{respostaDetails}</h4>
                     </div>}
 
 
@@ -218,13 +225,14 @@ export default function ChamadosDetailsAdmin() {
                                         label="Precisa de detalhes"
                                     />
 
-                                    <TextField
+                                    {status === "detalhes" && <TextField
                                         fullWidth
                                         placeholder="Especifique os detalhes necessários"
                                         multiline
+                                        minRows={3}
                                         sx={{ background: "#fff" }}
                                         onChange={(e) => setMoreDetails(e.target.value)}
-                                    />
+                                    />}
                                 </RadioGroup>
 
                             </div>

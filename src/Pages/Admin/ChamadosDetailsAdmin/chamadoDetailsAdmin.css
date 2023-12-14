@@ -63,6 +63,23 @@
     border-radius: 4px;
     background-color: var(--medium-gray);
 }
+.chamado-details-admin-detalhes{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    color: #838383;
+}
+.chamado-details-admin-detalhes2{
+    display: flex;
+    flex-wrap: wrap;
+    color: var(--dark-blue);
+    align-items: center;
+    margin-top: 8px;
+    padding: 20px;
+    border-radius: 4px;
+    gap: 10px;
+    background-color: var(--medium-gray);
+}
 
 .chamado-details-admin-files {
     display: flex;

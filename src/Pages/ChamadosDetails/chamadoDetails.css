@@ -1,4 +1,4 @@
-.chamado-details{
+.chamado-user{
     display: flex;
     flex-direction: column;
     width: 90%;
@@ -8,53 +8,60 @@
     border: 1px solid lightgray;
     color: var(--dark-blue);
 }
-.chamado-details-main{
+.chamado-user-main{
     display: flex;
     width: 100%;
     justify-content: center;
 }
-.chamado-details-title{
+.chamado-user-title{
     font-size: 32px;
 }
-.chamado-details-title p{
+.chamado-user-title p{
     font-size: 16px;
 }
-.chamado-details-title,
-.chamado-details-description, .chamado-details-status,
-.chamado-details-resposta
+.chamado-user-title,
+.chamado-user-description, .chamado-user-status,
+.chamado-user-resposta, .chamado-user-detalhes
 {
     width: 100%;
     display: flex;
     gap: 8px;
 }
-.chamado-details :where(h3, h4, p, span)::first-letter{
+.chamado-user :where(h3, h4, p, span)::first-letter{
     text-transform: uppercase;
 }
-.chamado-details-title{
+.chamado-user-title{
     align-items: center;
     justify-content: space-between;
 }
 
-.chamado-details-description{
+.chamado-user-description{
     width: 100%;
     border-radius: 4px;
     padding: 10px 20px;
     margin-top: 20px;
     background-color: var(--medium-gray);
 }
-.chamado-details-status{
+.chamado-user-status{
     align-items: center;
     margin: 32px 0;
 }
 
-.chamado-details-resposta{
+.chamado-user-resposta,
+.chamado-user-detalhes {
     align-items: center;
     padding: 20px;
     border-radius: 4px;
     background-color: var(--medium-gray);
 }
+.chamado-user-detalhes{
+    display: flex;
+    flex-wrap: wrap;
+    text-align: start;
+    background-color: var(--alert-yellow);
+}
 
-.chamado-details-files{
+.chamado-user-files{
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -65,7 +72,7 @@
     background-color: var(--medium-gray);
     border-radius: 4px;
 }
-.chamado-details-files img{
+.chamado-user-files img{
     width: 100%;
     max-width: 200px;
     height: 100px;
@@ -78,8 +85,22 @@
     margin-left: 8px;
     color: red;
 }
-.chamado-details-actions{
+.chamado-user-actions{
     display: flex;
     width: 100%;
     justify-content: center;
+}
+
+.moreDetails-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    flex-direction: column;
+}
+.moreDetails-container button{
+    display: flex;
+    font-size: 18px;
+    height: 45px;
+    width: 400px !important;
 }

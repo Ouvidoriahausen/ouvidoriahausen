@@ -1,6 +1,6 @@
 import "./meusChamados.css"
 import { useContext, useEffect } from "react"
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 // Local Components
 import { Content } from "../../components/layout/Content";
@@ -10,7 +10,6 @@ import { Title } from "../../components/layout/Title";
 import { AuthContext } from "../../contexts/AuthContext";
 import { useLoadChamados } from "../../hooks/useLoadChamados";
 import { useHandleCancelChamado } from "../../hooks/useHandleCancelChamado";
-import { useUserType } from "../../hooks/useUserType";
 
 //Icons and Components
 import { Button, CircularProgress, IconButton, Tooltip } from "@mui/material";
@@ -91,11 +90,11 @@ export default function MeusChamados() {
                                         </Tooltip>
                                     </Link>
 
-                                    <Tooltip title="Cancelar" onClick={() => handleCancelChamado(chamado.id)}>
+                                    {chamado.status === "aberto" && <Tooltip title="Cancelar" onClick={() => handleCancelChamado(chamado.id)}>
                                         <IconButton color="error" size="large" className="action">
                                             <ImCancelCircle size={20} />
                                         </IconButton>
-                                    </Tooltip>
+                                    </Tooltip>}
                                 </td>
                             </tr>
                         ))}

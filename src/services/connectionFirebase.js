@@ -4,7 +4,6 @@ import { getAuth } from 'firebase/auth';
 import { getStorage } from 'firebase/storage';
 
 //Banco de dados #01 (Production)
-const firebaseConfig = {
 // const firebaseConfig = {
 //   apiKey: "AIzaSyCoawov7wWinuqQ1fMBBp7Klucg0HAX8OU",
 //   authDomain: "ouvidoria-grupo-hausen.firebaseapp.com",

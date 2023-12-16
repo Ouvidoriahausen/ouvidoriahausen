@@ -6,6 +6,7 @@ import { useContext, useState } from "react";
 export function useLoadChamados() {
 
     const { user } = useContext(AuthContext);
+    const chamadosCollection = "chamados"
 
     // Muitos Chamados
     const [userChamados, setUserChamados] = useState([]);
@@ -22,12 +23,13 @@ export function useLoadChamados() {
     const [moreDetails, setMoreDetails] = useState("")
     const [respostaDetails, setRespostaDetails] = useState("")
     const [files, setFiles] = useState([])
+    const [filesMoreDetails, setFilesMoreDetails] = useState([])
 
 
     // Muitos Chamados
 
     async function loadChamados() {
-        const q = query(collection(db, "chamados"), orderBy("newID", "desc"), where("userID", "==", user.uid));
+        const q = query(collection(db, chamadosCollection), orderBy("newID", "desc"), where("userID", "==", user.uid));
         try {
             const querySnapshot = await getDocs(q);
             if (!querySnapshot.empty) {
@@ -42,6 +44,7 @@ export function useLoadChamados() {
                         resposta: doc.data().resposta,
                         status: doc.data().status,
                         moreDetails: doc.data().moreDetails,
+                        filesMoreDetails: doc.data().filesMoreDetails,
                         respostaDetails: doc.data().respostaDetails,
                         created: doc.data().created,
                     };
@@ -72,7 +75,7 @@ export function useLoadChamados() {
     async function loadChamadoById(id) {
         setLoadingChamados(true)
 
-        const docRef = doc(db, "chamados", id);
+        const docRef = doc(db, chamadosCollection, id);
         try {
             const docSnap = await getDoc(docRef);
             if (docSnap.exists()) {
@@ -85,6 +88,8 @@ export function useLoadChamados() {
                 setFiles(data.fileURLs)
                 setMoreDetails(data.moreDetails)
                 setRespostaDetails(data.respostaDetails)
+                setFilesMoreDetails(data.filesMoreDetails)
+                
 
                 setIsEmptyById(false)
                 setLoadingChamados(false)
@@ -117,11 +122,13 @@ export function useLoadChamados() {
         resposta,
         respostaDetails,
         files,
+        filesMoreDetails,
         isEmptyById,
 
         setStatus,
         setResposta,
         setMoreDetails,
         setRespostaDetails,
+        setFilesMoreDetails,
     }
 }

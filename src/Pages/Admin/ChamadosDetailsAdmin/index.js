@@ -34,8 +34,11 @@ export default function ChamadosDetailsAdmin() {
         loadingChamados,
         setResposta,
         setStatus,
+
+        // Details
         moreDetails,
         setMoreDetails,
+        filesMoreDetails,
         respostaDetails,
     } = useLoadChamados()
 
@@ -43,6 +46,9 @@ export default function ChamadosDetailsAdmin() {
     const imagesTypeAccepted = ["jpeg", "jpg", "png", "gif"] // Adicionar mais tipos de imagens aqui caso necessário...
     const [showImage, setShowImage] = useState(false);
     const [viewerImages, setViewerImages] = useState([]);
+
+    const [showMoreDetailsImage, setShowMoreDetailsImage] = useState(false);
+    const [moreDetailsImages, setMoreDetailsImages] = useState([]);
 
     useEffect(() => {
         loadChamadoById(id)
@@ -58,6 +64,17 @@ export default function ChamadosDetailsAdmin() {
         }));
         setViewerImages(preparedViewerImages);
     }, [files]);
+
+    useEffect(() => {
+        // Filtra apenas os arquivos de imagem e vídeo e os converte para o formato esperado pelo Viewer
+        const pMoreDetailsImages = filesMoreDetails.map((file, index) => ({
+            src: file,
+            alt: `File ${index + 1}`,
+            type: imagesTypeAccepted.includes(getTypeFile(file)) ? 'image' : 'video',
+        }));
+        setMoreDetailsImages(pMoreDetailsImages);
+    }, [filesMoreDetails]);
+
 
     // Pegar o tipo de arquivo
     function getTypeFile(url) {
@@ -138,20 +155,9 @@ export default function ChamadosDetailsAdmin() {
 
                     {resposta === "" && <span className="alert-resposta">Esse chamado ainda não foi respondido.</span>}
 
-                    {moreDetails && <div className="chamado-details-admin-detalhes">
-                        <span>Mais detalhes: (Descrito por um admin.)</span>
-                        <h4>{moreDetails}</h4>
-                    </div>}
-
-                    {respostaDetails && <div className="chamado-details-admin-detalhes2">
-                        <span>Resposta dada pelo usuário:</span>
-                        <h4>{respostaDetails}</h4>
-                    </div>}
-
-
                     {files.length === 0 ? (
                         <section className="chamado-details-admin-files">
-                            <p style={{ color: "gray" }}> Este chamado não tem nenhum aquivo a ser mostrado...</p>
+                            <p style={{ color: "gray" }}> Este chamado não tem nenhum arquivo a ser mostrado...</p>
                         </section>
                     ) : (
                         <section className="chamado-details-admin-files">
@@ -172,7 +178,58 @@ export default function ChamadosDetailsAdmin() {
                         </section>
                     )}
 
-                    {/* Visualizador de imagens */}
+                    <span className="divider" style={{ borderColor: "var(--medium-gray)", marginBottom: "30px" }} />
+
+
+                    {moreDetails || respostaDetails ? <section className="category-container">
+                        <div className="category-title">
+                            <h3>Mais Detalhes:</h3>
+                        </div>
+
+                        <div className="chamado-details-admin-detalhes">
+                            <span>Detalhes solicitado:</span>
+                            <h4>{moreDetails === "" ? "..." : moreDetails}</h4>
+                        </div>
+
+                        <div className="chamado-details-admin-detalhes">
+                            <span>Resposta dada pelo usuário:</span>
+                            <h4>{respostaDetails === "" ? "..." : respostaDetails}</h4>
+                        </div>
+
+                        <div className="chamado-details-admin-files">
+                            {filesMoreDetails.length === 0 ? (
+                                <section className="chamado-details-admin-files details">
+                                    <p style={{ color: "gray" }}> O usuário não enviou nenhum arquivo...</p>
+                                </section>
+                            ) : (
+                                <section className="chamado-details-admin-files details">
+                                    {filesMoreDetails.map((file, index) => (
+                                        <div key={index}>
+                                            {imagesTypeAccepted.includes(getTypeFile(file)) ? (
+                                                <div>
+                                                    <img
+                                                        src={file}
+                                                        alt={`File ${index + 1}`}
+                                                        className="image-preview"
+                                                        style={{ cursor: "pointer" }}
+                                                        onClick={() => setShowMoreDetailsImage(true)}
+                                                    />
+                                                </div>
+                                            ) : (
+                                                <div>
+                                                    <video width="100%" height={200} src={file} controls />
+                                                </div>
+                                            )}
+                                        </div>
+                                    ))}
+                                </section>
+                            )}
+                        </div>
+
+                    </section> : null}
+
+
+                    {/* Visualizador principal de imagens */}
                     <Viewer
                         visible={showImage} onClose={() => setShowImage(false)}
                         images={viewerImages}
@@ -182,7 +239,16 @@ export default function ChamadosDetailsAdmin() {
                         scalable={false}
                     />
 
-                    <span className="divider" style={{ borderColor: "var(--medium-gray)" }} />
+                    {/* Visualizador de detalhes */}
+                    <Viewer
+                        visible={showMoreDetailsImage}
+                        onClose={() => setShowMoreDetailsImage(false)}
+                        images={moreDetailsImages}
+                        drag={false}
+                        loop={false}
+                        rotatable={false}
+                        scalable={false}
+                    />
 
                     <section className="chamado-details-admin-actions">
                         <div className="action-radio-input">

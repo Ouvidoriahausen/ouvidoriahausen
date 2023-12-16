@@ -11,18 +11,22 @@
 }
 
 .navbrand {
-    padding: 20px;
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    padding: 20px 0;
 }
 
 .navbrand img {
-    width: 250px;
+    width: 220px;
 }
 
 .navbar {
     position: relative;
     display: flex;
     flex-direction: column;
-    gap: 50px;
+    gap: 30px;
     height: 100%;
 }
 

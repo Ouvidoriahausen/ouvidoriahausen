@@ -12,13 +12,14 @@ import { AiOutlineCloudUpload } from "react-icons/ai";
 import { LoadingButton } from '@mui/lab';
 
 export default function NovoChamado() {
+
+    const status = "aberto"
+    const chamadosCollection = "chamados"
     const [titulo, setTitulo] = useState("")
     const [descricao, setDescricao] = useState("")
     const [files, setFiles] = useState([]);
-    const status = "aberto"
 
     const [loading, setLoading] = useState(false);
-    const chamadosCollection = "chamados"
 
     // Dropzone
     const onDrop = useCallback(acceptedFiles => {
@@ -137,6 +138,7 @@ export default function NovoChamado() {
                 moreDetails: "",
                 respostaDetails: "",
                 fileURLs: [],
+                filesMoreDetails: [],
                 created: new Date(),
             };
 

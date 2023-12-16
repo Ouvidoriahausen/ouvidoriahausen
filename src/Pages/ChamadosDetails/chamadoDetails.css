@@ -104,3 +104,7 @@
     height: 45px;
     width: 400px !important;
 }
+
+.dropzone {
+    height: 8rem;
+}

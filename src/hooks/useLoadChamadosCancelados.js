@@ -1,18 +1,27 @@
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { getDownloadURL, ref } from "firebase/storage";
-import { useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { db, storage } from "../services/connectionFirebase";
+import { AuthContext } from "../contexts/AuthContext";
 
 export function useLoadChamadosCancelados() {
 
+    const { user } = useContext(AuthContext)
     const [chamadosCancelados, setChamadosCancelados] = useState([]);
     const [loadingChamados, setLoadingChamados] = useState(false)
+
+    useEffect(() => {
+        // Carregar chamados cancelados apenas quando o usuário estiver disponível
+        if (user) {
+            loadChamadosCancelados();
+        }
+    }, [user]);
 
     async function loadChamadosCancelados() {
         setLoadingChamados(true)
 
         try {
-            const q = query(collection(db, "chamados"), where("status", "==", "morto"));
+            const q = query(collection(db, "chamados"), where("status", "==", "morto"), where("userID", "==", user.uid));
             const querySnapshot = await getDocs(q);
 
             if (!querySnapshot.empty) {

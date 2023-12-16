@@ -20,7 +20,6 @@ export function useHandleCancelChamado() {
 
             toast.success("Chamado deletado com sucesso!");
             navigate("/chamados");
-            window.location.reload();
         } catch (error) {
             toast.error("Erro ao deletar chamado!");
             console.error("Erro:", error);

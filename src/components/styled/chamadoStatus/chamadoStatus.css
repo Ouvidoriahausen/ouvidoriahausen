@@ -1,0 +1,33 @@
+.chamado-status {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #ACACAC;
+    padding: 8px 0;
+    color: var(--dark-blue);
+    border-radius: 4px;
+    font-weight: bold;
+    cursor: help;
+}
+.chamado-status p{
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 90%;
+    max-width: 300px;
+    padding: 10px;
+    margin-top: 10em;
+    background-color: #ACACAC;
+    white-space: wrap;
+    border-radius: 4px;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    z-index: 999;
+}
+
+.chamado-status:hover > .status-popup{
+    visibility: visible;
+    opacity: 1;
+}

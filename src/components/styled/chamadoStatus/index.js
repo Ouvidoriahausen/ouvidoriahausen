@@ -1,3 +1,5 @@
+import "./chamadoStatus.css"
+
 // Status Styles
 const statusStyles = {
     "aberto": {
@@ -29,34 +31,42 @@ const statusStyles = {
 export const ChamadoStatus = ({ status }) => {
     const statusKey = status.toLowerCase();
     const getStatus = statusStyles[statusKey];
-    let statusText = '';
+    let statusText = ""
+    let statusPopup = ""
 
     switch (statusKey) {
-        case 'aberto':
-            statusText = 'Em Aberto';
+        case "aberto":
+            statusText = "Em Aberto";
+            statusPopup = "Seu chamado está em aberto para ser visualizado, porém ainda não foi desenvolvido nada com ele."
             break;
-        case 'finalizado':
-            statusText = 'Finalizado';
+        case "finalizado":
+            statusText = "Finalizado";
+            statusPopup = "Seu chamado está em aberto para ser visualizado, porém ainda não foi desenvolvido nada com ele."
             break;
-        case 'andamento':
-            statusText = 'Em Andamento';
+        case "andamento":
+            statusText = "Em Andamento";
+            statusPopup = "Seu chamado está em aberto para ser visualizado, porém ainda não foi desenvolvido nada com ele."
             break;
-        case 'arquivado':
-            statusText = 'Arquivado';
+        case "arquivado":
+            statusText = "Arquivado";
+            statusPopup = "Seu chamado está em aberto para ser visualizado, porém ainda não foi desenvolvido nada com ele."
             break;
-        case 'morto':
-            statusText = 'Cancelado';
+        case "morto":
+            statusText = "Cancelado";
+            statusPopup = "Seu chamado está em aberto para ser visualizado, porém ainda não foi desenvolvido nada com ele."
             break;
-        case 'detalhes':
-            statusText = 'Precisa de detalhes';
+        case "detalhes":
+            statusText = "Precisa de detalhes";
+            statusPopup = "Seu chamado está em aberto para ser visualizado, porém ainda não foi desenvolvido nada com ele."
             break;
         default:
-            statusText = '...';
+            statusText = "...";
     }
 
     return (
-        <span className="chamado-status" style={getStatus}>
-            {statusText}
-        </span>
+        <div className="chamado-status" style={getStatus}>
+            <span>{statusText}</span>
+            <p className="status-popup" style={getStatus}>{statusPopup}</p>
+        </div>
     );
 };

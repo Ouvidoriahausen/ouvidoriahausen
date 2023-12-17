@@ -51,7 +51,7 @@ export default function Login() {
         <div className='overlay'>
           <span className="overlay-close-bg" onClick={closeOverlay} />
           <div className='overlay-content'>
-            <p>Sinta-se seguro ao fazer sua demanda, você está totalmente anônimo e protegido.</p>
+            <p>Sinta-se seguro ao fazer seu relato, você está totalmente anônimo e protegido.</p>
 
             <IconButton color="error" size="large" onClick={closeOverlay} className="close-button">
               <IoClose size={20} />

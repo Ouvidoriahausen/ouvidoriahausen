@@ -252,6 +252,8 @@ export default function ChamadosDetails() {
                             <h4>{resposta === "" ? "..." : resposta}</h4>
                         </div>}
 
+                        {status === "andamento" && <span style={{ color: "red", marginTop: "16px" }}>Seu chamado será respondido em até 5 dias úteis, por favor aguarde.</span>}
+
 
                         {status === "detalhes" && (
                             <section className="moreDetails-container">

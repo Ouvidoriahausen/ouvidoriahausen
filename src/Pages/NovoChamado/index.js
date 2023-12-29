@@ -176,7 +176,7 @@ export default function NovoChamado() {
                             required
                             maxLength={30}
                             autoComplete="false"
-                            label='Digite o título da sua denúncia' />
+                            label='Digite o título do seu relato' />
 
                         <TextField
                             value={descricao}
@@ -186,7 +186,7 @@ export default function NovoChamado() {
                             minRows={5}
                             required
                             onChange={(e) => setDescricao(e.target.value)}
-                            label='Digite aqui a descrição da sua denúncia' />
+                            label='Digite aqui a descrição do seu relato' />
 
                         <div {...getRootProps()} className='dropzone'>
 

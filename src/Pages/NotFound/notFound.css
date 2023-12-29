@@ -6,6 +6,8 @@
     gap: 12px;
     font-size: 22px;
     min-height: 100vh;
+    margin-left: 278px;
     color: var(--dark-blue);
     background-color: white;
+    
   }

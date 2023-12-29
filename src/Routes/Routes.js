@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
-import { SideBar } from '../components/layout/Sidebar';
+import { SideBar } from '../components/layout/sidebar';
 
 // Common user pages
 import Home from '../Pages/Home';

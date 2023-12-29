@@ -37,27 +37,27 @@ export const ChamadoStatus = ({ status }) => {
     switch (statusKey) {
         case "aberto":
             statusText = "Em Aberto";
-            statusPopup = "Seu chamado está em aberto para ser visualizado, porém ainda não foi desenvolvido nada com ele."
+            statusPopup = "Seu relato foi recebido em nosso sistema. Aguardando um de nossos especialistas analisar."
             break;
         case "finalizado":
             statusText = "Finalizado";
-            statusPopup = "Seu chamado está em aberto para ser visualizado, porém ainda não foi desenvolvido nada com ele."
+            statusPopup = "Seu relato foi finalizado em nosso sistema. Caso continue com dúvida abra um novo relato."
             break;
         case "andamento":
             statusText = "Em Andamento";
-            statusPopup = "Seu chamado está em aberto para ser visualizado, porém ainda não foi desenvolvido nada com ele."
+            statusPopup = "Seu relato está sendo analisado pelos nossos especialistas."
             break;
         case "arquivado":
             statusText = "Arquivado";
-            statusPopup = "Seu chamado está em aberto para ser visualizado, porém ainda não foi desenvolvido nada com ele."
+            statusPopup = "Seu relato foi araquivado em nosso sistema. Caso continue com dúdiva abra um novo relato."
             break;
         case "morto":
             statusText = "Cancelado";
-            statusPopup = "Seu chamado está em aberto para ser visualizado, porém ainda não foi desenvolvido nada com ele."
+            statusPopup = " Seu relato foi cancelado em nosso sistema. Abra um novo chamado."
             break;
         case "detalhes":
-            statusText = "Precisa de detalhes";
-            statusPopup = "Seu chamado está em aberto para ser visualizado, porém ainda não foi desenvolvido nada com ele."
+            statusText = "Falta detalhes";
+            statusPopup = " Após análise de nossos especialistas, falta informações para darmos continuidade no relato."
             break;
         default:
             statusText = "...";

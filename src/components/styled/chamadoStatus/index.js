@@ -53,7 +53,7 @@ export const ChamadoStatus = ({ status }) => {
             break;
         case "morto":
             statusText = "Cancelado";
-            statusPopup = " Seu relato foi cancelado em nosso sistema. Abra um novo chamado."
+            statusPopup = " Seu relato foi cancelado em nosso sistema. Abra um novo relato."
             break;
         case "detalhes":
             statusText = "Falta detalhes";

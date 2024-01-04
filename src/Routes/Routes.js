@@ -9,6 +9,8 @@ import Cadastrar from '../Pages/Cadastrar';
 import NovoChamado from '../Pages/NovoChamado';
 import MeusChamados from '../Pages/MeusChamados';
 import ChamadosDetails from '../Pages/ChamadosDetails';
+import Saiba from '../Pages/Saiba'
+
 
 import { AdminPrivate, ComumPrivate, MasterPrivate } from "./Private"
 
@@ -46,12 +48,14 @@ export default function RoutesApp() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/cadastrar" element={<Cadastrar />} />
+        <Route path="/Saiba" element={<Saiba/>} />
+        
         <Route path="/novo-chamado" element={<ComumPrivate><NovoChamado /></ComumPrivate>} />
         <Route path="/chamados" element={<ComumPrivate><MeusChamados /></ComumPrivate>} />
         <Route path="/chamados/:id" element={<ComumPrivate><ChamadosDetails /></ComumPrivate>} />
         <Route path="/cancelados" element={<ComumPrivate><ChamadosCancelados /></ComumPrivate>} />
         <Route path="/cancelados/:id" element={<ComumPrivate><ChamadosDetails /></ComumPrivate>} />
-
+        
         <Route path="/admin" element={<AdminPrivate><Admin /></AdminPrivate>} />
         <Route path="/admin/:statusPage" element={<AdminPrivate><Admin /></AdminPrivate>} />
         <Route path="/admin/:statusPage/:id" element={<AdminPrivate><ChamadosDetailsAdmin /></AdminPrivate>} />

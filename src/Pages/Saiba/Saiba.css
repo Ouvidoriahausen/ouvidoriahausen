@@ -1,15 +1,28 @@
-h1{
-    text-align: center;
-    color: orangered;
-}
-
-p{
-    color: rgb(61, 58, 58);
-    margin-top: 22px;
-    margin-left: 12px;
-}
-
-
-.texto-saiba{
-   
-}
+div {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  h1 {
+    color: #1a73e8;
+  }
+  
+  .texto-saiba {
+    line-height: 1.6;
+    color: #333;
+  }
+  
+  ul {
+    padding-left: 20px;
+  }
+  
+  ul li {
+    margin-bottom: 10px;
+  }
+  
+  strong {
+    color: #1a73e8;
+  }
